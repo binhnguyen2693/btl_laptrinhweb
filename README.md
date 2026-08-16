@@ -90,7 +90,8 @@ btl_laptrinhweb/
 ├── index.php
 ├── about.php
 ├── admin/
-│   └── quan-ly-bai-viet.php
+│   ├── quan-ly-bai-viet.php
+    └── binhluan.php
 ├── assets/
 │   ├── css/
 │   ├── images/
@@ -121,6 +122,7 @@ btl_laptrinhweb/
 
    ```text
    http://localhost/btl_laptrinhweb/admin/quan-ly-bai-viet.php
+   http://localhost/btl_laptrinhweb/admin/binhluan.php
    ```
 
 Buổi 2 sử dụng mảng PHP nên dữ liệu mới chỉ hiển thị sau khi gửi form và chưa
