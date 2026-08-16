@@ -27,6 +27,8 @@ function e(string $value): string
             <a href="index.php">Trang chủ</a>
             <a href="about.php">Giới thiệu nhóm</a>
             <a href="admin/quan-ly-bai-viet.php">Quản lý bài viết</a>
+            <a href="admin/binhluan.php">Bình luận</a>
+            <a href="admin/timkiembaiviet.php">Tìm kiếm bài viết</a>
         </nav>
 
         <section class="intro small">
