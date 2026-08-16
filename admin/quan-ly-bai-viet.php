@@ -48,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="../index.php">Trang chủ</a>
             <a href="../about.php">Giới thiệu nhóm</a>
             <a href="quan-ly-bai-viet.php">Quản lý bài viết</a>
+            <a href="binhluan.php">Bình luận</a>
+            <a href="timkiembaiviet.php">Tìm kiếm bài viết</a>
         </nav>
 
         <section class="intro small">
