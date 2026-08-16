@@ -93,6 +93,38 @@ th {
     background: #e5edff;
 }
 
+form {
+    display: grid;
+    gap: 10px;
+}
+
+input,
+select,
+textarea,
+button {
+    padding: 10px;
+    font: inherit;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+button {
+    width: 150px;
+    color: white;
+    background: #1d4ed8;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.error {
+    color: #b91c1c;
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 12px;

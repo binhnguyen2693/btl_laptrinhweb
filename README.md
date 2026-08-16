@@ -4,17 +4,24 @@
 
 Nhóm chọn đề tài **Website tin tức/blog có trang quản trị**.
 
-Website dự kiến có phần xem bài viết cho người dùng và phần quản trị để nhóm
-có thể thêm, sửa, xóa bài viết.
+Website có phần xem bài viết cho người dùng và phần quản trị để nhóm có thể
+thêm, sửa, xóa bài viết.
 
 ## Thành viên
 
-| MSSV | Họ và tên |
-| --- | --- |
-| 224001812 | Khổng Thị Lý |
-| 224001828 | Trần Hà Như Quỳnh |
-| 224001819 | Trần Nguyễn Bình Nguyên |
-| 224001843 | Đặng Ánh Tuyết |
+| MSSV | Họ và tên | Phần phụ trách |
+| --- | --- | --- |
+| 224001812 | Khổng Thị Lý | Chuyên mục |
+| 224001828 | Trần Hà Như Quỳnh | Tác giả, người dùng |
+| 224001819 | Trần Nguyễn Bình Nguyên | Bài viết |
+| 224001843 | Đặng Ánh Tuyết | Bình luận |
+
+## Đối tượng dữ liệu chính
+
+- Bài viết.
+- Chuyên mục.
+- Tác giả, người dùng.
+- Bình luận.
 
 ## Chức năng dự kiến
 
@@ -23,6 +30,14 @@ có thể thêm, sửa, xóa bài viết.
 - Tìm kiếm bài viết.
 - Đăng nhập trang quản trị.
 - Thêm, sửa, xóa bài viết và danh mục.
+
+## Đã thực hiện đến hết Buổi 2
+
+- Tạo cấu trúc project và trang giới thiệu nhóm.
+- Thống nhất các đối tượng dữ liệu chính và phân công thành viên.
+- Tích hợp form nhập bài viết vào trang quản trị.
+- Nhận dữ liệu form bằng PHP và tổ chức dữ liệu bằng mảng.
+- Dùng hàm, điều kiện và vòng lặp để xác định trạng thái, hiển thị bài viết.
 
 ## Công nghệ sử dụng
 
@@ -37,6 +52,7 @@ btl_laptrinhweb/
 ├── index.php
 ├── about.php
 ├── admin/
+│   └── articles.php
 ├── assets/
 │   ├── css/
 │   ├── images/
@@ -63,6 +79,12 @@ btl_laptrinhweb/
    http://localhost/btl_laptrinhweb/about.php
    ```
 
-Hiện tại nhóm mới tạo cấu trúc ban đầu và trang giới thiệu. Các chức năng khác
-sẽ được bổ sung trong quá trình làm bài tập lớn.
+6. Trang quản lý bài viết đã tích hợp:
+
+   ```text
+   http://localhost/btl_laptrinhweb/admin/articles.php
+   ```
+
+Buổi 2 sử dụng mảng PHP nên dữ liệu mới chỉ hiển thị sau khi gửi form và chưa
+được lưu lại. Nhóm sẽ kết nối MySQL ở các buổi sau.
 

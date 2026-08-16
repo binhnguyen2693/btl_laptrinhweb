@@ -26,6 +26,7 @@ function e(string $value): string
         <nav>
             <a href="index.php">Trang chủ</a>
             <a href="about.php">Giới thiệu nhóm</a>
+            <a href="admin/articles.php">Quản lý bài viết</a>
         </nav>
 
         <section class="intro small">
