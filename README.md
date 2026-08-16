@@ -52,7 +52,7 @@ btl_laptrinhweb/
 ├── index.php
 ├── about.php
 ├── admin/
-│   └── articles.php
+│   └── quan-ly-bai-viet.php
 ├── assets/
 │   ├── css/
 │   ├── images/
@@ -82,7 +82,7 @@ btl_laptrinhweb/
 6. Trang quản lý bài viết đã tích hợp:
 
    ```text
-   http://localhost/btl_laptrinhweb/admin/articles.php
+   http://localhost/btl_laptrinhweb/admin/quan-ly-bai-viet.php
    ```
 
 Buổi 2 sử dụng mảng PHP nên dữ liệu mới chỉ hiển thị sau khi gửi form và chưa

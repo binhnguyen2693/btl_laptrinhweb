@@ -14,14 +14,14 @@ declare(strict_types=1);
         <nav>
             <a href="index.php">Trang chủ</a>
             <a href="about.php">Giới thiệu nhóm</a>
-            <a href="admin/articles.php">Quản lý bài viết</a>
+            <a href="admin/quan-ly-bai-viet.php">Quản lý bài viết</a>
         </nav>
 
         <section class="intro">
             <h1>Website tin tức/blog</h1>
             <p>Đây là đề tài dự kiến của nhóm trong môn Lập trình web.</p>
             <p>Nhóm đang xây dựng các chức năng quản lý nội dung cho website.</p>
-            <a class="button" href="admin/articles.php">Thêm bài viết</a>
+            <a class="button" href="admin/quan-ly-bai-viet.php">Thêm bài viết</a>
         </section>
 
         <section class="features">
