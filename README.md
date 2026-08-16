@@ -122,6 +122,11 @@ btl_laptrinhweb/
    ```text
    http://localhost/btl_laptrinhweb/admin/quan-ly-bai-viet.php
    ```
+7. Trang tìm kiếm bài viết đã tích hợp:
+
+   ```text
+   http://localhost/btl_laptrinhweb/admin/timkiembaiviet.php
+   ```
 
 Buổi 2 sử dụng mảng PHP nên dữ liệu mới chỉ hiển thị sau khi gửi form và chưa
 được lưu lại. Nhóm sẽ kết nối MySQL ở các buổi sau.
