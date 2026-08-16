@@ -11,27 +11,27 @@ thêm, sửa, xóa bài viết.
 
 | MSSV | Họ và tên | Phần phụ trách |
 | --- | --- | --- |
-| 224001812 | Khổng Thị Lý | Người dùng, danh mục và giao diện chung của trang quản trị |
+| 224001812 | Khổng Thị Lý | Impact Box, bình luận và quản lý danh mục |
 | 224001828 | Trần Hà Như Quỳnh | Bài viết và quy trình kiểm duyệt |
-| 224001819 | Trần Nguyễn Bình Nguyên | Giao diện công khai và tìm kiếm |
-| 224001843 | Đặng Ánh Tuyết | Impact Box và bình luận |
+| 224001819 | Trần Nguyễn Bình Nguyên | Người dùng và giao diện chung của trang quản trị |
+| 224001843 | Đặng Ánh Tuyết | Giao diện công khai và tìm kiếm |
 
 ## Phân công thiết kế và phát triển
 
-### Khổng Thị Lý
+### Trần Nguyễn Bình Nguyên - Người 1
 
 - Thiết kế và phát triển phần đăng nhập, người dùng/tác giả.
-- Quản lý danh mục.
 - Xây dựng giao diện chung của trang quản trị.
+- Tích hợp các chức năng vào project chung.
 
-### Trần Hà Như Quỳnh
+### Trần Hà Như Quỳnh - Người 2
 
 - Dashboard tác giả.
 - Form tạo và sửa bài viết.
 - Màn hình biên tập viên duyệt bài.
 - Xử lý các trạng thái của bài viết.
 
-### Trần Nguyễn Bình Nguyên
+### Đặng Ánh Tuyết - Người 3
 
 - Trang danh mục và trang kết quả tìm kiếm.
 - Trang chi tiết bài viết.
@@ -39,12 +39,13 @@ thêm, sửa, xóa bài viết.
 - Responsive trên thiết bị di động.
 - Khối Impact Summary.
 
-### Đặng Ánh Tuyết
+### Khổng Thị Lý - Người 4
 
 - Modal lưu bài viết vào Impact Box.
 - Trang Impact Box và trạng thái trống.
 - Modal sửa ghi chú.
 - Giao diện và chức năng quản lý bình luận.
+- Giao diện quản lý danh mục.
 
 ## Đối tượng dữ liệu chính
 
