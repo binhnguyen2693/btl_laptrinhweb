@@ -11,10 +11,40 @@ thêm, sửa, xóa bài viết.
 
 | MSSV | Họ và tên | Phần phụ trách |
 | --- | --- | --- |
-| 224001812 | Khổng Thị Lý | Chuyên mục |
-| 224001828 | Trần Hà Như Quỳnh | Tác giả, người dùng |
-| 224001819 | Trần Nguyễn Bình Nguyên | Bài viết |
-| 224001843 | Đặng Ánh Tuyết | Bình luận |
+| 224001812 | Khổng Thị Lý | Người dùng, danh mục và giao diện chung của trang quản trị |
+| 224001828 | Trần Hà Như Quỳnh | Bài viết và quy trình kiểm duyệt |
+| 224001819 | Trần Nguyễn Bình Nguyên | Giao diện công khai và tìm kiếm |
+| 224001843 | Đặng Ánh Tuyết | Impact Box và bình luận |
+
+## Phân công thiết kế và phát triển
+
+### Khổng Thị Lý
+
+- Thiết kế và phát triển phần đăng nhập, người dùng/tác giả.
+- Quản lý danh mục.
+- Xây dựng giao diện chung của trang quản trị.
+
+### Trần Hà Như Quỳnh
+
+- Dashboard tác giả.
+- Form tạo và sửa bài viết.
+- Màn hình biên tập viên duyệt bài.
+- Xử lý các trạng thái của bài viết.
+
+### Trần Nguyễn Bình Nguyên
+
+- Trang danh mục và trang kết quả tìm kiếm.
+- Trang chi tiết bài viết.
+- Hiển thị khi chưa có bài viết.
+- Responsive trên thiết bị di động.
+- Khối Impact Summary.
+
+### Đặng Ánh Tuyết
+
+- Modal lưu bài viết vào Impact Box.
+- Trang Impact Box và trạng thái trống.
+- Modal sửa ghi chú.
+- Giao diện và chức năng quản lý bình luận.
 
 ## Đối tượng dữ liệu chính
 
@@ -22,6 +52,7 @@ thêm, sửa, xóa bài viết.
 - Chuyên mục.
 - Tác giả, người dùng.
 - Bình luận.
+- Impact Box và ghi chú.
 
 ## Chức năng dự kiến
 
@@ -30,6 +61,12 @@ thêm, sửa, xóa bài viết.
 - Tìm kiếm bài viết.
 - Đăng nhập trang quản trị.
 - Thêm, sửa, xóa bài viết và danh mục.
+- Gửi bài viết để biên tập viên kiểm duyệt.
+- Quản lý trạng thái bản nháp, chờ duyệt và đã đăng.
+- Theo dõi tác giả.
+- Bình luận và quản lý bình luận.
+- Lưu bài viết vào Impact Box và thêm ghi chú.
+- Hiển thị responsive trên thiết bị di động.
 
 ## Đã thực hiện đến hết Buổi 2
 
