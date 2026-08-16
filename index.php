@@ -14,7 +14,7 @@ declare(strict_types=1);
         <nav>
             <a href="index.php">Trang chủ</a>
             <a href="about.php">Giới thiệu nhóm</a>
-            <a href="comments/index.php">Bình luận</a>
+            <a href="admin/binhluan.php">Quản lý bình luận</a>
             <a href="admin/quan-ly-bai-viet.php">Quản lý bài viết</a>
         </nav>
 
