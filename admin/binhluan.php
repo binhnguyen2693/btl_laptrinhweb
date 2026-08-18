@@ -1,441 +1,539 @@
 <?php
+
 declare(strict_types=1);
 
+session_start();
 
-$danhSachBaiViet = [
-    1 => [
-        'tieuDe' => 'Công nghệ AI đang thay đổi cuộc sống như thế nào?',
-        'chuyenMuc' => 'Công nghệ',
-        'tacGia' => 'Nguyễn Văn An'
-    ],
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/Comment.php';
+require_once __DIR__ . '/../config/csrf.php';
 
-    2 => [
-        'tieuDe' => 'Những xu hướng công nghệ nổi bật năm 2026',
-        'chuyenMuc' => 'Công nghệ',
-        'tacGia' => 'Trần Minh Anh'
-    ],
+$commentModel = new Comment($pdo);
 
-    3 => [
-        'tieuDe' => 'Kinh nghiệm học tập hiệu quả cho sinh viên',
-        'chuyenMuc' => 'Giáo dục',
-        'tacGia' => 'Lê Hoàng Nam'
-    ],
-
-    4 => [
-        'tieuDe' => 'Những địa điểm du lịch đáng trải nghiệm',
-        'chuyenMuc' => 'Đời sống',
-        'tacGia' => 'Phạm Thu Hà'
-    ]
-];
-
-
-
-$binhLuan = [];
+$csrfToken = generateCsrfToken();
+$filter = $_GET['status'] ?? 'all';
 
 $thongBao = '';
-$loaiThongBao = '';
-
-$articleId = 0;
-$username = '';
-$content = '';
-
-
-function validateComment(
-    int $articleId,
-    string $username,
-    string $content,
-    array $danhSachBaiViet
-): string {
-
-    if ($articleId === 0) {
-        return 'Vui lòng chọn bài viết muốn bình luận.';
-    }
-
-    if (!isset($danhSachBaiViet[$articleId])) {
-        return 'Bài viết không tồn tại.';
-    }
-
-    if ($username === '') {
-        return 'Vui lòng nhập tên của bạn.';
-    }
-
-    if ($content === '') {
-        return 'Vui lòng nhập nội dung bình luận.';
-    }
-
-    if (strlen($username) > 50) {
-        return 'Tên không được vượt quá 50 ký tự.';
-    }
-
-    if (strlen($content) > 500) {
-        return 'Nội dung bình luận không được vượt quá 500 ký tự.';
-    }
-
-    return '';
-}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Nhận dữ liệu từ form
-    $articleId = (int) ($_POST['article_id'] ?? 0);
+    $csrfTokenPost = $_POST['csrf_token'] ?? '';
 
-    $username = trim($_POST['username'] ?? '');
+    if (!verifyCsrfToken($csrfTokenPost)) {
 
-    $content = trim($_POST['content'] ?? '');
-
-
-    // Gọi hàm tự định nghĩa
-    $loi = validateComment(
-        $articleId,
-        $username,
-        $content,
-        $danhSachBaiViet
-    );
-
-
-    if ($loi !== '') {
-
-        // Có lỗi
-        $thongBao = $loi;
-        $loaiThongBao = 'error';
+        $thongBao = 'Yêu cầu không hợp lệ. CSRF token không đúng.';
 
     } else {
 
-        // Tạo bình luận mới
-        $binhLuanMoi = [
-            'article_id' => $articleId,
-            'username' => $username,
-            'content' => $content,
+        $commentId = (int) ($_POST['comment_id'] ?? 0);
+        $status = $_POST['status'] ?? '';
 
-            // Bình luận mới phải chờ xét duyệt
-            'status' => 'pending'
-        ];
+        if ($commentId <= 0) {
 
+            $thongBao = 'ID bình luận không hợp lệ.';
 
-        // Thêm bình luận vào mảng
-        $binhLuan[] = $binhLuanMoi;
+        } else {
 
+            $result = $commentModel->updateStatus($commentId, $status);
 
-        // Thông báo cho người dùng
-        $thongBao =
-            'Bình luận của bạn đã được gửi thành công và đang chờ xét duyệt.';
+            if ($result) {
 
-        $loaiThongBao = 'success';
+                $thongBao = 'Cập nhật trạng thái bình luận thành công.';
 
+            } else {
 
-        // Xóa dữ liệu form sau khi gửi thành công
-        $articleId = 0;
-        $username = '';
-        $content = '';
+                $thongBao = 'Không thể cập nhật trạng thái bình luận.';
+            }
+        }
     }
 }
 
+if ($filter === 'all') {
+
+    $binhLuan = $commentModel->getAll();
+
+} else {
+
+    $binhLuan = $commentModel->getByStatus($filter);
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Gửi bình luận - StoryHub</title>
+    <title>Quản lý bình luận - StoryHub</title>
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/style.css"
-    >
+    <link rel="stylesheet" href="../assets/css/style.css">
 
     <style>
+
+        body {
+            background: #f7f3ee;
+        }
+
         .comment-page {
-            max-width: 850px;
+            max-width: 1200px;
             margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .comment-box {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        .comment-header {
+            margin-bottom: 25px;
         }
 
-        .comment-box h1 {
-            margin-top: 0;
+        .comment-header h1 {
+            margin-bottom: 8px;
         }
 
-        .comment-form {
+        .comment-header p {
+            color: #666;
+        }
+
+        .comment-filter {
             display: flex;
-            flex-direction: column;
             gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
-        .comment-form label {
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .comment-form input,
-        .comment-form select,
-        .comment-form textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+        .comment-filter a {
+            display: inline-block;
+            padding: 8px 15px;
+            background: white;
+            border: 1px solid #ddd;
             border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 15px;
+            text-decoration: none;
+            color: #333;
         }
 
-        .comment-form textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-
-        .comment-form button {
-            margin-top: 15px;
-            padding: 11px 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
+        .comment-filter a:hover {
+            background: #f0f0f0;
         }
 
         .message {
+            background: #e5f7e9;
+            color: #176b2c;
             padding: 12px 15px;
             border-radius: 6px;
             margin-bottom: 20px;
         }
 
-        .message.error {
-            background: #ffe5e5;
-            color: #b00020;
+        .comment-table-wrapper {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
-        .message.success {
-            background: #e5f7e9;
-            color: #176b2c;
+        .comment-table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .article-info {
-            margin-top: 25px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 8px;
+        .comment-table th,
+        .comment-table td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            vertical-align: top;
         }
 
-        .article-info h2 {
-            margin-top: 0;
-            font-size: 20px;
+        .comment-table th {
+            background: #f5f1ec;
         }
 
-        .comment-status {
-            margin-top: 25px;
-            padding: 15px;
-            background: #fff8df;
-            border-left: 4px solid #e0aa00;
+        .comment-content {
+            max-width: 350px;
+            word-break: break-word;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-hidden {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .action-button {
+            padding: 6px 10px;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            margin: 2px;
         }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
     </style>
+
 </head>
 
 <body>
 
-<main class="container comment-page">
+<main class="comment-page">
 
-    <nav>
-        <a href="../index.php">Trang chủ</a>
+    <div class="comment-header">
 
-        <a href="../about.php">
-            Giới thiệu nhóm
-        </a>
+        <h1>Quản lý bình luận</h1>
 
-        <a href="index.php">
-            Bình luận
-        </a>
+        <p>Quản lý các bình luận của người dùng trên StoryHub.</p>
 
-        <a href="../admin/quan-ly-bai-viet.php">
-            Quản lý bài viết
-        </a>
-    </nav>
+    </div>
 
 
-    <section class="comment-box">
+    <?php if ($thongBao !== ''): ?>
 
-        <h1>Gửi bình luận</h1>
+        <div class="message">
 
-        <p>
-            Chia sẻ ý kiến của bạn về bài viết trên StoryHub.
-        </p>
+            <?= htmlspecialchars($thongBao, ENT_QUOTES, 'UTF-8') ?>
 
+        </div>
 
-        <?php if ($thongBao !== ''): ?>
-
-            <div class="message <?= htmlspecialchars($loaiThongBao) ?>">
-                <?= htmlspecialchars($thongBao) ?>
-            </div>
-
-        <?php endif; ?>
+    <?php endif; ?>
 
 
-        <form
-            method="POST"
-            class="comment-form"
-        >
+    <div class="comment-filter">
 
-            <!-- Chọn bài viết -->
+        <a href="binhluan.php">Tất cả</a>
 
-            <label for="article_id">
-                Chọn bài viết
-            </label>
+        <a href="binhluan.php?status=pending">Chờ duyệt</a>
 
-            <select
-                id="article_id"
-                name="article_id"
-                required
-            >
+        <a href="binhluan.php?status=approved">Đã hiển thị</a>
 
-                <option value="">
-                    -- Chọn bài viết muốn bình luận --
-                </option>
+        <a href="binhluan.php?status=hidden">Đã ẩn</a>
+
+    </div>
 
 
-                <?php foreach ($danhSachBaiViet as $id => $baiViet): ?>
+    <div class="comment-table-wrapper">
 
-                    <option
-                        value="<?= $id ?>"
-                        <?= $articleId === $id ? 'selected' : '' ?>
-                    >
+        <table class="comment-table">
 
-                        <?= htmlspecialchars($baiViet['tieuDe']) ?>
+            <thead>
 
-                    </option>
+                <tr>
+                    <th>ID</th>
+                    <th>Người bình luận</th>
+                    <th>Bài viết</th>
+                    <th>Nội dung</th>
+                    <th>Trạng thái</th>
+                    <th>Thời gian</th>
+                    <th>Thao tác</th>
+                </tr>
 
-                <?php endforeach; ?>
+            </thead>
 
-            </select>
+            <tbody>
 
+            <?php if (count($binhLuan) === 0): ?>
 
-            <!-- Tên người bình luận -->
+                <tr>
 
-            <label for="username">
-                Tên của bạn
-            </label>
+                    <td colspan="7" class="empty">
+                        Không có bình luận nào.
+                    </td>
 
-            <input
-                id="username"
-                type="text"
-                name="username"
-                maxlength="50"
-                value="<?= htmlspecialchars($username) ?>"
-                placeholder="Nhập tên của bạn"
-                required
-            >
+                </tr>
 
-
-            <!-- Nội dung bình luận -->
-
-            <label for="content">
-                Nội dung bình luận
-            </label>
-
-            <textarea
-                id="content"
-                name="content"
-                maxlength="500"
-                placeholder="Nhập bình luận của bạn..."
-                required
-            ><?= htmlspecialchars($content) ?></textarea>
-
-
-            <button type="submit">
-                Gửi bình luận
-            </button>
-
-        </form>
-
-
-        <?php if ($articleId !== 0 && isset($danhSachBaiViet[$articleId])): ?>
-
-            <section class="article-info">
-
-                <h2>
-                    Bài viết được chọn
-                </h2>
-
-                <p>
-                    <strong>
-                        Tiêu đề:
-                    </strong>
-
-                    <?= htmlspecialchars(
-                        $danhSachBaiViet[$articleId]['tieuDe']
-                    ) ?>
-                </p>
-
-                <p>
-                    <strong>
-                        Chuyên mục:
-                    </strong>
-
-                    <?= htmlspecialchars(
-                        $danhSachBaiViet[$articleId]['chuyenMuc']
-                    ) ?>
-                </p>
-
-                <p>
-                    <strong>
-                        Tác giả:
-                    </strong>
-
-                    <?= htmlspecialchars(
-                        $danhSachBaiViet[$articleId]['tacGia']
-                    ) ?>
-                </p>
-
-            </section>
-
-        <?php endif; ?>
-
-
-        <?php if (count($binhLuan) > 0): ?>
-
-            <section class="comment-status">
-
-                <h2>
-                    Trạng thái bình luận
-                </h2>
+            <?php else: ?>
 
                 <?php foreach ($binhLuan as $item): ?>
 
-                    <p>
-                        <strong>
-                            <?= htmlspecialchars($item['username']) ?>
-                        </strong>
-                    </p>
+                    <tr>
 
-                    <p>
-                        <?= htmlspecialchars($item['content']) ?>
-                    </p>
+                        <!-- ID -->
 
-                    <p>
-                        Trạng thái:
-                        <strong>
-                            Chờ xét duyệt
-                        </strong>
-                    </p>
+                        <td>
+                            <?= (int) $item['id'] ?>
+                        </td>
+
+
+                        <!-- NGƯỜI BÌNH LUẬN -->
+
+                        <td>
+                            <?= htmlspecialchars($item['user_name'] ?? 'Không xác định', ENT_QUOTES, 'UTF-8') ?>
+                        </td>
+
+
+                        <!-- BÀI VIẾT -->
+
+                        <td>
+                            <?= htmlspecialchars($item['post_title'] ?? 'Bài viết không tồn tại', ENT_QUOTES, 'UTF-8') ?>
+                        </td>
+
+
+                        <td class="comment-content">
+                            <?= htmlspecialchars($item['content'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                        </td>
+
+
+                        <td>
+
+                            <?php if ($item['status'] === 'pending'): ?>
+
+                                <span class="status status-pending">
+                                    Chờ duyệt
+                                </span>
+
+                            <?php elseif ($item['status'] === 'approved'): ?>
+
+                                <span class="status status-approved">
+                                    Đã hiển thị
+                                </span>
+
+                            <?php else: ?>
+
+                                <span class="status status-hidden">
+                                    Đã ẩn
+                                </span>
+
+                            <?php endif; ?>
+
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($item['created_at'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                        </td>
+
+
+                        <td>
+
+                            <?php if ($item['status'] === 'pending'): ?>
+
+
+                                <button
+                                    type="button"
+                                    class="action-button btn-duyet"
+                                    data-id="<?= (int) $item['id'] ?>"
+                                    data-csrf="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>"
+                                >
+                                    Duyệt
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="action-button hide-button"
+                                    data-id="<?= (int) $item['id'] ?>"
+                                    data-csrf="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>"
+                                >
+                                    Ẩn
+                                </button>
+
+
+                            <?php elseif ($item['status'] === 'approved'): ?>
+
+
+                                <button
+                                    type="button"
+                                    class="action-button hide-button"
+                                    data-id="<?= (int) $item['id'] ?>"
+                                    data-csrf="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>"
+                                >
+                                    Ẩn
+                                </button>
+
+
+                            <?php elseif ($item['status'] === 'hidden'): ?>
+
+                                <button
+                                    type="button"
+                                    class="action-button show-button"
+                                    data-id="<?= (int) $item['id'] ?>"
+                                    data-csrf="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>"
+                                >
+                                    Hiển thị
+                                </button>
+
+                            <?php endif; ?>
+
+                        </td>
+
+                    </tr>
 
                 <?php endforeach; ?>
 
-            </section>
+            <?php endif; ?>
 
-        <?php endif; ?>
+            </tbody>
 
-    </section>
+        </table>
+
+    </div>
 
 </main>
+
+
+<script>
+
+
+document.querySelectorAll('.btn-duyet').forEach(function(button) {
+
+    button.addEventListener('click', function() {
+
+        const commentId = this.dataset.id;
+        const csrfToken = this.dataset.csrf;
+
+        const formData = new FormData();
+
+        formData.append('comment_id', commentId);
+        formData.append('csrf_token', csrfToken);
+
+        fetch('api/duyet-binh-luan.php', {
+            method: 'POST',
+            body: formData
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.success) {
+
+                alert(data.message);
+                location.reload();
+
+            } else {
+
+                alert(data.message);
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+            alert('Có lỗi xảy ra khi duyệt bình luận.');
+
+        });
+
+    });
+
+});
+
+
+document.querySelectorAll('.hide-button').forEach(function(button) {
+
+    button.addEventListener('click', function() {
+
+        const commentId = this.dataset.id;
+        const csrfToken = this.dataset.csrf;
+
+        const formData = new FormData();
+
+        formData.append('comment_id', commentId);
+        formData.append('csrf_token', csrfToken);
+        formData.append('status', 'hidden');
+
+        fetch('api/duyet-binh-luan.php', {
+            method: 'POST',
+            body: formData
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.success) {
+
+                alert(data.message);
+                location.reload();
+
+            } else {
+
+                alert(data.message);
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+            alert('Có lỗi xảy ra khi ẩn bình luận.');
+
+        });
+
+    });
+
+});
+
+
+
+document.querySelectorAll('.show-button').forEach(function(button) {
+
+    button.addEventListener('click', function() {
+
+        const commentId = this.dataset.id;
+        const csrfToken = this.dataset.csrf;
+
+        const formData = new FormData();
+
+        formData.append('comment_id', commentId);
+        formData.append('csrf_token', csrfToken);
+        formData.append('status', 'approved');
+
+        fetch('api/duyet-binh-luan.php', {
+            method: 'POST',
+            body: formData
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.success) {
+
+                alert(data.message);
+                location.reload();
+
+            } else {
+
+                alert(data.message);
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+            alert('Có lỗi xảy ra khi hiển thị bình luận.');
+
+        });
+
+    });
+
+});
+
+</script>
 
 </body>
 </html>
