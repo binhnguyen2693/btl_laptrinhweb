@@ -93,6 +93,144 @@ th {
     background: #e5edff;
 }
 
+.login-page {
+    max-width: 900px;
+}
+
+.login-card {
+    width: min(520px, 100%);
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #dbe2ea;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.login-heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.login-heading h1 {
+    margin: 0 0 8px;
+    color: #1d4ed8;
+}
+
+.login-heading p {
+    margin: 0;
+    color: #64748b;
+}
+
+.login-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-field label span {
+    color: #b91c1c;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    font: inherit;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-field input:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.form-field input[aria-invalid="true"] {
+    border-color: #b91c1c;
+}
+
+.field-error {
+    display: block;
+    margin-top: 6px;
+    color: #b91c1c;
+}
+
+.required-note {
+    margin: -4px 0 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.login-button,
+.secondary-button {
+    width: 100%;
+    padding: 10px;
+    font: inherit;
+    font-weight: bold;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-button {
+    color: white;
+    background: #1d4ed8;
+}
+
+.secondary-button {
+    color: #1d4ed8;
+    background: #e5edff;
+}
+
+.login-message {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 6px;
+}
+
+.login-message.success {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.login-message.error-message {
+    color: #991b1b;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
+.login-status {
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.login-status h2 {
+    margin-top: 0;
+}
+
+.logout-form {
+    margin-top: 12px;
+}
+
+.demo-account {
+    display: grid;
+    gap: 4px;
+    margin-top: 20px;
+    padding: 14px;
+    color: #475569;
+    font-size: 14px;
+    background: #f1f5f9;
+    border-radius: 6px;
+}
+
 @media (max-width: 600px) {
     body {
         padding: 12px;
@@ -104,6 +242,16 @@ th {
 
     .intro {
         padding: 24px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        gap: 10px 16px;
+    }
+
+    .login-card {
+        margin: 20px auto;
+        padding: 22px 18px;
     }
 }
 
