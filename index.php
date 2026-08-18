@@ -17,7 +17,6 @@ declare(strict_types=1);
             <a href="admin/quan-ly-bai-viet.php">Quản lý bài viết</a>
             <a href="admin/binhluan.php">Bình luận</a>
             <a href="admin/timkiembaiviet.php">Tìm kiếm bài viết</a>
-             <a href="admin/quanlybaiviet.php">Quản lý bài viết</a>
         </nav>
 
         <section class="intro">
