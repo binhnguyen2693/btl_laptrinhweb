@@ -8,7 +8,7 @@ body {
     color: #222;
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background: #f3f4f6;
+    background: #fff8ec;
 }
 
 .container {
@@ -18,24 +18,38 @@ body {
 
 nav {
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 20px;
-    padding: 14px 18px;
-    background: white;
+    padding: 12px 14px;
+    background: #7a2e25;
     border-radius: 8px;
 }
 
 nav a {
-    color: #1d4ed8;
+    padding: 9px 14px;
+    color: white;
     font-weight: bold;
     text-decoration: none;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background: #c69332;
+    color: white;
+}
+
+nav a.active {
+    background: #c69332;
+    color: white;
 }
 
 .intro {
     margin-bottom: 20px;
     padding: 40px;
     color: white;
-    background: #1d4ed8;
+    background: #7a2e25;
     border-radius: 10px;
 }
 
@@ -51,7 +65,7 @@ nav a {
     display: inline-block;
     margin-top: 10px;
     padding: 9px 14px;
-    color: #1d4ed8;
+    color: #7a2e25;
     font-weight: bold;
     text-decoration: none;
     background: white;
@@ -75,6 +89,7 @@ nav a {
 .features h2,
 .box h2 {
     margin-top: 0;
+    color: #4a3028;
 }
 
 table {
@@ -86,11 +101,258 @@ th,
 td {
     padding: 10px;
     text-align: left;
-    border: 1px solid #d1d5db;
+    border: 1px solid #d6d3d1;
 }
 
 th {
-    background: #e5edff;
+    color: white;
+    background: #7a2e25;
+}
+.login-page {
+    max-width: 900px;
+}
+
+.login-card {
+    width: min(520px, 100%);
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e2d4c5;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(74, 48, 40, 0.08);
+}
+
+.login-heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.login-heading h1 {
+    margin: 0 0 8px;
+    color: #7a2e25;
+}
+
+.login-heading p {
+    margin: 0;
+    color: #6c8065;
+}
+
+.login-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #4a3028;
+}
+
+.form-field label span {
+    color: #b91c1c;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    font: inherit;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-field input:focus {
+    border-color: #7a2e25;
+    box-shadow: 0 0 0 3px rgba(122, 46, 37, 0.12);
+}
+
+.form-field input[aria-invalid="true"] {
+    border-color: #b91c1c;
+}
+
+.field-error {
+    display: block;
+    margin-top: 6px;
+    color: #b91c1c;
+}
+
+.required-note {
+    margin: -4px 0 0;
+    color: #6c8065;
+    font-size: 14px;
+}
+
+.login-button,
+.secondary-button {
+    width: 100%;
+    padding: 10px;
+    font: inherit;
+    font-weight: bold;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-button {
+    color: white;
+    background: #7a2e25;
+}
+
+.login-button:hover {
+    background: #4a3028;
+}
+
+.secondary-button {
+    color: #7a2e25;
+    background: #f4e7d2;
+}
+
+.login-message {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 6px;
+}
+
+.login-message.success {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.login-message.error-message {
+    color: #991b1b;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
+.login-status {
+    padding: 20px;
+    background: #fff8ec;
+    border-radius: 8px;
+}
+
+.login-status h2 {
+    margin-top: 0;
+    color: #4a3028;
+}
+
+.logout-form {
+    margin-top: 12px;
+}
+
+.demo-account {
+    display: grid;
+    gap: 4px;
+    margin-top: 20px;
+    padding: 14px;
+    color: #4a3028;
+    font-size: 14px;
+    background: #f4e7d2;
+    border-radius: 6px;
+}
+.search-card {
+    width: min(800px, 100%);
+    margin: 40px auto 20px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e2d4c5;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(74, 48, 40, 0.08);
+}
+
+.search-heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.search-heading h1 {
+    margin: 0 0 8px;
+    color: #7a2e25;
+}
+
+.search-heading p {
+    margin: 0;
+    color: #6c8065;
+}
+
+.search-form {
+    display: grid;
+    gap: 18px;
+}
+
+.search-button {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background: #7a2e25;
+    font: inherit;
+    font-weight: bold;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background: #4a3028;
+}
+
+.error-message {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    color: #991b1b;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+}
+
+.search-result {
+    margin-bottom: 20px;
+    padding: 22px;
+    background: white;
+    border-radius: 8px;
+}
+
+.result-heading {
+    margin-bottom: 18px;
+}
+
+.result-heading h2 {
+    margin-top: 0;
+    color: #4a3028;
+}
+
+.result-heading p {
+    color: #6c8065;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.search-result table {
+    min-width: 700px;
+}
+
+.search-result th {
+    color: white;
+    background: #7a2e25;
+}
+
+.search-result tbody tr:nth-child(even) {
+    background: #fff8ec;
+}
+
+.search-result tbody tr:hover {
+    background: #f4e7d2;
+}
+
+.no-result {
+    padding: 14px;
+    color: #4a3028;
+    background: #fff8ec;
+    border-radius: 6px;
 }
 
 @media (max-width: 600px) {
@@ -105,5 +367,23 @@ th {
     .intro {
         padding: 24px;
     }
-}
 
+    nav {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    nav a {
+        padding: 8px 10px;
+    }
+
+    .login-card,
+    .search-card {
+        margin: 20px auto;
+        padding: 22px 18px;
+    }
+
+    .search-result {
+        padding: 18px;
+    }
+}
