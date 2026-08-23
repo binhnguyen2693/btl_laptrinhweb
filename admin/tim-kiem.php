@@ -65,11 +65,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!doctype html>
 <html lang="vi">
-<link rel="stylesheet" href="../assets/css/style.css">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tìm kiếm bài viết - Nhịp Khoa</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
 <body>
     <nav class="main-menu">
-    <a href="index.php">Trang chủ</a>
-    <a href="about.php">Giới thiệu nhóm</a>
+    <a href="../index.php">Trang chủ</a>
+    <a href="../about.php">Giới thiệu nhóm</a>
     <a href="tim-kiem.php" class="active">Tìm kiếm</a>
     </nav>
 <main class="container">
