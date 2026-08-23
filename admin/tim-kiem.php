@@ -220,6 +220,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #FFF8EC;
             color: #4A3028;
         }
+        .main-menu {
+            width: min(1000px, 100%);
+            margin: 0 auto 25px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            background: #7A2E25;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .main-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .main-menu a:hover {
+            background: #C69332;
+        }
+        .main-menu a.active {
+            background: #C69332;
+            color: #ffffff;
+        }
         @media (max-width: 600px) {
             body {
                 padding: 15px 10px;
