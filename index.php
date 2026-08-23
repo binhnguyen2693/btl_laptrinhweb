@@ -14,6 +14,7 @@ declare(strict_types=1);
         <nav>
             <a href="index.php">Trang chủ</a>
             <a href="about.php">Giới thiệu nhóm</a>
+            <a href="tim-kiem.php">Tìm kiếm</a>
         </nav>
 
         <section class="intro">
