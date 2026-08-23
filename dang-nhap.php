@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$thuMucSession = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'storyhub_group_sessions';
+$thuMucSession = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'nhip_khoa_group_sessions';
 
 if (!is_dir($thuMucSession) && !mkdir($thuMucSession, 0775, true)) {
     exit('Không thể tạo thư mục lưu session.');
@@ -16,9 +16,9 @@ $thongBaoThanhCong = '';
 $nguoiDungDangNhap = $_SESSION['nguoiDungDangNhap'] ?? null;
 
 $taiKhoanMau = [
-    'email' => 'admin@storyhub.vn',
+    'email' => 'admin@nhipkhoa.vn',
     'matKhauHash' => '$2y$10$5qOBuv285ychc3kts46L7OsmFyodolU33/K0T8QAo3dczDCzkqFga',
-    'hoTen' => 'Quản trị viên StoryHub',
+    'hoTen' => 'Quản trị viên Nhịp Khoa',
     'vaiTro' => 'Quản trị viên',
 ];
 
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đăng nhập quản trị - StoryHub</title>
+    <title>Đăng nhập quản trị - Nhịp Khoa</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             name="email"
                             maxlength="254"
                             value="<?= hienThiAnToan($email) ?>"
-                            placeholder="admin@storyhub.vn"
+                            placeholder="admin@nhipkhoa.vn"
                             autocomplete="email"
                             aria-invalid="<?= isset($loi['email']) ? 'true' : 'false' ?>"
                         >
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="demo-account">
                     <strong>Tài khoản thử nghiệm:</strong>
-                    <span>Email: admin@storyhub.vn</span>
+                    <span>Email: admin@nhipkhoa.vn</span>
                     <span>Mật khẩu: Admin@123</span>
                 </div>
             <?php endif; ?>
