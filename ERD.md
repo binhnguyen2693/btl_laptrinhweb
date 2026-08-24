@@ -29,7 +29,7 @@ erDiagram
         int id PK
         varchar name
         varchar slug UK
-        varchar description
+        text description
         timestamp created_at
     }
 
@@ -55,56 +55,51 @@ erDiagram
         varchar status
         timestamp created_at
     }
-Mối quan hệ
-Users – Posts
+```
+
+## Mối quan hệ
+
+### Users – Posts
 
 Một người dùng có thể tạo nhiều bài viết.
 
-USERS (1) -------- (N) POSTS
+**Khóa liên kết:** `posts.user_id → users.id`
 
-Khóa liên kết:
-
-posts.user_id → users.id
-Users – Comments
+### Users – Comments
 
 Một người dùng có thể viết nhiều bình luận.
 
-USERS (1) -------- (N) COMMENTS
+**Khóa liên kết:** `comments.user_id → users.id`
 
-Khóa liên kết:
-
-comments.user_id → users.id
-Categories – Posts
+### Categories – Posts
 
 Một danh mục có thể chứa nhiều bài viết.
 
-CATEGORIES (1) -------- (N) POSTS
+**Khóa liên kết:** `posts.category_id → categories.id`
 
-Khóa liên kết:
-
-posts.category_id → categories.id
-Posts – Comments
+### Posts – Comments
 
 Một bài viết có thể có nhiều bình luận.
 
-POSTS (1) -------- (N) COMMENTS
+**Khóa liên kết:** `comments.post_id → posts.id`
 
-Khóa liên kết:
+## Các bảng liên quan đến chức năng cá nhân
 
-comments.post_id → posts.id
-Các bảng liên quan đến chức năng cá nhân
-Quản lý bình luận
+### Quản lý bình luận
 
 Chức năng quản lý bình luận sử dụng:
-comments: lưu nội dung và trạng thái bình luận.
-users: xác định người viết bình luận.
-posts: xác định bài viết được bình luận.
-Quản lý danh mục
+
+- `comments`: lưu nội dung và trạng thái bình luận.
+- `users`: xác định người viết bình luận.
+- `posts`: xác định bài viết được bình luận.
+
+### Quản lý danh mục
 
 Chức năng quản lý danh mục sử dụng:
 
-categories: lưu thông tin danh mục.
-posts: xác định các bài viết thuộc danh mục.
-Impact Box
+- `categories`: lưu thông tin danh mục.
+- `posts`: xác định các bài viết thuộc danh mục.
+
+### Impact Box
 
 Impact Box liên quan đến việc người dùng lưu và quản lý các bài viết mà họ quan tâm.
