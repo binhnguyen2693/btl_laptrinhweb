@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 session_start();
 
 require_once __DIR__ . '/config/database.php';
@@ -12,16 +15,31 @@ $commentModel = new Comment($pdo);
 $thongBao = '';
 $loaiThongBao = '';
 
+
+// Lấy danh sách tất cả bài viết đã được đăng
+$stmt = $pdo->query("
+    SELECT id, title
+    FROM posts
+    WHERE status = 'published'
+    ORDER BY id DESC
+");
+
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// Xử lý khi người dùng gửi bình luận
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $postId = (int) ($_POST['post_id'] ?? 0);
     $content = trim($_POST['content'] ?? '');
 
+    // Kiểm tra đã chọn bài viết chưa
     if ($postId <= 0) {
 
-        $thongBao = 'Bài viết không hợp lệ.';
+        $thongBao = 'Vui lòng chọn bài viết.';
         $loaiThongBao = 'error';
 
+    // Kiểm tra nội dung
     } elseif ($content === '') {
 
         $thongBao = 'Vui lòng nhập nội dung bình luận.';
@@ -34,33 +52,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } else {
 
-        /*
-         * Tạm dùng user_id = 1 để test.
-         * Sau khi nhóm hoàn thiện đăng nhập,
-         * thay bằng ID người dùng đang đăng nhập.
-         */
+        // Kiểm tra bài viết có tồn tại và đã được đăng chưa
+        $stmt = $pdo->prepare("
+            SELECT id
+            FROM posts
+            WHERE id = ?
+            AND status = 'published'
+        ");
 
-        $userId = 1;
+        $stmt->execute([$postId]);
 
-        $result = $commentModel->create(
-            $postId,
-            $userId,
-            $content
-        );
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
+        if (!$post) {
 
-            $thongBao =
-                'Bình luận đã được gửi và đang chờ xét duyệt.';
-
-            $loaiThongBao = 'success';
+            $thongBao = 'Bài viết không tồn tại hoặc chưa được đăng.';
+            $loaiThongBao = 'error';
 
         } else {
 
-            $thongBao =
-                'Không thể gửi bình luận.';
+            /*
+             * Tạm thời dùng user_id = 1 để test.
+             * Sau này nhóm có đăng nhập thì thay bằng
+             * ID của người dùng đang đăng nhập.
+             */
 
-            $loaiThongBao = 'error';
+            $userId = 1;
+
+            $result = $commentModel->create(
+                $postId,
+                $userId,
+                $content
+            );
+
+            if ($result) {
+
+                $thongBao = 'Bình luận đã được gửi và đang chờ xét duyệt.';
+                $loaiThongBao = 'success';
+
+            } else {
+
+                $thongBao = 'Không thể gửi bình luận.';
+                $loaiThongBao = 'error';
+            }
         }
     }
 }
@@ -86,6 +120,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             font-family: Arial, sans-serif;
             background: #f7f3ee;
+            margin: 0;
+            padding: 0;
         }
 
         .comment-box {
@@ -95,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: white;
             padding: 30px;
             border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
         h1 {
@@ -109,12 +146,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         input,
-        textarea {
+        textarea,
+        select {
             width: 100%;
             box-sizing: border-box;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
+            font-family: Arial, sans-serif;
         }
 
         textarea {
@@ -128,6 +167,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            background: #7A2E25;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
         }
 
         .success {
@@ -146,6 +191,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
         }
 
+        .empty {
+            color: #777;
+            margin-top: 10px;
+        }
+
     </style>
 
 </head>
@@ -158,13 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($thongBao !== ''): ?>
 
-        <div class="<?= htmlspecialchars($loaiThongBao) ?>">
+        <div class="<?= htmlspecialchars($loaiThongBao, ENT_QUOTES, 'UTF-8') ?>">
 
-            <?= htmlspecialchars(
-                $thongBao,
-                ENT_QUOTES,
-                'UTF-8'
-            ) ?>
+            <?= htmlspecialchars($thongBao, ENT_QUOTES, 'UTF-8') ?>
 
         </div>
 
@@ -174,17 +220,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST">
 
         <label for="post_id">
-            ID bài viết
+            Chọn bài viết
         </label>
 
-        <input
-            type="number"
+        <select
             id="post_id"
             name="post_id"
-            value="1"
-            min="1"
             required
         >
+
+            <option value="">
+                -- Chọn bài viết --
+            </option>
+
+            <?php if (count($posts) > 0): ?>
+
+                <?php foreach ($posts as $post): ?>
+
+                    <option
+                        value="<?= (int) $post['id'] ?>"
+                        <?= isset($_POST['post_id']) && (int) $_POST['post_id'] === (int) $post['id'] ? 'selected' : '' ?>
+                    >
+
+                        <?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?>
+
+                    </option>
+
+                <?php endforeach; ?>
+
+            <?php endif; ?>
+
+        </select>
+
+
+        <?php if (count($posts) === 0): ?>
+
+            <p class="empty">
+                Hiện chưa có bài viết nào được đăng.
+            </p>
+
+        <?php endif; ?>
 
 
         <label for="content">
@@ -197,7 +272,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             maxlength="500"
             placeholder="Nhập bình luận của bạn..."
             required
-        ></textarea>
+        ><?= htmlspecialchars($_POST['content'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
 
 
         <button type="submit">

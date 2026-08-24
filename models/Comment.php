@@ -10,7 +10,6 @@ class Comment
     }
 
 
-    // Lấy tất cả bình luận
     public function getAll(): array
     {
         $sql = "
@@ -23,7 +22,7 @@ class Comment
                 p.title AS post_title
             FROM comments c
             LEFT JOIN users u ON c.user_id = u.id
-LEFT JOIN posts p ON c.post_id = p.id
+            LEFT JOIN posts p ON c.post_id = p.id
             ORDER BY c.created_at DESC
         ";
 
@@ -35,7 +34,6 @@ LEFT JOIN posts p ON c.post_id = p.id
     }
 
 
-    // Lấy bình luận theo trạng thái
     public function getByStatus(string $status): array
     {
         $allowedStatuses = [
@@ -58,7 +56,7 @@ LEFT JOIN posts p ON c.post_id = p.id
                 p.title AS post_title
             FROM comments c
             LEFT JOIN users u ON c.user_id = u.id
-LEFT JOIN posts p ON c.post_id = p.id
+            LEFT JOIN posts p ON c.post_id = p.id
             WHERE c.status = :status
             ORDER BY c.created_at DESC
         ";
@@ -72,8 +70,6 @@ LEFT JOIN posts p ON c.post_id = p.id
         return $stmt->fetchAll();
     }
 
-
-    // Cập nhật trạng thái bình luận
     public function updateStatus(
         int $commentId,
         string $status
@@ -102,7 +98,6 @@ LEFT JOIN posts p ON c.post_id = p.id
             ':id' => $commentId
         ]);
     }
-    // Thêm bình luận mới
 public function create(
     int $postId,
     int $userId,
