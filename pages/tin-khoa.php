@@ -1,46 +1,50 @@
 <?php include '../includes/header.php'; ?>
 
-<section class="intro small">
-    <h1>TIN KHOA</h1>
-    <p>Cập nhật những thông tin, hoạt động và thông báo mới nhất từ khoa dành cho sinh viên.</p>
-</section>
+<div class="breadcrumb"><a href="../index.php">Trang chủ</a> / Tin khoa</div>
+<h1 class="page-title">TIN KHOA</h1>
+<p class="page-desc">Cập nhật những thông tin, hoạt động và thông báo mới nhất từ khoa dành cho sinh viên.</p>
 
-<div class="features">
-    <div class="main-content">
-        <article>
-            <h2>Khoa tổ chức hội thảo chuyên ngành dành cho sinh viên</h2>
-            <p>Chương trình mang đến cơ hội giao lưu, trao đổi kiến thức và tìm hiểu những xu hướng mới trong lĩnh vực chuyên ngành...</p>
-            <small>12/08/2026 • 320 lượt xem</small><br><br>
-            <a href="chi-tiet-bai-viet.php" class="button">Xem bài</a>
-        </article>
-        <article>
-            <h2>Sinh viên khoa đạt thành tích nổi bật trong cuộc thi học thuật</h2>
-            <p>Những thành tích nổi bật của sinh viên trong các cuộc thi học thuật và hoạt động chuyên môn, góp phần lan tỏa tinh thần học tập...</p>
-            <small>12/08/2026 • 320 lượt xem</small><br><br>
-            <a href="chi-tiet-bai-viet.php" class="button">Xem bài</a>
-        </article>
-        <article>
-            <h2>Khoa triển khai hoạt động hỗ trợ sinh viên trong năm học mới</h2>
-            <p>Các hoạt động hỗ trợ nhằm giúp sinh viên tiếp cận thông tin, tài liệu và những cơ hội học tập phù hợp...</p>
-            <small>10/08/2026 • 320 lượt xem</small><br><br>
-            <a href="chi-tiet-bai-viet.php" class="button">Xem bài</a>
-        </article>
+<div class="layout-grid">
+    <div>
+        <div class="card-item">
+            <img src="../assets/images/sample.jpg" alt="Thảm họa">
+            <div class="card-content">
+                <div>
+                    <div class="card-title">Khoa tổ chức hội thảo chuyên ngành dành cho sinh viên</div>
+                    <div class="card-desc">Chương trình mang đến cơ hội giao lưu, trao đổi kiến thức và tìm hiểu những xu hướng mới trong lĩnh vực chuyên ngành...</div>
+                </div>
+                <div class="card-meta">
+                    <span>12/08/2026 • 320 lượt xem</span>
+                    <a href="chi-tiet-bai-viet.php" style="color:var(--primary-red);">Xem bài →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-item">
+            <img src="../assets/images/sample.jpg" alt="Sinh viên">
+            <div class="card-content">
+                <div>
+                    <div class="card-title">Sinh viên khoa đạt thành tích nổi bật trong cuộc thi học thuật</div>
+                    <div class="card-desc">Những thành tích nổi bật của sinh viên trong các cuộc thi học thuật và hoạt động chuyên môn, góp phần lan tỏa tinh thần học tập...</div>
+                </div>
+                <div class="card-meta">
+                    <span>12/08/2026 • 320 lượt xem</span>
+                    <a href="chi-tiet-bai-viet.php" style="color:var(--primary-red);">Xem bài →</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <aside class="sidebar-content">
-        <div class="box">
-            <h2>DANH MỤC</h2>
-            <p><b>• Tin khoa</b></p>
-            <p>• Học tập & Nghiên cứu</p>
-            <p>• Cơ hội</p>
-            <p>• Sự kiện</p>
-            <p>• Thông tin thay đổi</p>
-        </div>
-        <div class="box">
-            <h2>BÀI MỚI NHẤT</h2>
-            <p><b>Khoa tổ chức hội thảo chuyên ngành...</b><br><small>12/08/2026</small></p>
-            <hr style="border:0; border-top: 1px solid #e2d4c5; margin: 8px 0;">
-            <p><b>Sinh viên khoa đạt thành tích nổi bật...</b><br><small>10/08/2026</small></p>
+    <aside>
+        <div class="sidebar-box">
+            <div class="sidebar-title">DANH MỤC</div>
+            <ul class="sidebar-list">
+                <li class="active">| Tin khoa</li>
+                <li>Học tập & Nghiên cứu</li>
+                <li>Cơ hội</li>
+                <li>Sự kiện</li>
+                <li>Thông tin thay đổi</li>
+            </ul>
         </div>
     </aside>
 </div>
