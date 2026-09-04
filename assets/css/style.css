@@ -234,7 +234,6 @@ a {
     display: flex;
     justify-content: space-between;
 }
-/* Ghi đè ép Logo hiển thị kích thước to hơn */
 .site-header .logo img,
 header .logo img {
     height: 75px !important;
@@ -245,4 +244,27 @@ header .logo img {
 .site-header, header {
     height: auto !important;
     min-height: 90px !important;
+}
+header {
+    background-color: #7A2E25 !important;
+    padding: 14px 0 !important;
+}
+
+header nav {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+header nav a {
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+/* Xóa ô màu đè lên logo */
+header img, footer img {
+    background: transparent !important;
+    mix-blend-mode: normal !important;
+    filter: none !important;
 }
