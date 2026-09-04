@@ -6,7 +6,7 @@
             <!-- Cột 1: Logo & Slogan -->
             <div>
                 <?php $logo_f = file_exists('../assets/images/logo.png') ? '../assets/images/logo.png' : 'assets/images/logo.png'; ?>
-                <img src="<?php echo $logo_f; ?>" alt="Nhịp Khoa Logo" style="height: 48px; width: auto; display: block; object-fit: contain; margin-bottom: 20px;">
+                <img src="<?php echo $logo_f; ?>" alt="Nhịp Khoa Logo" style="height: 40px; width: auto; display: block; margin-bottom: 16px;">
                 <p style="margin: 0 0 6px 0; color: #e0e0e0;">Cổng thông tin chính thức của khoa CNTT.</p>
                 <p style="margin: 0; color: #e0e0e0;">Cập nhật - Kết nối - Tạo tác động.</p>
             </div>
