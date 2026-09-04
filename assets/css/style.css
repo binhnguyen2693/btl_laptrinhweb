@@ -1,565 +1,248 @@
-/* ==========================================
-   1. CẤU HÌNH CƠ BẢN (RESET & SYSTEM)
-   ========================================== */
+:root {
+    --bg-main: #FAF6EE;
+    --primary-red: #6A2B23;
+    --card-bg: #FFFFFF;
+    --border-color: #A36B63;
+    --text-dark: #333333;
+    --text-muted: #666666;
+    --badge-gold: #C28B38;
+}
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    color: #222;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background: #fff8ec;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
 }
 
-.container,
-.main-container {
-    width: min(1100px, 100%);
-    margin: auto;
-    padding: 24px 20px;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-/* ==========================================
-   2. HEADER & THANH ĐIỀU HƯỚNG (SITE HEADER)
-   ========================================== */
+/* HEADER & NAV */
 .site-header {
-    background-color: #fdfbf7;
-    border-bottom: 1px solid #e2d4c5;
-    padding: 12px 0;
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: var(--primary-red);
+    color: white;
+    padding: 12px 30px;
 }
 
 .header-container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
 }
 
-.logo img {
-    height: 48px;
-    display: block;
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .main-nav {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    gap: 20px;
 }
 
-.nav-link {
-    padding: 8px 12px;
-    color: #4a3028;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: 0.2s;
+.main-nav a {
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    transition: opacity 0.2s;
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: #7a2e25;
-    background: #f4e7d2;
+.main-nav a:hover {
+    opacity: 0.8;
 }
 
-.header-actions {
+.header-right {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.search-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid #7a2e25;
+.search-input-box {
+    background: white;
+    border-radius: 20px;
+    padding: 4px 12px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #7a2e25;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.2s;
 }
 
-.search-btn:hover {
-    background: #7a2e25;
-    color: white;
-}
-
-.login-btn {
-    background-color: #7a2e25;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: 0.2s;
-}
-
-.login-btn:hover {
-    background-color: #4a3028;
-}
-
-/* Thanh Nav cũ (Dùng dự phòng nếu cần) */
-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding: 12px 14px;
-    background: #7a2e25;
-    border-radius: 8px;
-}
-
-nav a {
-    padding: 9px 14px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: 0.2s;
-}
-
-nav a:hover,
-nav a.active {
-    background: #c69332;
-    color: white;
-}
-
-/* ==========================================
-   3. KHỐI BANNER & NỘI DUNG (INTRO, BOX, FEAT)
-   ========================================== */
-.intro {
-    margin-bottom: 20px;
-    padding: 40px;
-    color: white;
-    background: #7a2e25;
-    border-radius: 10px;
-}
-
-.intro.small {
-    padding: 28px;
-}
-
-.intro h1 {
-    margin-top: 0;
-}
-
-.button {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 9px 14px;
-    color: #7a2e25;
-    font-weight: bold;
-    text-decoration: none;
-    background: white;
-    border-radius: 6px;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-}
-
-.features article,
-.box {
-    margin-bottom: 20px;
-    padding: 22px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(74, 48, 40, 0.05);
-}
-
-.features h2,
-.box h2 {
-    margin-top: 0;
-    color: #4a3028;
-}
-
-/* ==========================================
-   4. BẢNG DỮ LIỆU (TABLES)
-   ========================================== */
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #d6d3d1;
-}
-
-th {
-    color: white;
-    background: #7a2e25;
-}
-
-/* ==========================================
-   5. FORM ĐĂNG NHẬP & TÌM KIẾM
-   ========================================== */
-.login-page {
-    max-width: 900px;
-}
-
-.login-card,
-.search-card {
-    width: min(520px, 100%);
-    margin: 40px auto;
-    padding: 30px;
-    background: white;
-    border: 1px solid #e2d4c5;
-    border-radius: 10px;
-    box-shadow: 0 12px 30px rgba(74, 48, 40, 0.08);
-}
-
-.search-card {
-    width: min(800px, 100%);
-    margin: 40px auto 20px;
-}
-
-.login-heading,
-.search-heading {
-    margin-bottom: 24px;
-    text-align: center;
-}
-
-.login-heading h1,
-.search-heading h1 {
-    margin: 0 0 8px;
-    color: #7a2e25;
-}
-
-.login-heading p,
-.search-heading p {
-    margin: 0;
-    color: #6c8065;
-}
-
-.login-form,
-.search-form {
-    display: grid;
-    gap: 18px;
-}
-
-.form-field label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: bold;
-    color: #4a3028;
-}
-
-.form-field label span {
-    color: #b91c1c;
-}
-
-.form-field input {
-    width: 100%;
-    padding: 10px;
-    font: inherit;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+.search-input-box input {
+    border: none;
     outline: none;
+    font-size: 13px;
+    width: 110px;
 }
 
-.form-field input:focus {
-    border-color: #7a2e25;
-    box-shadow: 0 0 0 3px rgba(122, 46, 37, 0.12);
-}
-
-.form-field input[aria-invalid="true"] {
-    border-color: #b91c1c;
-}
-
-.field-error {
-    display: block;
-    margin-top: 6px;
-    color: #b91c1c;
-}
-
-.required-note {
-    margin: -4px 0 0;
-    color: #6c8065;
-    font-size: 14px;
-}
-
-.login-button,
-.secondary-button,
-.search-button {
-    width: 100%;
-    padding: 10px;
-    font: inherit;
-    font-weight: bold;
-    border: 0;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.login-button,
-.search-button {
-    color: white;
-    background: #7a2e25;
-}
-
-.login-button:hover,
-.search-button:hover {
-    background: #4a3028;
-}
-
-.secondary-button {
-    color: #7a2e25;
-    background: #f4e7d2;
-}
-
-.login-message {
-    margin-bottom: 18px;
-    padding: 12px 14px;
-    border-radius: 6px;
-}
-
-.login-message.success {
-    color: #166534;
-    background: #dcfce7;
-    border: 1px solid #86efac;
-}
-
-.login-message.error-message,
-.error-message {
-    margin-bottom: 18px;
-    padding: 12px 14px;
-    color: #991b1b;
-    background: #fee2e2;
-    border: 1px solid #fca5a5;
-    border-radius: 6px;
-}
-
-.login-status {
-    padding: 20px;
-    background: #fff8ec;
-    border-radius: 8px;
-}
-
-.login-status h2 {
-    margin-top: 0;
-    color: #4a3028;
-}
-
-.logout-form {
-    margin-top: 12px;
-}
-
-.demo-account {
-    display: grid;
-    gap: 4px;
-    margin-top: 20px;
-    padding: 14px;
-    color: #4a3028;
-    font-size: 14px;
-    background: #f4e7d2;
-    border-radius: 6px;
-}
-
-/* ==========================================
-   6. KẾT QUẢ TÌM KIẾM (SEARCH RESULTS)
-   ========================================== */
-.search-result {
-    margin-bottom: 20px;
-    padding: 22px;
+.btn-login {
     background: white;
-    border-radius: 8px;
-}
-
-.result-heading {
-    margin-bottom: 18px;
-}
-
-.result-heading h2 {
-    margin-top: 0;
-    color: #4a3028;
-}
-
-.result-heading p {
-    color: #6c8065;
-}
-
-.search-result table {
-    min-width: 700px;
-}
-
-.search-result th {
-    color: white;
-    background: #7a2e25;
-}
-
-.search-result tbody tr:nth-child(even) {
-    background: #fff8ec;
-}
-
-.search-result tbody tr:hover {
-    background: #f4e7d2;
-}
-
-.no-result {
-    padding: 14px;
-    color: #4a3028;
-    background: #fff8ec;
+    color: var(--primary-red);
+    padding: 6px 16px;
     border-radius: 6px;
-}
-
-/* ==========================================
-   7. CHÂN TRANG (SITE FOOTER)
-   ========================================== */
-.site-footer {
-    background-color: #4a2920;
-    color: #e2d8d5;
-    padding-top: 40px;
-    margin-top: 40px;
+    font-weight: bold;
     font-size: 14px;
 }
 
-.footer-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.8fr;
-    gap: 30px;
-    padding: 0 20px 40px 20px;
+/* BREADCRUMB & WRAPPER */
+.main-wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
 }
 
-.footer-logo {
-    height: 45px;
-    margin-bottom: 16px;
-    filter: brightness(0) invert(1);
-}
-
-.footer-col h3 {
-    color: #fff;
-    font-size: 16px;
-    margin-bottom: 18px;
-    font-weight: 600;
-}
-
-.footer-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-col ul li {
+.breadcrumb {
+    font-size: 14px;
+    color: var(--text-muted);
     margin-bottom: 10px;
 }
 
-.footer-col ul li a {
-    color: #e2d8d5;
-    text-decoration: none;
-    transition: color 0.2s;
+.breadcrumb a {
+    color: var(--primary-red);
 }
 
-.footer-col ul li a:hover {
-    color: #fff;
+.page-title {
+    font-size: 28px;
+    color: #2D1512;
+    margin-bottom: 5px;
 }
 
-.contact-col li {
+.page-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* CARDS & LISTS */
+.card-item {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    gap: 16px;
+}
+
+.card-item img {
+    width: 180px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 18px;
+    color: var(--primary-red);
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.card-desc {
+    font-size: 13px;
+    color: var(--text-dark);
     line-height: 1.4;
 }
 
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 16px 0;
-    background-color: #3b2019;
+.card-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
 }
 
-.footer-bottom-container {
-    max-width: 1100px;
+/* LAYOUT WITH SIDEBAR */
+.layout-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 25px;
+}
+
+.sidebar-box {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.sidebar-title {
+    font-size: 16px;
+    color: var(--primary-red);
+    font-weight: bold;
+    border-bottom: 1px solid #E5E5E5;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-list li {
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.sidebar-list li.active {
+    color: var(--primary-red);
+    font-weight: bold;
+}
+
+/* FOOTER */
+.site-footer {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 30px 15px;
+    margin-top: 40px;
+}
+
+.footer-container {
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
     font-size: 13px;
 }
 
-.footer-links a {
-    color: #e2d8d5;
-    text-decoration: none;
+.footer-col h4 {
+    margin-bottom: 10px;
 }
 
-/* ==========================================
-   8. RESPONSIVE (MÀN HÌNH NHỎ & DI ĐỘNG)
-   ========================================== */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .main-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .footer-container {
-        grid-template-columns: 1fr 1fr;
-    }
+.footer-bottom {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 15px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+/* Ghi đè ép Logo hiển thị kích thước to hơn */
+.site-header .logo img,
+header .logo img {
+    height: 75px !important;
+    max-height: 80px !important;
+    width: auto !important;
 }
 
-@media (max-width: 600px) {
-    .features {
-        grid-template-columns: 1fr;
-    }
-
-    .intro {
-        padding: 24px;
-    }
-
-    nav {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    nav a {
-        padding: 8px 10px;
-    }
-
-    .login-card,
-    .search-card {
-        margin: 20px auto;
-        padding: 22px 18px;
-    }
-
-    .search-result {
-        padding: 18px;
-    }
-
-    .footer-container {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-bottom-container {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
+.site-header, header {
+    height: auto !important;
+    min-height: 90px !important;
 }
