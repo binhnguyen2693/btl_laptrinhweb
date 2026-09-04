@@ -21,7 +21,7 @@
     <header class="site-header" style="background-color: #6A2B23; padding: 10px 30px; min-height: 90px; display: flex; align-items: center;">
         <div class="header-container" style="max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
             <a href="<?php echo $index_path; ?>" style="display: flex; align-items: center; text-decoration: none;">
-              <img src="<?php echo $logo_path; ?>" alt="Nhịp Khoa Logo" style="height: 48px; width: auto; display: block; object-fit: contain;">
+                <img src="<?php echo $logo_path; ?>" alt="Nhịp Khoa Logo" style="height: 40px; width: auto; display: block;">
             </a>
 
             <!-- Menu chính -->
