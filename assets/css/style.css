@@ -917,3 +917,18 @@ html,body { margin:0; width:100%; }
     .impact-row { grid-template-columns:19px 92px minmax(0,1fr); }
 }
 
+/* Hover menu: đổi màu và hiện gạch chân, không làm thay đổi kích thước header. */
+.desktop-nav a {
+    transition:color .18s ease,border-color .18s ease;
+}
+.desktop-nav a:hover,
+.desktop-nav a:focus-visible {
+    color:var(--wine);
+    border-bottom-color:var(--wine);
+    outline:none;
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .desktop-nav a { transition:none; }
+}
+
