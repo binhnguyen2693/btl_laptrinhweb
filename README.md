@@ -55,6 +55,13 @@ Email: admin@nhipkhoa.vn
 Mật khẩu: Admin@123
 ```
 
+Tài khoản bị khóa để kiểm thử cảnh báo đăng nhập:
+
+```text
+Email: khoa.locked@nhipkhoa.vn hoặc lan.locked@nhipkhoa.vn
+Mật khẩu: Admin@123
+```
+
 ## Thiết kế CSDL - Buổi 4
 
 CSDL `nhip_khoa` gồm 6 bảng chính:

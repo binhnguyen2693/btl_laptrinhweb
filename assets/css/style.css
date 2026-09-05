@@ -1103,3 +1103,40 @@ html,body { margin:0; width:100%; }
     transform:rotate(-35deg);
 }
 
+/* Cảnh báo riêng khi thông tin đúng nhưng tài khoản đã bị quản trị viên khóa. */
+.account-locked-message {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin:0 0 18px;
+    padding:13px 14px;
+    color:#7f1d1d;
+    background:#fff1f0;
+    border:1px solid #f3b9b4;
+    border-radius:7px;
+    text-align:left;
+}
+.account-locked-message > span:last-child { display:grid; gap:3px; }
+.account-locked-message strong { font-size:14px; line-height:1.35; }
+.account-locked-message small { color:#9b3a32; font-size:12px; line-height:1.45; }
+.account-locked-icon {
+    position:relative;
+    flex:0 0 18px;
+    width:18px;
+    height:15px;
+    margin-top:5px;
+    border:1.8px solid currentColor;
+    border-radius:3px;
+}
+.account-locked-icon::before {
+    position:absolute;
+    left:3px;
+    bottom:12px;
+    width:8px;
+    height:7px;
+    content:"";
+    border:1.8px solid currentColor;
+    border-bottom:0;
+    border-radius:7px 7px 0 0;
+}
+
