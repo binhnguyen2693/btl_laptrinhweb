@@ -3,3 +3,62 @@
 @media(max-width:760px){.admin-layout{display:block}.admin-sidebar{position:static;width:100%;height:auto;padding:15px}.admin-brand{width:130px;height:50px;margin:0}.admin-label,.admin-sidebar-note{display:none}.admin-nav{margin-top:10px;display:flex;overflow-x:auto}.admin-nav a{flex:0 0 auto;padding:9px 11px}.admin-topbar{height:auto;padding:13px 16px}.admin-topbar>div:first-child,.admin-profile-copy{display:none}.admin-profile{margin-left:auto}.admin-main{padding:24px 16px}.admin-heading{align-items:flex-start;gap:16px}.admin-heading h1{font-size:25px}.admin-heading span{line-height:1.5}.admin-stats{grid-template-columns:1fr 1fr}.admin-filters{align-items:stretch;flex-direction:column}.admin-search{min-width:0}.account-summary small{display:none}.admin-footer{padding:16px}.admin-profile button{margin-left:0}}
 @media(max-width:470px){.admin-stats{grid-template-columns:1fr}.admin-heading{flex-direction:column}.admin-primary{width:100%;text-align:center}}
 .admin-nav-disabled{display:flex;align-items:center;gap:12px;padding:12px 14px;color:#9f8f88;border-radius:8px;font-size:13px}.admin-nav-disabled b{display:grid;place-items:center;width:20px;font-size:18px;font-weight:400}.admin-nav-disabled small{margin-left:auto;padding:3px 5px;color:#baa9a1;background:rgba(255,255,255,.06);border-radius:4px;font-size:7px;text-transform:uppercase}
+
+/* Nhịp chữ và icon thống nhất cho giao diện quản trị. */
+.admin-body { font-size:14px; }
+.admin-layout { grid-template-columns:260px minmax(0,1fr); }
+.admin-sidebar { padding:28px 18px; }
+.admin-label { margin:2px 14px 14px; font-size:10px; }
+.admin-nav { gap:7px; }
+.admin-nav a,
+.admin-nav-disabled { min-height:46px; padding:11px 13px; gap:11px; font-size:14px; line-height:1.25; }
+.admin-nav-icon { display:grid!important; place-items:center; flex:0 0 30px; width:30px!important; height:30px; color:#d8c4bb; border:1px solid rgba(255,255,255,.1); border-radius:8px; background:rgba(255,255,255,.045); }
+.admin-nav-icon svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.65; stroke-linecap:round; stroke-linejoin:round; }
+.admin-nav a:hover .admin-nav-icon,
+.admin-nav a.active .admin-nav-icon { color:#fff; border-color:rgba(234,179,100,.45); background:rgba(234,179,100,.15); }
+.admin-nav-disabled .admin-nav-icon { color:#9f8f88; }
+.admin-nav-disabled small { padding:4px 6px; font-size:8px; letter-spacing:.04em; }
+.admin-sidebar-note strong { font-size:16px; }
+.admin-sidebar-note span { font-size:11px; }
+
+.admin-topbar { height:82px; padding-inline:34px; }
+.admin-topbar strong { font-size:19px; }
+.admin-kicker { font-size:10px; }
+.admin-profile-copy b { font-size:12px; }
+.admin-profile-copy small { font-size:10px; }
+.admin-profile button { font-size:12px; }
+.admin-main { padding:36px 34px 52px; }
+.admin-heading { margin-bottom:26px; }
+.admin-heading p { font-size:11px; }
+.admin-heading h1 { font-size:31px; line-height:1.2; }
+.admin-heading span { font-size:13px; line-height:1.5; }
+.admin-alert { font-size:12px; }
+
+.admin-search input,
+.admin-filters select,
+.role-form select { font-size:12px; }
+.filter-button,
+.role-form button,
+.status-action { font-size:11px; }
+.account-summary span { font-size:12px; }
+.account-summary small { font-size:10px; }
+.admin-table th { padding-block:13px; font-size:10px; }
+.admin-table td { padding-block:15px; font-size:12px; }
+.user-cell { gap:12px; }
+.user-cell>span { width:36px; height:36px; font-size:12px; }
+.user-cell b { font-size:12px; line-height:1.35; }
+.user-cell small { font-size:10px; }
+.role-chip,
+.status-chip { font-size:10px; }
+.protected-note { font-size:10px; }
+.admin-footer { font-size:10px; }
+
+@media(max-width:1100px) {
+    .admin-layout { grid-template-columns:220px minmax(0,1fr); }
+    .admin-nav a,.admin-nav-disabled { font-size:13px; }
+}
+@media(max-width:760px) {
+    .admin-layout { display:block; }
+    .admin-nav-icon { flex-basis:26px; width:26px!important; height:26px; }
+    .admin-nav-icon svg { width:15px; height:15px; }
+}
