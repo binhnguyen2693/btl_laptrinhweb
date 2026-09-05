@@ -101,8 +101,28 @@ thuật.
 
 ## 8. Phần tiếp theo còn phải tích hợp
 
-- Màn quản lý tài khoản và cấp role cho Admin.
 - Link chi tiết bài khi branch trang công khai được ghép.
 - Các trang Author/Editor do Người 2 thực hiện.
 - Tìm kiếm/chi tiết/responsive nâng cao do Người 3 thực hiện.
 - Bình luận/danh mục/Impact Box do Người 4 thực hiện.
+
+## 9. Flow Admin quản lý tài khoản
+
+Admin đăng nhập và mở `admin/users.php` để tìm tài khoản theo tên hoặc email,
+lọc theo vai trò/trạng thái, cấp vai trò Reader, Author hoặc Editor và khóa/mở
+khóa tài khoản.
+
+Mọi thao tác cập nhật đều gửi bằng POST, kiểm tra CSRF và gọi
+`requireRole(['admin'])` ở server. Admin đang đăng nhập không thể tự khóa hoặc
+tự hạ quyền; một Admin khác cũng không thể bị sửa tại màn hình này. Hệ thống
+không cho xem hoặc sửa mật khẩu của người dùng.
+
+Flow cấp quyền tác giả:
+
+```text
+Người dùng đăng ký → mặc định là Reader
+→ Admin mở Quản lý tài khoản
+→ chọn vai trò Tác giả và bấm Lưu
+→ lần đăng nhập tiếp theo, session nhận role Author
+→ người dùng được phép vào Dashboard tác giả
+```
