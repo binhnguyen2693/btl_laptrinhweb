@@ -8,5 +8,4 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 verifyCsrf();
 $_SESSION = [];
 session_regenerate_id(true);
-$_SESSION['flash_success'] = 'Bạn đã đăng xuất.';
 redirect('dang-nhap.php');
