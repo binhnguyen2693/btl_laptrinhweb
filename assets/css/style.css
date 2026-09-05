@@ -1071,43 +1071,18 @@ html,body { margin:0; width:100%; }
     transform:translateY(-50%);
     outline:none;
 }
-.password-toggle .eye-icon {
-    position:relative;
-    top:auto;
-    right:auto;
-    display:block;
-    width:17px;
-    height:11px;
-    border:1.5px solid currentColor;
-    border-radius:50% 50% 46% 46%;
-}
-.eye-icon::after {
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:4px;
-    height:4px;
-    content:"";
-    background:currentColor;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-}
-.password-toggle.is-visible .eye-icon::before {
-    position:absolute;
-    top:4px;
-    left:-2px;
-    width:21px;
-    content:"";
-    border-top:1.5px solid currentColor;
-    transform:rotate(-35deg);
-}
+.password-toggle .eye-icon { position:static; display:block; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.password-toggle .eye-slash { display:none; }
+.password-toggle.is-visible .eye-slash { display:block; }
+.password-toggle.is-visible .eye-outline,
+.password-toggle.is-visible circle { opacity:.55; }
 
 /* Cảnh báo riêng khi thông tin đúng nhưng tài khoản đã bị quản trị viên khóa. */
-.account-locked-message {
+.login-error-message {
     display:flex;
     align-items:center;
     gap:10px;
-    margin:0 0 18px;
+    margin:-3px 0 0;
     padding:8px 14px;
     color:#a1443c;
     background:#fff0ef;
@@ -1117,7 +1092,7 @@ html,body { margin:0; width:100%; }
     font-size:12px;
     line-height:1.35;
 }
-.account-locked-message svg {
+.login-error-message svg {
     width:20px;
     height:20px;
     flex:0 0 20px;
