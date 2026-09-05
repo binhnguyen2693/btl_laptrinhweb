@@ -360,12 +360,23 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
 }
 
 .desktop-nav {
-    justify-content:flex-start;
-    margin-left:18px;
+    align-self:center;
+    justify-content:flex-end;
+    height:50px;
+    margin-left:auto;
 }
 
 .header-actions {
-    margin-left:auto;
+    margin-left:10px;
+}
+
+.desktop-nav a {
+    height:100%;
+}
+
+.footer-logo img {
+    filter:none;
+    mix-blend-mode:multiply;
 }
 
 @media(max-width:620px) {
