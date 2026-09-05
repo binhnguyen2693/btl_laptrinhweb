@@ -2,6 +2,16 @@
 declare(strict_types=1);
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
+    // Không dùng C:\xampp\tmp vì thư mục đó có thể bị giới hạn quyền ghi.
+    // Mỗi project dùng một thư mục session riêng trong vùng tạm của Windows.
+    $sessionDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'nhip_khoa_sessions';
+
+    if (!is_dir($sessionDirectory) && !mkdir($sessionDirectory, 0775, true) && !is_dir($sessionDirectory)) {
+        http_response_code(500);
+        exit('Không thể tạo thư mục lưu phiên đăng nhập.');
+    }
+
+    session_save_path($sessionDirectory);
     session_start();
 }
 require_once __DIR__ . '/../config/database.php';
