@@ -437,3 +437,19 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .change-card:hover,.article-card:hover,.topic-grid>article:hover { transform:none; }
 }
 
+/* Khối "Thay đổi đáng chú ý": đồng bộ lại với nền trang và hai thẻ hồng trong Figma. */
+.soft-section {
+    background:#fff;
+}
+
+.change-card,
+.change-card.info {
+    background:#fff1ec;
+    border-color:#efb9ae;
+}
+
+.change-card.warning {
+    background:#fff8e7;
+    border-color:#e3bd65;
+}
+
