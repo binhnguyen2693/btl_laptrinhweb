@@ -340,3 +340,42 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .site-shell { width:100%; padding-inline:16px; }
 }
 
+/* Chỉ phần đầu và footer full-width; nội dung giữa giữ khung 1238px của Figma. */
+.site-shell {
+    width:min(1238px,calc(100% - 48px));
+    padding-inline:0;
+}
+
+.announcement .site-shell,
+.figma-header .site-shell,
+.figma-hero .site-shell,
+.figma-footer .site-shell {
+    width:100%;
+    max-width:none;
+    padding-inline:clamp(24px,4.7vw,88px);
+}
+
+.figma-hero .hero-layout {
+    padding-right:0;
+}
+
+.desktop-nav {
+    justify-content:flex-start;
+    margin-left:18px;
+}
+
+.header-actions {
+    margin-left:auto;
+}
+
+@media(max-width:620px) {
+    .site-shell,
+    .announcement .site-shell,
+    .figma-header .site-shell,
+    .figma-hero .site-shell,
+    .figma-footer .site-shell {
+        width:100%;
+        padding-inline:16px;
+    }
+}
+
