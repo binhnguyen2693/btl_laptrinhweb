@@ -932,3 +932,24 @@ html,body { margin:0; width:100%; }
     .desktop-nav a { transition:none; }
 }
 
+/* Gom thông tin đối tượng và hạn chót, tránh bị dàn ra hai mép card. */
+.change-meta {
+    grid-template-columns:125px 110px;
+    justify-content:start;
+    gap:30px;
+}
+.change-meta>div { gap:6px; }
+.change-meta img {
+    width:13px;
+    height:14px;
+    margin-top:0;
+    flex-basis:13px;
+}
+
+@media(max-width:620px) {
+    .change-meta {
+        grid-template-columns:120px 105px;
+        gap:18px;
+    }
+}
+
