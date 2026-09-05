@@ -8,9 +8,9 @@ try {
     $posts = [];
 }
 $demoPosts = [
- ['category_name'=>'HỌC TẬP','title'=>'Bí quyết học hiệu quả trong giai đoạn nước rút cuối cấp','summary'=>'Những phương pháp khoa học giúp bạn tối ưu thời gian ôn tập và cải thiện kết quả.','image'=>'article-1.jpg'],
- ['category_name'=>'CƠ HỘI','title'=>'Học bổng khuyến khích học tập HK2/2024–2025','summary'=>'Thông tin chi tiết về điều kiện và cách thức nộp hồ sơ học bổng.','image'=>'article-2.jpg'],
- ['category_name'=>'HƯỚNG DẪN','title'=>'Hướng dẫn tra cứu lịch học và phòng học','summary'=>'Các bước tra cứu nhanh trên cổng thông tin sinh viên.','image'=>'article-3.jpg'],
+ ['category_name'=>'HỌC TẬP','title'=>'Bí quyết học hiệu quả trong giai đoạn nước rút cuối cấp','summary'=>'Những phương pháp khoa học giúp bạn tối ưu thời gian ôn tập và cải thiện kết quả.','image'=>'home-card-1.png'],
+ ['category_name'=>'CƠ HỘI','title'=>'Học bổng khuyến khích học tập HK2/2024–2025','summary'=>'Thông tin chi tiết về điều kiện và cách thức nộp hồ sơ học bổng.','image'=>'article-3.jpg'],
+ ['category_name'=>'HƯỚNG DẪN','title'=>'Hướng dẫn tra cứu lịch học và phòng học','summary'=>'Các bước tra cứu nhanh trên cổng thông tin sinh viên.','image'=>'article-2.jpg'],
  ['category_name'=>'SỰ KIỆN','title'=>'Talkshow: Kỹ năng thuyết trình ấn tượng','summary'=>'Đăng ký tham gia talkshow cùng chuyên gia.','image'=>'article-4.jpg'],
 ];
 if ($posts === []) $posts = $demoPosts;
@@ -25,7 +25,7 @@ $pageTitle='Trang chủ'; require __DIR__.'/includes/header.php';
 </div></div></section>
 
 <section id="articles" class="home-section"><div class="site-shell"><div class="section-title"><h2>Bài viết và hướng dẫn</h2><a href="#">Xem tất cả →</a></div><div class="article-grid">
-<?php foreach ($posts as $index=>$post): $image=$post['image'] ?? $demoPosts[$index]['image']; ?><article class="article-card"><img src="assets/images/figma/<?= e($image) ?>" alt=""><div><div class="article-meta"><span><?= e($post['category_name']) ?></span><span><?= isset($post['published_at']) ? e(date('d/m/Y',strtotime($post['published_at']))) : '12/05/2026' ?></span></div><h3><?= e($post['title']) ?></h3><p><?= e($post['summary']) ?></p><small>◷ 5 phút đọc　　♡</small></div></article><?php endforeach; ?>
+<?php foreach ($posts as $index=>$post): $image=$post['image'] ?? $demoPosts[$index]['image']; ?><article class="article-card"><img src="assets/images/figma/<?= e($image) ?>" alt=""><div><div class="article-meta"><span><?= e($post['category_name']) ?></span><span><?= isset($post['published_at']) ? e(date('d/m/Y',strtotime($post['published_at']))) : '12/05/2026' ?></span></div><h3><?= e($post['title']) ?></h3><p><?= e($post['summary']) ?></p><div class="article-actions"><small>◷ 5 phút đọc</small><a class="save-button" href="<?= empty($_SESSION['user']) ? 'dang-nhap.php' : '#' ?>" aria-label="Lưu bài viết vào Impact Box" title="Lưu bài viết">♡</a></div></div></article><?php endforeach; ?>
 </div></div></section>
 
 <section id="topics" class="topic-section"><div class="site-shell topic-grid"><article><img src="assets/images/figma/icon-study.png" alt=""><div><h3>Học tập</h3><p>Lịch học, học phần, hướng dẫn học tập và tài liệu</p><a href="#">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-opportunity.svg" alt=""><div><h3>Cơ hội</h3><p>Học bổng, tuyển dụng, thực tập và cuộc thi.</p><a href="#">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-event.svg" alt=""><div><h3>Sự kiện</h3><p>Hội thảo, workshop và hoạt động nổi bật.</p><a href="#">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-impact.svg" alt=""><div><h3>Impact Box</h3><p>Dự án, sáng kiến và câu chuyện tác động.</p><a href="#">Khám phá →</a></div></article></div></section>

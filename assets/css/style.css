@@ -340,6 +340,11 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .site-shell { width:100%; padding-inline:16px; }
 }
 
+.article-actions { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+.article-actions small { margin-top:0; }
+.save-button { display:grid; place-items:center; width:30px; height:30px; color:var(--wine); font-size:21px; line-height:1; text-decoration:none; background:#fff; border:1px solid #dfb8ae; border-radius:50%; transition:.2s ease; }
+.save-button:hover, .save-button:focus-visible { color:#fff; background:var(--wine); border-color:var(--wine); transform:translateY(-1px); }
+
 /* Chỉ phần đầu và footer full-width; nội dung giữa giữ khung 1238px của Figma. */
 .site-shell {
     width:min(1238px,calc(100% - 48px));
