@@ -813,3 +813,7 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .impact-row { grid-template-columns:18px 92px minmax(0,1fr); }
 }
 
+/* Loại bỏ khoảng trắng mặc định để các dải nền chạm đủ hai mép màn hình. */
+html,body { margin:0; width:100%; }
+.announcement { width:100%; }
+
