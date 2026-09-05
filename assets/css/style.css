@@ -403,8 +403,7 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
 .faculty-symbol img { position:absolute; top:0; left:-1px; width:auto; height:20px; max-width:none; filter:sepia(1) saturate(.7) brightness(1.15); }
 
 .security-note { display:flex; align-items:flex-start; gap:10px; }
-.security-icon { position:relative; display:block; width:12px; height:14px; margin-top:1px; border:1px solid var(--wine); border-radius:5px 5px 7px 7px; flex:0 0 12px; }
-.security-icon::after { position:absolute; left:4px; top:4px; width:2px; height:4px; content:""; border-radius:2px; background:var(--wine); }
+.security-icon { display:block; width:20px; height:20px; margin-top:0; flex:0 0 20px; fill:#f8e4e2; stroke:#c99994; stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
 
 .figma-auth-form button { cursor:pointer; transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease; }
 .figma-auth-form button:hover,.figma-auth-form button:focus-visible { background:#6f211a; box-shadow:0 7px 16px rgba(111,33,26,.2); transform:translateY(-1px); outline:none; }
@@ -1106,37 +1105,26 @@ html,body { margin:0; width:100%; }
 /* Cảnh báo riêng khi thông tin đúng nhưng tài khoản đã bị quản trị viên khóa. */
 .account-locked-message {
     display:flex;
-    align-items:flex-start;
-    gap:12px;
+    align-items:center;
+    gap:10px;
     margin:0 0 18px;
-    padding:13px 14px;
-    color:#7f1d1d;
-    background:#fff1f0;
-    border:1px solid #f3b9b4;
-    border-radius:7px;
+    padding:8px 14px;
+    color:#a1443c;
+    background:#fff0ef;
+    border:1px solid #f4aaa3;
+    border-radius:8px;
     text-align:left;
+    font-size:12px;
+    line-height:1.35;
 }
-.account-locked-message > span:last-child { display:grid; gap:3px; }
-.account-locked-message strong { font-size:14px; line-height:1.35; }
-.account-locked-message small { color:#9b3a32; font-size:12px; line-height:1.45; }
-.account-locked-icon {
-    position:relative;
-    flex:0 0 18px;
-    width:18px;
-    height:15px;
-    margin-top:5px;
-    border:1.8px solid currentColor;
-    border-radius:3px;
-}
-.account-locked-icon::before {
-    position:absolute;
-    left:3px;
-    bottom:12px;
-    width:8px;
-    height:7px;
-    content:"";
-    border:1.8px solid currentColor;
-    border-bottom:0;
-    border-radius:7px 7px 0 0;
+.account-locked-message svg {
+    width:20px;
+    height:20px;
+    flex:0 0 20px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.7;
+    stroke-linecap:round;
+    stroke-linejoin:round;
 }
 
