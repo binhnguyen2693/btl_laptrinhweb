@@ -148,3 +148,14 @@ Hiện tại project đã có cấu trúc ban đầu, trang giới thiệu, form
 script CSDL. Các thành viên sẽ tiếp tục tích hợp chức năng của mình vào schema
 chung.
 
+## Tài liệu phát triển hiện tại
+
+- [`docs/NGUOI-1-FLOW.md`](docs/NGUOI-1-FLOW.md): nhiệm vụ, cơ chế hoạt động,
+  điều kiện đăng ký/đăng nhập, phân quyền và cách demo phần Người 1.
+- [`docs/GITHUB-FLOW.md`](docs/GITHUB-FLOW.md): cách tổ chức `main`, `develop`,
+  branch chức năng và Pull Request của cả nhóm.
+
+Branch `feature/person1-auth-home` thay tài khoản mẫu bằng đăng ký/đăng nhập thật
+qua PDO và MySQL, thêm session, CSRF, kiểm tra role, trang chủ chỉ đọc bài
+`published` và khung dashboard dành cho Admin.
+
