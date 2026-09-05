@@ -742,3 +742,74 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .impact-row { grid-template-columns:17px 92px minmax(0,1fr); gap:5px; }
 }
 
+/* Cân lại chiều cao và dùng một hệ icon nét thống nhất trong Impact Summary. */
+.change-card { min-height:620px; }
+.impact { min-height:180px; }
+.impact-row {
+    grid-template-columns:18px 105px minmax(0,1fr);
+    align-items:center;
+    margin-top:14px;
+}
+.impact-icon {
+    position:relative;
+    display:block;
+    width:14px;
+    height:14px;
+    color:#4a3028;
+}
+.impact-person img {
+    display:block;
+    width:14px;
+    height:14px;
+    object-fit:contain;
+    filter:brightness(0) saturate(100%) opacity(.78);
+}
+.impact-task {
+    width:12px;
+    height:12px;
+    margin-left:1px;
+    border:1.4px solid currentColor;
+    border-radius:1px;
+}
+.impact-task::after {
+    position:absolute;
+    inset:3px;
+    content:"";
+    border:1px solid currentColor;
+}
+.impact-calendar {
+    width:13px;
+    height:12px;
+    margin-left:1px;
+    border:1.4px solid currentColor;
+    border-radius:2px;
+}
+.impact-calendar::before {
+    position:absolute;
+    top:3px;
+    left:0;
+    width:100%;
+    content:"";
+    border-top:1px solid currentColor;
+}
+.impact-calendar::after {
+    position:absolute;
+    top:-3px;
+    left:2px;
+    width:7px;
+    height:4px;
+    content:"";
+    border-left:1.4px solid currentColor;
+    border-right:1.4px solid currentColor;
+}
+
+@media(max-width:1000px) {
+    .change-card { min-height:620px; }
+}
+
+@media(max-width:620px) {
+    .change-card { min-height:600px; }
+    .impact { min-height:175px; }
+    .impact-row { grid-template-columns:18px 92px minmax(0,1fr); }
+}
+
