@@ -394,6 +394,29 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .expanding-search,.search-input { transition:none; }
 }
 
+/* Hoàn thiện màn hình xác thực: bỏ góc bo và thay các ký tự tạm bằng biểu tượng thật. */
+.auth-visual { border-radius:0; }
+
+.faculty-mark { display:flex; align-items:center; justify-content:center; gap:12px; height:22px; }
+.faculty-mark>i { display:block; width:18px; height:1px; background:#ccb986; }
+.faculty-symbol { position:relative; display:block; width:21px; height:20px; overflow:hidden; }
+.faculty-symbol img { position:absolute; top:0; left:-1px; width:auto; height:20px; max-width:none; filter:sepia(1) saturate(.7) brightness(1.15); }
+
+.security-note { display:flex; align-items:flex-start; gap:10px; }
+.security-icon { position:relative; display:block; width:12px; height:14px; margin-top:1px; border:1px solid var(--wine); border-radius:5px 5px 7px 7px; flex:0 0 12px; }
+.security-icon::after { position:absolute; left:4px; top:4px; width:2px; height:4px; content:""; border-radius:2px; background:var(--wine); }
+
+.figma-auth-form button { cursor:pointer; transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease; }
+.figma-auth-form button:hover,.figma-auth-form button:focus-visible { background:#6f211a; box-shadow:0 7px 16px rgba(111,33,26,.2); transform:translateY(-1px); outline:none; }
+.figma-auth-form button:active { box-shadow:none; transform:translateY(0); }
+.login-pill { transition:background-color .18s ease,box-shadow .18s ease; }
+.login-pill:hover,.login-pill:focus-visible { background:#6f211a; box-shadow:0 6px 14px rgba(111,33,26,.18); outline:none; }
+
+@media(prefers-reduced-motion:reduce) {
+    .figma-auth-form button,.login-pill { transition:none; }
+    .figma-auth-form button:hover,.figma-auth-form button:focus-visible { transform:none; }
+}
+
 .article-actions { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
 .article-actions small { margin-top:0; }
 .save-button { display:grid; place-items:center; width:30px; height:30px; color:var(--wine); font-size:21px; line-height:1; text-decoration:none; background:#fff; border:1px solid #dfb8ae; border-radius:50%; transition:.2s ease; }
