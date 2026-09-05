@@ -639,3 +639,70 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .impact-row { grid-template-columns:17px 90px minmax(0,1fr); }
 }
 
+/* Quy tắc hoàn thiện đặt cuối file để không bị các khai báo cũ ghi đè. */
+.footer-logo img {
+    display:block;
+    width:170px;
+    height:72px;
+    object-fit:contain;
+    opacity:1;
+    visibility:visible;
+    filter:none;
+    mix-blend-mode:normal;
+}
+
+.footer-contact p {
+    display:grid;
+    grid-template-columns:18px minmax(0,1fr);
+    align-items:center;
+    gap:8px;
+    min-height:20px;
+}
+.footer-contact p img {
+    display:block;
+    width:14px;
+    height:14px;
+    margin:0;
+    justify-self:center;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:.92;
+}
+
+.search-input { padding-left:43px; padding-right:14px; }
+.expanding-search .search-circle {
+    position:absolute;
+    left:3px;
+    right:auto;
+    border:0;
+    background:transparent;
+}
+.expanding-search .search-circle:hover,
+.expanding-search .search-circle:focus-visible { border:0; background:transparent; }
+.expanding-search .search-circle:hover img,
+.expanding-search .search-circle:focus-visible img { filter:none; }
+
+/* Màn hình hẹp giữ nguyên cỡ thẻ và cuộn ngang, không kéo thẻ rộng toàn màn hình. */
+@media(max-width:1000px) {
+    .change-grid {
+        grid-template-columns:none;
+        grid-auto-flow:column;
+        grid-auto-columns:min(390px,calc(100vw - 48px));
+        justify-content:start;
+        overflow-x:auto;
+        padding:4px 4px 18px;
+        scroll-snap-type:x proximity;
+        scrollbar-width:thin;
+    }
+
+    .change-card {
+        width:auto;
+        min-height:535px;
+        scroll-snap-align:start;
+    }
+}
+
+@media(max-width:620px) {
+    .change-grid { grid-auto-columns:min(340px,calc(100vw - 32px)); }
+}
+
