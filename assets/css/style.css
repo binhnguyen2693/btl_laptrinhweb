@@ -417,6 +417,44 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     .figma-auth-form button:hover,.figma-auth-form button:focus-visible { transform:none; }
 }
 
+/* Tìm kiếm dùng một khung duy nhất; kính lúp nằm bên trái ô nhập. */
+.search-input { padding:0 14px 0 43px; }
+.expanding-search .search-circle {
+    position:absolute;
+    left:3px;
+    border:0;
+    background:transparent;
+}
+.expanding-search .search-circle:hover,
+.expanding-search .search-circle:focus-visible { border:0; background:transparent; }
+.expanding-search .search-circle:hover img,
+.expanding-search .search-circle:focus-visible img { filter:none; }
+
+/* Các icon liên hệ cùng một cột và cùng kích thước nhìn. */
+.footer-contact p {
+    display:grid;
+    grid-template-columns:17px minmax(0,1fr);
+    align-items:center;
+    gap:8px;
+    min-height:20px;
+}
+.footer-contact p img {
+    display:block;
+    width:14px;
+    height:14px;
+    margin:0;
+    justify-self:center;
+    object-fit:contain;
+    flex:none;
+}
+.footer-contact p:nth-of-type(3) img { width:15px; height:15px; }
+
+/* Logo trắng có nền trong suốt thật, không cần filter nên chữ giữ nguyên nét. */
+.footer-logo img {
+    filter:none;
+    mix-blend-mode:normal;
+}
+
 .article-actions { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
 .article-actions small { margin-top:0; }
 .save-button { display:grid; place-items:center; width:30px; height:30px; color:var(--wine); font-size:21px; line-height:1; text-decoration:none; background:#fff; border:1px solid #dfb8ae; border-radius:50%; transition:.2s ease; }
