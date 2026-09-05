@@ -327,3 +327,16 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
 .topic-grid>article>img { width:54px; height:54px; object-fit:contain; flex:0 0 54px; }
 .footer-logo img { width:170px; height:72px; object-fit:contain; filter:brightness(0) invert(1); }
 
+/* Full-width theo kích thước cửa sổ; nội dung vẫn có khoảng đệm như Figma. */
+.site-shell { width:100%; max-width:none; padding-inline:clamp(24px,4.7vw,88px); }
+.hero-layout { grid-template-columns:46% 54%; padding-right:0; }
+.hero-photo img { display:block; }
+
+/* PNG logo có nền trắng: invert biến nền thành đen, screen làm nền đen hòa vào footer. */
+.footer-logo { display:block; width:190px; overflow:hidden; }
+.footer-logo img { display:block; width:170px; height:72px; object-fit:contain; filter:invert(1) grayscale(1) brightness(3); mix-blend-mode:screen; }
+
+@media(max-width:620px) {
+    .site-shell { width:100%; padding-inline:16px; }
+}
+
