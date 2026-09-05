@@ -1040,3 +1040,8 @@ html,body { margin:0; width:100%; }
     .change-meta small { font-size:10px; }
 }
 
+.change-card>span {
+    font-size:12px;
+    line-height:1.2;
+}
+
