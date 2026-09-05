@@ -13,7 +13,13 @@ $demoPosts = [
  ['category_name'=>'HƯỚNG DẪN','title'=>'Hướng dẫn tra cứu lịch học và phòng học','summary'=>'Các bước tra cứu nhanh trên cổng thông tin sinh viên.','image'=>'article-2.jpg'],
  ['category_name'=>'SỰ KIỆN','title'=>'Talkshow: Kỹ năng thuyết trình ấn tượng','summary'=>'Đăng ký tham gia talkshow cùng chuyên gia.','image'=>'article-4.jpg'],
 ];
-if ($posts === []) $posts = $demoPosts;
+if ($posts === []) {
+    $posts = $demoPosts;
+} elseif (count($posts) < 4) {
+    // Khi database chưa có đủ bài đã xuất bản, bổ sung bài minh họa để giao diện
+    // trang chủ vẫn đủ bốn thẻ. Bài thật luôn được ưu tiên hiển thị trước.
+    $posts = array_merge($posts, array_slice($demoPosts, 0, 4 - count($posts)));
+}
 $pageTitle='Trang chủ'; require __DIR__.'/includes/header.php';
 ?>
 <section class="figma-hero"><div class="site-shell hero-layout"><div class="hero-copy"><p>CẬP NHẬT · ĐỔI MỚI · TÁC ĐỘNG</p><h1>ĐIỀU GÌ<br>ĐANG THAY ĐỔI?</h1><i></i><div>Nơi cập nhật những thông tin quan trọng, cơ hội và hướng dẫn mới nhất dành riêng cho sinh viên Khoa CNTT.<br>Hiểu đúng – Hành động kịp thời – Tạo ra tác động.</div><div class="hero-buttons"><a href="#articles">Tìm thông tin →</a><a href="#featured">Xem bài mới</a></div></div><div class="hero-photo"><img src="assets/images/figma/home-hero.png" alt="Sinh viên trao đổi và học tập trong khuôn viên trường"></div></div></section>
