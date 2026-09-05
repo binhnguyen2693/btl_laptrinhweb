@@ -1020,3 +1020,23 @@ html,body { margin:0; width:100%; }
     .change-meta { width:94%; margin-top:10px; gap:16px; }
 }
 
+/* Hệ chữ metadata thống nhất cho cả ba thẻ; phân cấp bằng độ đậm, không thu chữ quá bé. */
+.change-meta b,
+.change-meta small {
+    font-size:10.5px;
+    line-height:1.4;
+}
+.change-meta b { font-weight:600; }
+.change-meta small { font-weight:400; }
+.change-meta p { gap:2px; }
+.change-meta img {
+    width:14px;
+    height:14px;
+    flex-basis:14px;
+}
+
+@media(max-width:620px) {
+    .change-meta b,
+    .change-meta small { font-size:10px; }
+}
+
