@@ -979,3 +979,44 @@ html,body { margin:0; width:100%; }
     .change-meta>div:first-child { max-width:140px; }
 }
 
+/* Căn metadata giống Figma và rút ngắn khoảng cách sau phần mô tả. */
+.change-card>p { min-height:50px; }
+.change-meta {
+    display:grid;
+    width:88%;
+    margin:12px auto 24px;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+}
+.change-meta>div,
+.change-meta>div:first-child,
+.change-meta>div:last-child {
+    width:auto;
+    min-width:0;
+    max-width:none;
+}
+
+/* Dùng icon có sẵn của box Cơ hội và Sự kiện, thu nhỏ và đổi thành màu đen. */
+.impact-icon {
+    display:grid;
+    place-items:center;
+    width:14px;
+    height:14px;
+    margin:0;
+    border:0;
+}
+.impact-icon>img,
+.impact-person img {
+    display:block;
+    width:12px;
+    height:12px;
+    max-width:12px;
+    object-fit:contain;
+    filter:brightness(0) saturate(100%);
+}
+
+@media(max-width:620px) {
+    .change-card>p { min-height:46px; }
+    .change-meta { width:94%; margin-top:10px; gap:16px; }
+}
+
