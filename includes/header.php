@@ -16,7 +16,7 @@ $user = $_SESSION['user'] ?? null;
     <nav class="desktop-nav" aria-label="Điều hướng chính">
         <a class="active" href="<?= e($basePath ?? '') ?>index.php">Trang chủ</a><a href="#">Tin khoa</a><a href="#">Học tập</a><a href="#">Cơ hội</a><a href="#">Sự kiện</a><a href="#articles">Hướng dẫn</a><a href="#topics">Hộp tác động</a>
     </nav>
-    <div class="header-actions"><button class="search-circle" aria-label="Tìm kiếm"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-search.svg" alt=""></button>
+    <div class="header-actions"><form class="expanding-search" role="search"><input class="search-input" type="search" name="q" placeholder="Tìm kiếm bài viết..." aria-label="Nhập từ khóa tìm kiếm" autocomplete="off"><button class="search-circle" type="submit" aria-label="Mở tìm kiếm" aria-expanded="false"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-search.svg" alt=""></button></form>
     <?php if ($user === null): ?><a class="login-pill" href="<?= e($basePath ?? '') ?>dang-nhap.php"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-user.svg" alt="">Đăng nhập</a>
     <?php else: ?><span class="welcome">Chào, <?= e($user['full_name']) ?></span><?php if (($user['role'] ?? '') === 'admin'): ?><a href="<?= e($basePath ?? '') ?>admin/dashboard.php">Quản trị</a><?php endif; ?><form method="post" action="<?= e($basePath ?? '') ?>dang-xuat.php" class="inline-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button class="link-button" type="submit">Đăng xuất</button></form><?php endif; ?>
     </div><button class="mobile-menu" aria-label="Mở menu">☰</button>
