@@ -455,6 +455,12 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
     mix-blend-mode:normal;
 }
 
+/* Biểu tượng ngựa riêng, đúng tỷ lệ trong màn hình đăng nhập/đăng ký Figma. */
+.faculty-mark { gap:10px; height:32px; }
+.faculty-mark>i { width:34px; }
+.faculty-symbol { display:grid; place-items:center; width:38px; height:31px; overflow:visible; }
+.faculty-symbol img { position:static; display:block; width:35px; height:31px; max-width:35px; object-fit:contain; filter:none; }
+
 .article-actions { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
 .article-actions small { margin-top:0; }
 .save-button { display:grid; place-items:center; width:30px; height:30px; color:var(--wine); font-size:21px; line-height:1; text-decoration:none; background:#fff; border:1px solid #dfb8ae; border-radius:50%; transition:.2s ease; }
