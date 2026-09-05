@@ -1128,3 +1128,46 @@ html,body { margin:0; width:100%; }
     stroke-linejoin:round;
 }
 
+/* Nút đăng xuất đồng bộ với nhóm thao tác trên header. */
+.header-actions .welcome {
+    max-width:150px;
+    overflow:hidden;
+    color:#55423c;
+    font-weight:600;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.header-actions .logout-button {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-height:34px;
+    padding:7px 12px;
+    color:var(--wine);
+    background:#fff;
+    border:1px solid #d8a39c;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
+    transition:color .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.header-actions .logout-button svg {
+    width:16px;
+    height:16px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.header-actions .logout-button:hover,
+.header-actions .logout-button:focus-visible {
+    color:#fff;
+    background:var(--wine);
+    border-color:var(--wine);
+    box-shadow:0 4px 10px rgba(145,47,38,.18);
+    outline:none;
+}
+
