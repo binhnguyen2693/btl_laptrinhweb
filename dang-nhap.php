@@ -53,25 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = 'Đăng nhập';
-require __DIR__ . '/includes/header.php';
-?>
-<section class="auth-card">
-    <h1>Đăng nhập</h1>
-    <p>Dùng tài khoản đã đăng ký để sử dụng chức năng phù hợp với vai trò.</p>
-    <?php if ($notice !== ''): ?><div class="message success"><?= e($notice) ?></div><?php endif; ?>
-    <?php if ($flashError !== ''): ?><div class="message error"><?= e($flashError) ?></div><?php endif; ?>
-    <?php if (isset($errors['login'])): ?><div class="message error"><?= e($errors['login']) ?></div><?php endif; ?>
-    <form method="post" class="auth-form" novalidate>
-        <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-        <label>Email<input type="email" name="email" maxlength="150" autocomplete="email" value="<?= e($email) ?>" required>
-            <?php if (isset($errors['email'])): ?><small class="field-error"><?= e($errors['email']) ?></small><?php endif; ?>
-        </label>
-        <label>Mật khẩu<input type="password" name="password" minlength="8" maxlength="72" autocomplete="current-password" required>
-            <?php if (isset($errors['password'])): ?><small class="field-error"><?= e($errors['password']) ?></small><?php endif; ?>
-        </label>
-        <button class="primary-button" type="submit">Đăng nhập</button>
-    </form>
-    <p class="auth-switch">Chưa có tài khoản? <a href="dang-ky.php">Đăng ký độc giả</a></p>
-</section>
-<?php require __DIR__ . '/includes/footer.php'; ?>
+?><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập - Nhịp Khoa</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css"></head><body class="auth-page">
+<main class="auth-layout"><section class="auth-visual"><div class="auth-visual-copy"><h2>NHỊP KHOA <span>The faculty post</span></h2><i></i><p>Nhịp khoa là không gian chia sẻ học thuật<br>và kết nối tri thức. Cùng nhau lan tỏa giá trị,<br>thúc đẩy nghiên cứu và phát triển cộng đồng<br>học thuật bền vững.</p></div></section>
+<section class="auth-panel"><div class="figma-auth-card"><header><h2>NHỊP KHOA <span>The faculty post</span></h2><div class="faculty-mark">—　♜　—</div><h1>Đăng nhập</h1><p>Truy cập tài khoản Nhịp Khoa</p></header>
+<?php if ($notice !== ''): ?><div class="message success"><?= e($notice) ?></div><?php endif; ?><?php if ($flashError !== ''): ?><div class="message error"><?= e($flashError) ?></div><?php endif; ?><?php if (isset($errors['login'])): ?><div class="message error"><?= e($errors['login']) ?></div><?php endif; ?>
+<form method="post" class="figma-auth-form" novalidate><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><label>Email<input type="email" name="email" maxlength="150" autocomplete="email" placeholder="Nhập email của bạn" value="<?= e($email) ?>" required><?php if(isset($errors['email'])):?><small><?= e($errors['email']) ?></small><?php endif;?></label><label>Mật khẩu<div class="password-field"><input type="password" name="password" minlength="8" maxlength="72" autocomplete="current-password" placeholder="Nhập mật khẩu của bạn" required><span>⊙</span></div><?php if(isset($errors['password'])):?><small><?= e($errors['password']) ?></small><?php endif;?></label><div class="form-row"><label class="check"><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label><a href="#">Quên mật khẩu?</a></div><button type="submit">Đăng nhập</button></form><p class="auth-account">Chưa có tài khoản? <a href="dang-ky.php">Đăng ký</a></p><a class="back-home" href="index.php">← Quay lại trang chủ</a><div class="security-note">♢　Để đảm bảo an toàn, hệ thống NHỊP KHOA không bao giờ yêu cầu bạn chia sẻ mật khẩu.</div>
+</div></section></main></body></html>

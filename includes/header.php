@@ -3,35 +3,22 @@ require_once __DIR__ . '/app.php';
 $pageTitle = $pageTitle ?? 'Nhịp Khoa';
 $user = $_SESSION['user'] ?? null;
 ?>
-<!doctype html>
-<html lang="vi">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($pageTitle) ?> - Nhịp Khoa</title>
-    <link rel="stylesheet" href="<?= e($basePath ?? '') ?>assets/css/style.css">
-</head>
-<body>
-<header class="site-header">
-    <nav class="container main-nav" aria-label="Điều hướng chính">
-        <a class="brand" href="<?= e($basePath ?? '') ?>index.php">NHỊP KHOA</a>
-        <div class="nav-links">
-            <a href="<?= e($basePath ?? '') ?>index.php">Trang chủ</a>
-            <a href="<?= e($basePath ?? '') ?>about.php">Giới thiệu</a>
-            <?php if ($user === null): ?>
-                <a href="<?= e($basePath ?? '') ?>dang-nhap.php">Đăng nhập</a>
-                <a class="nav-button" href="<?= e($basePath ?? '') ?>dang-ky.php">Đăng ký</a>
-            <?php else: ?>
-                <?php if (($user['role'] ?? '') === 'admin'): ?>
-                    <a href="<?= e($basePath ?? '') ?>admin/dashboard.php">Quản trị</a>
-                <?php endif; ?>
-                <span>Xin chào, <?= e($user['full_name']) ?></span>
-                <form method="post" action="<?= e($basePath ?? '') ?>dang-xuat.php" class="inline-form">
-                    <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                    <button class="link-button" type="submit">Đăng xuất</button>
-                </form>
-            <?php endif; ?>
-        </div>
+<!doctype html><html lang="vi"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?= e($pageTitle) ?> - Nhịp Khoa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<?= e($basePath ?? '') ?>assets/css/style.css">
+</head><body>
+<div class="announcement"><div class="site-shell"><span>Thông báo: Kỳ đăng ký học phần bắt đầu từ ngày 20/05.</span><a href="#featured">Xem chi tiết →</a></div></div>
+<header class="figma-header"><div class="site-shell header-inner">
+    <a class="figma-logo" href="<?= e($basePath ?? '') ?>index.php"><span>🐆</span><strong>NHỊP KHOA<small>THE FACULTY POST</small></strong></a>
+    <nav class="desktop-nav" aria-label="Điều hướng chính">
+        <a class="active" href="<?= e($basePath ?? '') ?>index.php">Trang chủ</a><a href="#">Tin khoa</a><a href="#">Học tập</a><a href="#">Cơ hội</a><a href="#">Sự kiện</a><a href="#articles">Hướng dẫn</a><a href="#topics">Hộp tác động</a>
     </nav>
-</header>
-<main class="container page-content">
+    <div class="header-actions"><button class="search-circle" aria-label="Tìm kiếm">⌕</button>
+    <?php if ($user === null): ?><a class="login-pill" href="<?= e($basePath ?? '') ?>dang-nhap.php">♙&nbsp; Đăng nhập</a>
+    <?php else: ?><span class="welcome">Chào, <?= e($user['full_name']) ?></span><?php if (($user['role'] ?? '') === 'admin'): ?><a href="<?= e($basePath ?? '') ?>admin/dashboard.php">Quản trị</a><?php endif; ?><form method="post" action="<?= e($basePath ?? '') ?>dang-xuat.php" class="inline-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button class="link-button" type="submit">Đăng xuất</button></form><?php endif; ?>
+    </div><button class="mobile-menu" aria-label="Mở menu">☰</button>
+</div></header>
+<main>

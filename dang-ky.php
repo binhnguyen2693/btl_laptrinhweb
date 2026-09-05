@@ -53,29 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$pageTitle = 'Đăng ký';
-require __DIR__ . '/includes/header.php';
-?>
-<section class="auth-card">
-    <h1>Tạo tài khoản độc giả</h1>
-    <p>Tài khoản đăng ký công khai luôn là Độc giả. Chỉ Admin được cấp vai trò khác.</p>
-    <?php if (isset($errors['register'])): ?><div class="message error"><?= e($errors['register']) ?></div><?php endif; ?>
-    <form method="post" class="auth-form" novalidate>
-        <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-        <label>Họ và tên<input type="text" name="full_name" maxlength="120" value="<?= e($values['full_name']) ?>" required>
-            <?php if (isset($errors['full_name'])): ?><small class="field-error"><?= e($errors['full_name']) ?></small><?php endif; ?>
-        </label>
-        <label>Email<input type="email" name="email" maxlength="150" value="<?= e($values['email']) ?>" required>
-            <?php if (isset($errors['email'])): ?><small class="field-error"><?= e($errors['email']) ?></small><?php endif; ?>
-        </label>
-        <label>Mật khẩu<input type="password" name="password" minlength="8" maxlength="72" required>
-            <?php if (isset($errors['password'])): ?><small class="field-error"><?= e($errors['password']) ?></small><?php endif; ?>
-        </label>
-        <label>Nhập lại mật khẩu<input type="password" name="password_confirmation" minlength="8" maxlength="72" required>
-            <?php if (isset($errors['password_confirmation'])): ?><small class="field-error"><?= e($errors['password_confirmation']) ?></small><?php endif; ?>
-        </label>
-        <button class="primary-button" type="submit">Đăng ký</button>
-    </form>
-    <p class="auth-switch">Đã có tài khoản? <a href="dang-nhap.php">Đăng nhập</a></p>
-</section>
-<?php require __DIR__ . '/includes/footer.php'; ?>
+?><!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng ký - Nhịp Khoa</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css"></head><body class="auth-page">
+<main class="auth-layout"><section class="auth-visual"><div class="auth-visual-copy"><h2>NHỊP KHOA <span>The faculty post</span></h2><i></i><p>Nhịp khoa là không gian chia sẻ học thuật<br>và kết nối tri thức. Cùng nhau lan tỏa giá trị,<br>thúc đẩy nghiên cứu và phát triển cộng đồng<br>học thuật bền vững.</p></div></section>
+<section class="auth-panel"><div class="figma-auth-card register-card"><header><h2>NHỊP KHOA <span>The faculty post</span></h2><div class="faculty-mark">—　♜　—</div><h1>Đăng ký</h1><p>Đăng ký tài khoản thành viên Nhịp Khoa</p></header><?php if(isset($errors['register'])):?><div class="message error"><?= e($errors['register']) ?></div><?php endif;?>
+<form method="post" class="figma-auth-form compact" novalidate><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><label>Họ và tên<input type="text" name="full_name" maxlength="120" placeholder="Nhập họ và tên của bạn" value="<?= e($values['full_name']) ?>" required><?php if(isset($errors['full_name'])):?><small><?= e($errors['full_name']) ?></small><?php endif;?></label><label>Email<input type="email" name="email" maxlength="150" placeholder="Nhập email của bạn" value="<?= e($values['email']) ?>" required><?php if(isset($errors['email'])):?><small><?= e($errors['email']) ?></small><?php endif;?></label><label>Mật khẩu<input type="password" name="password" minlength="8" maxlength="72" placeholder="Nhập mật khẩu của bạn" required><?php if(isset($errors['password'])):?><small><?= e($errors['password']) ?></small><?php endif;?></label><label>Xác nhận mật khẩu<input type="password" name="password_confirmation" minlength="8" maxlength="72" placeholder="Nhập lại mật khẩu của bạn" required><?php if(isset($errors['password_confirmation'])):?><small><?= e($errors['password_confirmation']) ?></small><?php endif;?></label><label class="check terms"><input type="checkbox" required> Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a></label><button type="submit">Đăng ký</button></form><p class="auth-account">Đã có tài khoản? <a href="dang-nhap.php">Đăng nhập</a></p><a class="back-home" href="index.php">← Quay lại trang chủ</a><div class="role-note">Tài khoản đăng ký mặc định có vai trò thành viên</div>
+</div></section></main></body></html>
