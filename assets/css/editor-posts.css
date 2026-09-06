@@ -1,0 +1,389 @@
+.review-container {
+    max-width: 1180px;
+    margin: auto;
+    padding: 25px 20px 35px;
+}
+
+.review-heading {
+    margin-bottom: 20px;
+}
+
+.review-heading h1 {
+    margin-bottom: 5px;
+    color: #49312b;
+    font-size: 22px;
+}
+
+.review-heading p {
+    color: #87937b;
+    font-size: 14px;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.message.success {
+    background: #e1f3df;
+    color: #348547;
+}
+
+.message.error {
+    background: #f9dddd;
+    color: #bd3636;
+}
+
+.filter-tabs {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.filter-tabs a {
+    padding: 9px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 12px;
+}
+
+.filter-tabs a.active {
+    border-color: #813027;
+    background: #813027;
+    color: #fff;
+}
+
+.review-layout {
+    display: grid;
+    grid-template-columns: minmax(0,1.7fr) 350px;
+    gap: 18px;
+    align-items: start;
+}
+
+.post-list,
+.post-detail {
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.post-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.post-list th,
+.post-list td {
+    padding: 12px 9px;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 11px;
+}
+
+.post-list th {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.post-list tbody tr.selected {
+    background: #fff5eb;
+}
+
+.post-title {
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-title img,
+.small-image {
+    width: 42px;
+    height: 34px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.post-title img {
+    object-fit: cover;
+}
+
+.small-image {
+    background: #eee;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-btn {
+    padding: 6px 10px;
+    border: 1px solid #ef6565;
+    border-radius: 5px;
+    color: #e34c4c;
+}
+
+.empty {
+    padding: 35px !important;
+    color: #888;
+    text-align: center !important;
+}
+
+.pagination {
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.pagination a {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+.pagination a.active {
+    border-color: #813027;
+    background: #813027;
+    color: #fff;
+}
+
+.detail-top {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.detail-top h3 {
+    font-size: 13px;
+}
+
+.detail-content {
+    max-height: 520px;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.detail-content h2 {
+    margin-bottom: 18px;
+    color: #3e302c;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.meta {
+    margin-bottom: 16px;
+}
+
+.meta p {
+    margin-bottom: 5px;
+    font-size: 11px;
+}
+
+.status {
+    font-weight: 600;
+}
+
+.status.pending {
+    color: #a367d2;
+}
+
+.status.published {
+    color: #39934c;
+}
+
+.status.rejected {
+    color: #d94848;
+}
+
+.detail-image {
+    width: 100%;
+    max-height: 180px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.article-summary {
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fff8ed;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.article-content {
+    color: #444;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.reject-note {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fbe2e2;
+    color: #a73535;
+    font-size: 11px;
+}
+
+.reject-note p {
+    margin-top: 5px;
+}
+
+.detail-actions {
+    padding: 12px 15px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.reject-btn,
+.approve-btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.reject-btn {
+    border: 1px solid #ef5b5b;
+    background: #fff;
+    color: #e44b4b;
+}
+
+.approve-btn {
+    border: none;
+    background: #419854;
+    color: #fff;
+}
+
+.choose-post {
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.choose-post i {
+    font-size: 30px;
+}
+
+.reject-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.4);
+}
+
+.reject-modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 420px;
+    max-width: calc(100% - 30px);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.modal-header {
+    padding: 14px 17px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h3 {
+    font-size: 15px;
+}
+
+.modal-header button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 17px;
+}
+
+.modal-body label {
+    margin-bottom: 7px;
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.modal-body label span {
+    color: #d33;
+}
+
+.modal-body textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    outline: none;
+    font-family: inherit;
+}
+
+.modal-actions {
+    padding: 0 17px 17px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.cancel-btn,
+.confirm-reject {
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.cancel-btn {
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.confirm-reject {
+    border: 0;
+    background: #d94646;
+    color: #fff;
+}
+
+@media (max-width: 950px) {
+    .review-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-tabs {
+        flex-wrap: wrap;
+    }
+}
