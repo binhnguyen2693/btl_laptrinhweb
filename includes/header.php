@@ -31,10 +31,11 @@
 
             <nav style="display: flex; gap: 20px; font-size: var(--font-base);">
                 <a href="<?php echo $root_path; ?>index.php" style="color: #FFFFFF; text-decoration: none;" ...>Trang chủ</a>
-                <a href="tin-khoa.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'tin-khoa.php') ? 'active' : ''; ?>">Tin khoa</a>
-                <a href="hoc-tap.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'hoc-tap.php') ? 'active' : ''; ?>">Học tập</a>
-                <a href="co-hoi.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'co-hoi.php') ? 'active' : ''; ?>">Cơ hội</a>
-                <a href="su-kien.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'su-kien.php') ? 'active' : ''; ?>">Sự kiện</a>
+                <a href="tin-khoa.php" style="color: #FFFFFF; text-decoration: none;" class="<?= (basename($_SERVER['PHP_SELF']) == 'tin-khoa.php') ? 'active' : ''; ?>">Tin khoa</a>
+                <a href="hoc-tap.php" style="color: #FFFFFF; text-decoration: none;" class="<?= (basename($_SERVER['PHP_SELF']) == 'hoc-tap.php') ? 'active' : ''; ?>">Học tập</a>
+                <a href="co-hoi.php" style="color: #FFFFFF; text-decoration: none;" class="<?= (basename($_SERVER['PHP_SELF']) == 'co-hoi.php') ? 'active' : ''; ?>">Cơ hội</a>
+                <a href="su-kien.php" style="color: #FFFFFF; text-decoration: none;" class="<?= (basename($_SERVER['PHP_SELF']) == 'su-kien.php') ? 'active' : ''; ?>">Sự kiện</a>
+                <a href="hop-tac-dong.php" style="color: #FFFFFF; text-decoration: none;" class="<?= (basename($_SERVER['PHP_SELF']) == 'hop-tac-dong.php') ? 'active' : ''; ?>">Hộp Tác Động</a>
 </nav>
 
             <div style="display: flex; align-items: center; gap: 16px;">
