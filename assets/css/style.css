@@ -15,16 +15,15 @@
     --green: #6C8065;
     --cream: #FFF8EC;
 
-    /* Khai báo hệ thống biến cỡ chữ (Dễ dàng thay đổi ở đây) */
-    --font-xs: 8px;
-    --font-sm: 9px;
-    --font-md: 10px;
-    --font-base: 12px;
-    --font-lg: 14px;
-    --font-title-card: 16px;
-    --font-section: 20px;
-    --font-heading: 30px;
-    --font-hero: 38px;
+    --font-xs: 12px;       
+    --font-sm: 13px;     
+    --font-md: 14px;       
+    --font-base: 16px;   
+    --font-lg: 18px;       
+    --font-title-card: 20px;
+    --font-section: 24px;  
+    --font-heading: 34px;  
+    --font-hero: 44px;
 }
 
 * {
