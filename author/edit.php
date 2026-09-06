@@ -1,14 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/* Tạm giả lập tác giả, xóa khi merge Login */
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-    $_SESSION['full_name'] = 'Nguyễn Văn A';
-    $_SESSION['role'] = 'author';
-}
-
-$authorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/author-area.php';
 $postId = (int)($_GET['id'] ?? 0);
 
 $error = '';
@@ -52,6 +43,7 @@ $oldEditorNote = $post['editor_note'];
 
 /* Xử lý form */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
 
     /* =========================
        XÓA BÀI VIẾT
@@ -387,7 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Chỉnh sửa bài viết';
 $pageCss = 'edit.css';
 
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="edit-page-container">
@@ -474,7 +466,7 @@ include __DIR__ . '/../includes/header.php';
         enctype="multipart/form-data"
         class="edit-post-form"
         id="editPostForm"
-    >
+    ><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
 
         <div class="form-group">
 
@@ -746,4 +738,4 @@ thumbnailInput.addEventListener(
 );
 </script>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

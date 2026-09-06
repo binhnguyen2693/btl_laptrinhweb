@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/app.php';
+require_once __DIR__ . '/auth.php';
 $pageTitle = $pageTitle ?? 'Nhịp Khoa';
 $user = $_SESSION['user'] ?? null;
 ?>
@@ -18,7 +18,7 @@ $user = $_SESSION['user'] ?? null;
     </nav>
     <div class="header-actions"><form class="expanding-search" role="search"><input class="search-input" type="search" name="q" placeholder="Tìm kiếm bài viết..." aria-label="Nhập từ khóa tìm kiếm" autocomplete="off"><button class="search-circle" type="submit" aria-label="Mở tìm kiếm" aria-expanded="false"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-search.svg" alt=""></button></form>
     <?php if ($user === null): ?><a class="login-pill" href="<?= e($basePath ?? '') ?>dang-nhap.php"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-user.svg" alt="">Đăng nhập</a>
-    <?php else: ?><span class="welcome">Chào, <?= e($user['full_name']) ?></span><?php if (($user['role'] ?? '') === 'admin'): ?><a href="<?= e($basePath ?? '') ?>admin/dashboard.php">Quản trị</a><?php endif; ?><form method="post" action="<?= e($basePath ?? '') ?>dang-xuat.php" class="inline-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button class="link-button logout-button" type="submit"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M14 3h4a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-4"/></svg><span>Đăng xuất</span></button></form><?php endif; ?>
+    <?php else: ?><span class="welcome">Chào, <?= e($user['full_name']) ?></span><?php if (in_array(($user['role'] ?? ''), ['admin','editor','author'], true)): ?><a href="<?= e($basePath ?? '') ?><?= e(roleLandingPage((string) $user['role'])) ?>"><?= ($user['role'] ?? '') === 'admin' ? 'Quản trị' : 'Khu vực của tôi' ?></a><?php endif; ?><form method="post" action="<?= e($basePath ?? '') ?>dang-xuat.php" class="inline-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button class="link-button logout-button" type="submit"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M14 3h4a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-4"/></svg><span>Đăng xuất</span></button></form><?php endif; ?>
     </div><button class="mobile-menu" aria-label="Mở menu">☰</button>
 </div></header>
 <main>

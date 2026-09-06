@@ -1,14 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/* TẠM GIẢ LẬP TÁC GIẢ, sau này bỏ khi merge Login */
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-    $_SESSION['full_name'] = 'Nguyễn Văn A';
-    $_SESSION['role'] = 'author';
-}
-
-$authorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/author-area.php';
 $filter = $_GET['status'] ?? 'all';
 
 /* Đếm số bài theo trạng thái */
@@ -58,7 +49,7 @@ $posts = $stmt->fetchAll();
 $pageTitle = 'Bài viết của tôi';
 $pageCss = 'posts.css';
 
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="posts-page-container">
@@ -236,4 +227,4 @@ include __DIR__ . '/../includes/header.php';
 
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

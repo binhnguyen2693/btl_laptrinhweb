@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/includes/app.php';
+require_once __DIR__ . '/includes/auth.php';
 if (!empty($_SESSION['user'])) {
-    redirect('index.php');
+    redirect(roleLandingPage((string) ($_SESSION['user']['role'] ?? 'reader')));
 }
 
 $email = '';
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'full_name' => $user['full_name'],
                     'role' => $user['role'],
                 ];
-                redirect($user['role'] === 'admin' ? 'admin/dashboard.php' : 'index.php');
+                redirect(roleLandingPage((string) $user['role']));
             }
         } catch (PDOException $exception) {
             $errors['login'] = 'Chưa kết nối được cơ sở dữ liệu. Hãy kiểm tra MySQL và cấu hình.';

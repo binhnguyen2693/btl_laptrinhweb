@@ -1,10 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/* Tạm thời giả lập biên tập viên, sau này có đăng nhập thì xóa 3 dòng này */
-$_SESSION['user_id'] = 2;
-$_SESSION['full_name'] = 'Biên tập viên';
-$_SESSION['role'] = 'editor';
+require_once __DIR__ . '/../includes/editor-area.php';
 
 /* Thống kê */
 $stmt = $pdo->query("
@@ -153,4 +148,4 @@ include __DIR__ . '/../includes/editor-header.php';
     </section>
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

@@ -73,6 +73,10 @@ Mọi thành viên dùng chung cấu trúc trong `database/schema.sql` và dữ 
 2. Sửa `name`, `user`, `password`, `host` hoặc `port` theo MySQL trên máy đó.
 3. Không commit `config.local.php`; file này đã có trong `.gitignore`.
 
+Nếu database đã được tạo từ trước, chạy thêm
+`database/migrations/2026_09_06_role_content.sql` để bổ sung dữ liệu cần cho khu vực
+Tác giả và Biên tập viên.
+
 Biến môi trường `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` vẫn được
 ưu tiên nếu máy hoặc server đã cấu hình sẵn.
 

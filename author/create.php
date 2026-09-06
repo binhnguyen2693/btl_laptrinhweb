@@ -1,14 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/* Tạm giả lập tác giả */
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-    $_SESSION['full_name'] = 'Nguyễn Văn A';
-    $_SESSION['role'] = 'author';
-}
-
-$authorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/author-area.php';
 $error = '';
 $success = '';
 
@@ -16,6 +7,7 @@ $stmt = $pdo->query("SELECT id, name FROM categories ORDER BY id ASC");
 $categories = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
     $title = trim($_POST['title'] ?? '');
     $categoryId = (int)($_POST['category_id'] ?? 0);
     $summary = trim($_POST['summary'] ?? '');
@@ -71,16 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($error === '') {
         try {
+            $slug = 'bai-viet-' . bin2hex(random_bytes(6));
             $stmt = $pdo->prepare("
                 INSERT INTO posts
-                (author_id, category_id, title, summary, thumbnail, content, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                (author_id, category_id, title, slug, summary, thumbnail, content, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
 
             $stmt->execute([
                 $authorId,
                 $categoryId,
                 $title,
+                $slug,
                 $summary,
                 $thumbnail,
                 $content,
@@ -105,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Tạo bài viết';
 $pageCss = 'create.css';
 
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="create-page-container">
@@ -128,7 +122,7 @@ include __DIR__ . '/../includes/header.php';
         </div>
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data" class="post-form">
+    <form method="POST" enctype="multipart/form-data" class="post-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
 
         <div class="form-group">
             <label for="title">Tiêu đề <span>*</span></label>
@@ -239,4 +233,4 @@ preview.innerHTML = '';
 <?php endif; ?>
 </script>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

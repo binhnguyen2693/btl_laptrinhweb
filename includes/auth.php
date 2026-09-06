@@ -7,6 +7,16 @@ function currentUser(): ?array
     return $_SESSION['user'] ?? null;
 }
 
+function roleLandingPage(string $role): string
+{
+    return match ($role) {
+        'admin' => 'admin/dashboard.php',
+        'editor' => 'editor/dashboard.php',
+        'author' => 'author/dashboard.php',
+        default => 'index.php',
+    };
+}
+
 function requireLogin(): void
 {
     if (currentUser() === null) {

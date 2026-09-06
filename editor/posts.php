@@ -1,11 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-$_SESSION['user_id'] = 2;
-$_SESSION['full_name'] = 'Biên tập viên';
-$_SESSION['role'] = 'editor';
-
-$editorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/editor-area.php';
 $filter = $_GET['status'] ?? 'all';
 $viewId = (int)($_GET['view'] ?? 0);
 $allowed = ['all','pending','published','rejected'];
@@ -14,6 +8,7 @@ if (!in_array($filter,$allowed,true)) $filter = 'all';
 
 /* Duyệt hoặc từ chối */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
     $postId = (int)($_POST['post_id'] ?? 0);
     $action = $_POST['action'] ?? '';
 
@@ -25,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'approve') {
             $stmt = $pdo->prepare("
                 UPDATE posts
-                SET status='published',editor_id=?,editor_note=NULL
+                SET status='published',reviewer_id=?,editor_note=NULL,published_at=NOW()
                 WHERE id=? AND status='pending'
             ");
             $stmt->execute([$editorId,$postId]);
@@ -38,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($note !== '') {
                 $stmt = $pdo->prepare("
                     UPDATE posts
-                    SET status='rejected',editor_id=?,editor_note=?
+                    SET status='rejected',reviewer_id=?,editor_note=?,published_at=NULL
                     WHERE id=? AND status='pending'
                 ");
                 $stmt->execute([$editorId,$note,$postId]);
@@ -270,7 +265,7 @@ include __DIR__ . '/../includes/editor-header.php';
                             <i class="fa-solid fa-xmark"></i> Từ chối
                         </button>
 
-                        <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn duyệt bài này?')">
+                        <form method="POST" onsubmit="return confirm('Bạn chắc chắn muốn duyệt bài này?')"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
                             <input type="hidden" name="post_id" value="<?= $selectedPost['id'] ?>">
                             <button type="submit" name="action" value="approve" class="approve-btn">
                                 <i class="fa-solid fa-check"></i> Duyệt bài
@@ -298,7 +293,7 @@ include __DIR__ . '/../includes/editor-header.php';
             </button>
         </div>
 
-        <form method="POST">
+        <form method="POST"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
             <input type="hidden" name="post_id" value="<?= $selectedPost['id'] ?>">
 
             <div class="modal-body">
@@ -331,4 +326,4 @@ window.addEventListener('click',function(e){
 </script>
 <?php endif; ?>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

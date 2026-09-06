@@ -1,17 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/*
- * TẠM THỜI GIẢ LẬP TÁC GIẢ
- * Sau khi nhóm merge phần Login thì xóa đoạn này.
- */
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-    $_SESSION['full_name'] = 'Nguyễn Văn A';
-    $_SESSION['role'] = 'author';
-}
-
-$authorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/author-area.php';
 
 /* Lấy thông tin tác giả */
 $stmt = $pdo->prepare("SELECT full_name FROM users WHERE id = ?");
@@ -76,7 +64,7 @@ $recentPosts = $stmt->fetchAll();
 $pageTitle = 'Trang tổng quan';
 $pageCss = 'dashboard.css';
 
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="dashboard-container">
@@ -281,4 +269,4 @@ include __DIR__ . '/../includes/header.php';
 
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>

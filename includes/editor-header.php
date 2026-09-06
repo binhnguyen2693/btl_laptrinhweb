@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../config/config.php';
-
 $pageTitle = $pageTitle ?? 'Biên tập viên - NHỊP KHOA';
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
@@ -30,8 +28,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </nav>
         <div class="editor-user">
             <i class="fa-regular fa-user"></i>
-            <span>Biên tập viên</span>
-            <i class="fa-solid fa-chevron-down"></i>
+            <span><?= e(currentUser()['full_name'] ?? 'Biên tập viên') ?></span>
+            <form method="post" action="<?= BASE_URL ?>dang-xuat.php"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit">Đăng xuất</button></form>
         </div>
     </div>
 </header>

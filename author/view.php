@@ -1,14 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-
-/* Tạm giả lập tác giả */
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-    $_SESSION['full_name'] = 'Nguyễn Văn A';
-    $_SESSION['role'] = 'author';
-}
-
-$authorId = $_SESSION['user_id'];
+require_once __DIR__ . '/../includes/author-area.php';
 $postId = (int)($_GET['id'] ?? 0);
 
 if ($postId <= 0) {
@@ -65,7 +56,7 @@ $postCode = 'BV' . str_pad($post['id'], 3, '0', STR_PAD_LEFT);
 $pageTitle = 'Xem bài viết';
 $pageCss = 'view.css';
 
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="view-post-container">
@@ -197,4 +188,4 @@ include __DIR__ . '/../includes/header.php';
 
 </div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/role-footer.php'; ?>
