@@ -28,7 +28,7 @@
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-size:10px; color:#8C827A;">
           <span>10/08/2026</span>
-          <a href="chi-tiet-thay-doi.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
+          <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
         </div>
       </div>
     </article>
@@ -44,7 +44,7 @@
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-size:10px; color:#8C827A;">
           <span>10/08/2026</span>
-          <a href="chi-tiet-thay-doi.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
+          <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
         </div>
       </div>
     </article>
@@ -60,7 +60,7 @@
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-size:10px; color:#8C827A;">
           <span>10/08/2026</span>
-          <a href="chi-tiet-thay-doi.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
+          <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:10.5px;">Xem bài →</a>
         </div>
       </div>
     </article>
