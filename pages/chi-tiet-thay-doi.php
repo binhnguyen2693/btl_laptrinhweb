@@ -1,212 +1,143 @@
 <?php include '../includes/header.php'; ?>
-
-<!-- Logic xử lý dữ liệu PHP -->
-<?php
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=nhip_khoa_db;charset=utf8mb4", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Lấy chi tiết thông báo thay đổi
-    $stmt = $pdo->prepare("SELECT * FROM notice_changes WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-    $notice = $stmt->fetch(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    // Dữ liệu mẫu chuẩn 100% theo giao diện trong ảnh
-    $notice = [
-        'id' => 1,
-        'title' => 'Lịch hội thảo nghiên cứu khoa học được chuyển sang ngày 25/08/2026',
-        'updated_at' => '16/08/2026',
-        'author' => 'Ban tổ chức',
-        'views' => 325,
-        'old_time' => '20/08/2026',
-        'new_time' => '25/08/2026',
-        'target' => 'Sinh viên đã đăng ký',
-        'content_change' => 'Ban tổ chức thông báo thay đổi lịch tổ chức Hội thảo nghiên cứu khoa học sinh viên năm 2026. Lịch hội thảo sẽ được chuyển từ ngày 20/08/2026 sang ngày 25/08/2026.',
-        'affected_users' => 'Sinh viên đã đăng ký tham dự Hội thảo nghiên cứu khoa học sinh viên năm 2026.',
-        'action_required' => 'Sinh viên vui lòng kiểm tra lại lịch trình và sắp xếp thời gian để tham dự đúng ngày mới. Nếu có thắc mắc, liên hệ Ban tổ chức để được hỗ trợ.',
-        'source' => 'Thông báo của khoa Công nghệ thông tin',
-        // Dữ liệu cho bảng tóm tắt cột phải
-        'summary_change_type' => 'Thay đổi ngày tổ chức',
-        'summary_effective_date' => 'Từ ngày 16/08/2026',
-        'summary_target' => 'Sinh viên đăng ký tham dự hội thảo',
-        'summary_impact_level' => 'Trung bình',
-        'summary_action' => 'Kiểm tra lịch và có mặt đúng thời gian mới'
-    ];
-
-    $comments = [
-        [
-            'author' => 'Nguyễn Minh Anh',
-            'avatar' => 'assets/images/user1.jpg',
-            'created_at' => '14/08/2026',
-            'content' => 'Cảm ơn khoa đã thông báo sớm để sinh viên sắp xếp thời gian ạ.'
-        ],
-        [
-            'author' => 'Trần Hoàng Nam',
-            'avatar' => 'assets/images/user2.jpg',
-            'created_at' => '14/08/2026',
-            'content' => 'Mình đã cập nhật lại lịch, cảm ơn vì đã thông báo.'
-        ]
-    ];
-}
-?>
-
-<div class="container">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        Trang chủ / <b>Chi tiết thay đổi</b>
+<main class="container">
+  <div style="font-size:12px; color:var(--muted); margin-bottom:12px;">
+    <a href="../index.php">Trang chủ</a> / <span style="color:var(--brown); font-weight:600;">Chi tiết thay đổi</span>
+  </div>
+  <div style="display:flex; gap:24px; background:#fff; padding:24px; border-radius:16px; border:1.5px solid var(--border);">
+    <div style="flex:1; max-width:62%;">
+      <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 10px; background:#D97706; color:#fff; font-size:10px; font-weight:700; border-radius:12px; margin-bottom:10px;">
+        ⚠️ THÔNG TIN THAY ĐỔI
+      </span>
+      <h1 style="font-size:22px; font-weight:800; color:var(--brown-dark); line-height:1.35; margin-bottom:8px;">Lịch hội thảo nghiên cứu khoa học được chuyển sang ngày 25/08/2026</h1>
+      <div style="font-size:10.5px; color:#8C827A; margin-bottom:18px;">
+        <span>Cập nhật lần cuối: 16/08/2026</span> &nbsp;•&nbsp; <span>Người đăng: Ban tổ chức</span> &nbsp;•&nbsp; <span>325 lượt xem</span>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; background:#FFFBEB; border:1px dashed #F59E0B; border-radius:10px; padding:12px 16px; margin-bottom:20px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div>
+            <span style="font-size:9px; color:#B45309; text-transform:uppercase; font-weight:700; display:block;">THỜI GIAN CŨ</span>
+            <span style="font-size:12px; font-weight:700; color:#78350F; text-decoration:line-through;">20/08/2026</span>
+          </div>
+          <span style="color:#F59E0B; font-weight:700;">→</span>
+          <div>
+            <span style="font-size:9px; color:#B45309; text-transform:uppercase; font-weight:700; display:block;">THỜI GIAN MỚI</span>
+            <span style="font-size:12px; font-weight:800; color:#D97706;">25/08/2026</span>
+          </div>
+        </div>
+        <div style="border-left:1px solid #FCD34D; padding-left:16px;">
+          <span style="font-size:9px; color:#B45309; text-transform:uppercase; font-weight:700; display:block;">ĐỐI TƯỢNG ẢNH HƯỞNG</span>
+          <span style="font-size:11px; font-weight:700; color:#78350F;">Sinh viên đã đăng ký</span>
+        </div>
+      </div>
+      <div style="font-size:11px; line-height:1.6; color:#4A423D; display:flex; flex-direction:column; gap:12px;">
+        <div>
+          <strong style="color:var(--brown-dark); text-transform:uppercase; font-size:10.5px;">NỘI DUNG THAY ĐỔI</strong>
+          <p style="margin-top:2px;">Ban tổ chức thông báo thay đổi lịch tổ chức Hội thảo nghiên cứu khoa học sinh viên năm 2026. Lịch hội thảo sẽ được chuyển từ ngày 20/08/2026 sang ngày 25/08/2026.</p>
+        </div>
+        <div>
+          <strong style="color:var(--brown-dark); text-transform:uppercase; font-size:10.5px;">AI BỊ ẢNH HƯỞNG?</strong>
+          <p style="margin-top:2px;">Sinh viên đã đăng ký tham dự Hội thảo nghiên cứu khoa học sinh viên năm 2026.</p>
+        </div>
+        <div>
+          <strong style="color:var(--brown-dark); text-transform:uppercase; font-size:10.5px;">CẦN LÀM GÌ?</strong>
+          <p style="margin-top:2px;">Sinh viên vui lòng kiểm tra lại lịch trình và sắp xếp thời gian để tham dự đúng ngày mới. Nếu có thắc mắc, liên hệ Ban tổ chức để được hỗ trợ.</p>
+        </div>
+      </div>
+      <div style="margin-top:20px; padding-top:12px; border-top:1px dashed #DDD;">
+        <span style="font-size:10px; font-weight:700; color:var(--brown-dark); text-transform:uppercase; display:block; margin-bottom:6px;">NGUỒN THÔNG TIN</span>
+        <span style="padding:4px 10px; background:#F5F2EE; border-radius:12px; font-size:10px; color:#6B625D; display:inline-block;">Thông báo của khoa Công nghệ thông tin</span>
+      </div>
+      <div style="margin-top:25px;">
+        <h4 style="font-size:12px; font-weight:800; color:var(--brown-dark); margin-bottom:10px;">BÀI VIẾT LIÊN QUAN</h4>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+          <a href="#" style="border:1px solid #DDD; border-radius:8px; padding:6px; text-decoration:none; display:flex; gap:6px; align-items:center;">
+            <img src="../assets/images/hoc-tap-1.png" style="width:40px; height:32px; object-fit:cover; border-radius:4px;" onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=100&auto=format&fit=crop'">
+            <div>
+              <h5 style="font-size:9px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Cách ghi chép hiệu quả</h5>
+              <span style="font-size:8px; color:#8C827A;">12/08/2026</span>
+            </div>
+          </a>
+          <a href="#" style="border:1px solid #DDD; border-radius:8px; padding:6px; text-decoration:none; display:flex; gap:6px; align-items:center;">
+            <img src="../assets/images/hoc-tap-2.png" style="width:40px; height:32px; object-fit:cover; border-radius:4px;" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=100&auto=format&fit=crop'">
+            <div>
+              <h5 style="font-size:9px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Làm thế nào để đọc tài liệu</h5>
+              <span style="font-size:8px; color:#8C827A;">11/08/2026</span>
+            </div>
+          </a>
+          <a href="#" style="border:1px solid #DDD; border-radius:8px; padding:6px; text-decoration:none; display:flex; gap:6px; align-items:center;">
+            <img src="../assets/images/hoc-tap-3.png" style="width:40px; height:32px; object-fit:cover; border-radius:4px;" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&auto=format&fit=crop'">
+            <div>
+              <h5 style="font-size:9px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Kinh nghiệm làm bài kiểm tra</h5>
+              <span style="font-size:8px; color:#8C827A;">10/08/2026</span>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
-
-    <!-- Layout chính 2 cột -->
-    <div class="change-detail-layout">
-        
-        <!-- CỘT TRÁI: Nội dung chi tiết thông báo thay đổi -->
-        <main class="change-main">
-            <div class="badge-change-warning">⚠ THÔNG TIN THAY ĐỔI</div>
-            
-            <h1 class="change-title"><?= htmlspecialchars($notice['title']) ?></h1>
-            
-            <div class="change-meta">
-                Cập nhật lần cuối: <?= htmlspecialchars($notice['updated_at']) ?> • 
-                Người đăng: <?= htmlspecialchars($notice['author']) ?> • 
-                <?= htmlspecialchars($notice['views']) ?> lượt xem
+    <div style="flex:1; display:flex; flex-direction:column; gap:20px;">
+      <div style="border:1.5px solid #8B0000; border-radius:12px; padding:16px; background:#FFF;">
+        <h3 style="font-size:13px; font-weight:800; color:#8B0000; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.5px;">TÓM TẮT THAY ĐỔI</h3>
+        <table style="width:100%; font-size:10.5px; border-collapse:collapse;">
+          <tr style="border-bottom:1px dashed #EEE;">
+            <td style="padding:6px 0; color:#6B625D; width:40%;">Nội dung thay đổi</td>
+            <td style="padding:6px 0; text-align:right; font-weight:700; color:var(--brown-dark);">Thay đổi ngày tổ chức</td>
+          </tr>
+          <tr style="border-bottom:1px dashed #EEE;">
+            <td style="padding:6px 0; color:#6B625D;">Thời gian áp dụng</td>
+            <td style="padding:6px 0; text-align:right; font-weight:700; color:var(--brown-dark);">Từ ngày 16/08/2026</td>
+          </tr>
+          <tr style="border-bottom:1px dashed #EEE;">
+            <td style="padding:6px 0; color:#6B625D;">Đối tượng</td>
+            <td style="padding:6px 0; text-align:right; font-weight:700; color:var(--brown-dark);">Sinh viên đăng ký tham dự hội thảo</td>
+          </tr>
+          <tr style="border-bottom:1px dashed #EEE;">
+            <td style="padding:6px 0; color:#6B625D;">Mức độ ảnh hưởng</td>
+            <td style="padding:6px 0; text-align:right;">
+              <span style="padding:2px 8px; border:1px solid #F59E0B; border-radius:10px; color:#D97706; font-size:9.5px; font-weight:700;">Trung bình</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:6px 0; color:#6B625D;">Cần làm gì?</td>
+            <td style="padding:6px 0; text-align:right; font-weight:700; color:var(--brown-dark);">Kiểm tra lịch và có mặt đúng thời gian mới</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-size:13px; font-weight:800; color:var(--brown-dark); margin-bottom:12px;">Bình luận (2)</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; gap:10px; border-bottom:1px solid #EEE; padding-bottom:8px;">
+            <div style="width:30px; height:30px; border-radius:50%; background:#DDD; overflow:hidden; flex-shrink:0;">
+              <img src="../assets/images/user-1.png" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop'">
             </div>
-
-            <!-- Khung nổi bật so sánh Thời gian cũ -> Thời gian mới -->
-            <div class="time-comparison-box">
-                <div class="time-box">
-                    <span class="label">THỜI GIAN CŨ</span>
-                    <span class="value old-date"><?= htmlspecialchars($notice['old_time']) ?></span>
-                </div>
-                <div class="arrow">&rarr;</div>
-                <div class="time-box">
-                    <span class="label">THỜI GIAN MỚI</span>
-                    <span class="value new-date"><?= htmlspecialchars($notice['new_time']) ?></span>
-                </div>
-                <div class="divider">|</div>
-                <div class="time-box">
-                    <span class="label">ĐỐI TƯỢNG ÁNH HƯỞNG</span>
-                    <span class="value"><?= htmlspecialchars($notice['target']) ?></span>
-                </div>
+            <div>
+              <h4 style="font-size:10.5px; font-weight:700; color:var(--brown-dark); margin:0;">Nguyễn Minh Anh</h4>
+              <p style="font-size:10px; color:#5E5752; margin:2px 0;">Cảm ơn khoa đã thông báo sớm để sinh viên sắp xếp thời gian ạ.</p>
+              <span style="font-size:8.5px; color:#8C827A;">14/08/2026</span>
             </div>
-
-            <!-- Chi tiết các mục nội dung -->
-            <div class="change-body">
-                <h3>NỘI DUNG THAY ĐỔI</h3>
-                <p><?= htmlspecialchars($notice['content_change']) ?></p>
-
-                <h3>AI BỊ ÁNH HƯỞNG?</h3>
-                <p><?= htmlspecialchars($notice['affected_users']) ?></p>
-
-                <h3>CẦN LÀM GÌ?</h3>
-                <p><?= htmlspecialchars($notice['action_required']) ?></p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div style="width:30px; height:30px; border-radius:50%; background:#DDD; overflow:hidden; flex-shrink:0;">
+              <img src="../assets/images/user-2.png" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop'">
             </div>
-
-            <!-- Nguồn thông tin -->
-            <div class="change-source-section">
-                <span>NGUỒN THÔNG TIN</span><br>
-                <span class="source-badge"><?= htmlspecialchars($notice['source']) ?></span>
+            <div>
+              <h4 style="font-size:10.5px; font-weight:700; color:var(--brown-dark); margin:0;">Trần Hoàng Nam</h4>
+              <p style="font-size:10px; color:#5E5752; margin:2px 0;">Mình đã cập nhật lại lịch, cảm ơn vì đã thông báo.</p>
+              <span style="font-size:8.5px; color:#8C827A;">14/08/2026</span>
             </div>
-
-            <!-- Bài viết liên quan (3 thẻ nằm ngang ở dưới cột trái) -->
-            <div class="related-posts-section">
-                <h4 class="related-title">BÀI VIẾT LIÊN QUAN</h4>
-                <div class="related-grid-3col">
-                    <div class="related-card-small">
-                        <img src="assets/images/related1.jpg" alt="Liên quan 1">
-                        <div class="info">
-                            <h5>Cách ghi chép hiệu quả khi học trên lớp</h5>
-                            <span>12/08/2026</span>
-                        </div>
-                    </div>
-                    <div class="related-card-small">
-                        <img src="assets/images/related2.jpg" alt="Liên quan 2">
-                        <div class="info">
-                            <h5>Làm thế nào để đọc hiểu tài liệu chuyên ngành</h5>
-                            <span>12/08/2026</span>
-                        </div>
-                    </div>
-                    <div class="related-card-small">
-                        <img src="assets/images/related3.jpg" alt="Liên quan 3">
-                        <div class="info">
-                            <h5>Kinh nghiệm làm bài tập lớn khoa học hiệu quả</h5>
-                            <span>12/08/2026</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- CỘT PHẢI: Bảng Tóm Tắt + Bình Luận -->
-        <aside class="change-sidebar">
-            
-            <!-- Bảng Tóm Tắt Thay Đổi -->
-            <div class="summary-card">
-                <h3 class="summary-title">TÓM TẮT THAY ĐỔI</h3>
-                <table class="summary-table">
-                    <tr>
-                        <td>Nội dung thay đổi</td>
-                        <td><strong><?= htmlspecialchars($notice['summary_change_type']) ?></strong></td>
-                    </tr>
-                    <tr>
-                        <td>Thời gian áp dụng</td>
-                        <td><?= htmlspecialchars($notice['summary_effective_date']) ?></td>
-                    </tr>
-                    <tr>
-                        <td>Đối tượng</td>
-                        <td><?= htmlspecialchars($notice['summary_target']) ?></td>
-                    </tr>
-                    <tr>
-                        <td>Mức độ ảnh hưởng</td>
-                        <td><span class="badge-impact-medium"><?= htmlspecialchars($notice['summary_impact_level']) ?></span></td>
-                    </tr>
-                    <tr>
-                        <td>Cần làm gì ?</td>
-                        <td><?= htmlspecialchars($notice['summary_action']) ?></td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Phần Bình Luận -->
-            <div class="comments-sidebar-block">
-                <h3 class="comments-title">Bình luận (<?= count($comments) ?>)</h3>
-
-                <div class="comments-list">
-                    <?php foreach ($comments as $comment): ?>
-                        <div class="comment-item">
-                            <img src="<?= htmlspecialchars($comment['avatar']) ?>" alt="Avatar" class="comment-avatar">
-                            <div class="comment-body">
-                                <div class="comment-author"><?= htmlspecialchars($comment['author']) ?></div>
-                                <div class="comment-text"><?= htmlspecialchars($comment['content']) ?></div>
-                                <div class="comment-date"><?= htmlspecialchars($comment['created_at']) ?></div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Form Nhập Bình Luận -->
-                <div class="add-comment-box">
-                    <h4>VIẾT BÌNH LUẬN</h4>
-                    <form action="post-comment.php" method="POST">
-                        <input type="hidden" name="notice_id" value="<?= $id ?>">
-                        <div class="form-group">
-                            <input type="text" name="author_name" placeholder="Nguyễn Văn A" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="comment_text" rows="3" placeholder="Viết bình luận..." required></textarea>
-                        </div>
-                        <div class="form-action">
-                            <button type="submit" class="btn-submit-comment">Gửi bình luận</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </aside>
-
+          </div>
+        </div>
+      </div>
+      <div style="border:1.5px solid var(--brown); border-radius:12px; padding:12px; background:#FAF8F5;">
+        <span style="font-size:9.5px; font-weight:800; color:var(--brown-dark); text-transform:uppercase; display:block; margin-bottom:6px;">VIẾT BÌNH LUẬN</span>
+        <form action="#" method="POST" style="display:flex; flex-direction:column; gap:6px;">
+          <input type="text" placeholder="Nguyễn Văn A" style="padding:5px 8px; border:1px solid #DDD; border-radius:6px; font-size:10.5px; background:#fff; outline:none;">
+          <textarea placeholder="Viết bình luận..." rows="2" style="padding:5px 8px; border:1px solid #DDD; border-radius:6px; font-size:10.5px; background:#fff; outline:none; resize:none;"></textarea>
+          <div style="text-align:right;">
+            <button type="submit" style="padding:4px 12px; background:var(--brown); color:#fff; border:none; border-radius:6px; font-size:9.5px; font-weight:700; cursor:pointer;">Gửi bình luận</button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
-
+  </div>
+</main>
 <?php include '../includes/footer.php'; ?>
