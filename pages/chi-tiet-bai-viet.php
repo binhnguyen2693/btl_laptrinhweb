@@ -23,7 +23,7 @@ exit;
 <div class="box">
 <?php if(!empty($post['image'])): ?>
 <div style="width:100%;max-height:400px;overflow:hidden;border-radius:8px;margin-bottom:20px;">
-<img src="../<?=htmlspecialchars($post['image'])?>" alt="<?=htmlspecialchars($post['title'])?>" style="width:100%;max-height:400px;object-fit:cover;">
+<img src="../<?=htmlspecialchars($post['image'])?>" alt="<?=htmlspecialchars($post['title'])?>" style="width:100%;max-height:400px;object-fit:cover;" onerror="this.style.display='none';">
 </div>
 <?php endif; ?>
 
