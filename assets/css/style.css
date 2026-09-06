@@ -644,6 +644,12 @@ td {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+header nav a.active, 
+.sidebar-content a.active {
+    color: var(--brown) !important;
+    font-weight: 700;
+    border-bottom: 2px solid var(--brown); /* Hoặc thêm gạch chân/nền tùy thích */
+}
 
 @media (max-width: 768px) {
     main.container {
