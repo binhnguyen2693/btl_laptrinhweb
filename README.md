@@ -64,6 +64,18 @@ Mật khẩu: Admin@123
 
 ## Thiết kế CSDL - Buổi 4
 
+### Cấu hình trên từng máy
+
+Mọi thành viên dùng chung cấu trúc trong `database/schema.sql` và dữ liệu mẫu trong
+`database/seed.sql`. Riêng thông tin kết nối có thể khác nhau trên từng máy:
+
+1. Sao chép `config/config.local.example.php` thành `config/config.local.php`.
+2. Sửa `name`, `user`, `password`, `host` hoặc `port` theo MySQL trên máy đó.
+3. Không commit `config.local.php`; file này đã có trong `.gitignore`.
+
+Biến môi trường `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` vẫn được
+ưu tiên nếu máy hoặc server đã cấu hình sẵn.
+
 CSDL `nhip_khoa` gồm 6 bảng chính:
 
 - `roles`, `users`: tài khoản và phân quyền.

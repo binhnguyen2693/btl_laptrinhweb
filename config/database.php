@@ -8,11 +8,23 @@ function db(): PDO
         return $pdo;
     }
 
-    $host = getenv('DB_HOST') ?: '127.0.0.1';
-    $port = getenv('DB_PORT') ?: '3306';
-    $name = getenv('DB_NAME') ?: 'nhip_khoa';
-    $user = getenv('DB_USER') ?: 'root';
-    $password = getenv('DB_PASSWORD') ?: '';
+    $localFile = __DIR__ . '/config.local.php';
+    $local = is_file($localFile) ? require $localFile : [];
+    $local = is_array($local) ? $local : [];
+
+    $value = static function (string $environmentName, string $localName, string $default) use ($local): string {
+        $environmentValue = getenv($environmentName);
+        if ($environmentValue !== false) {
+            return $environmentValue;
+        }
+        return isset($local[$localName]) ? (string) $local[$localName] : $default;
+    };
+
+    $host = $value('DB_HOST', 'host', '127.0.0.1');
+    $port = $value('DB_PORT', 'port', '3306');
+    $name = $value('DB_NAME', 'name', 'nhip_khoa');
+    $user = $value('DB_USER', 'user', 'root');
+    $password = $value('DB_PASSWORD', 'password', '');
 
     $pdo = new PDO("mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4", $user, $password, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
