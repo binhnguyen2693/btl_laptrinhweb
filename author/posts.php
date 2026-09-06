@@ -1,4 +1,3 @@
-@ -1,239 +0,0 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
