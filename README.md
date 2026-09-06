@@ -80,6 +80,29 @@ Tác giả và Biên tập viên.
 Biến môi trường `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` vẫn được
 ưu tiên nếu máy hoặc server đã cấu hình sẵn.
 
+### Dùng chung MySQL trên VPS
+
+Mỗi thành viên tạo `config/config.local.php` với cấu hình sau và điền mật khẩu
+được quản trị viên chia sẻ riêng:
+
+```php
+<?php
+declare(strict_types=1);
+
+return [
+    'host' => '207.148.64.140',
+    'port' => '3306',
+    'name' => 'nhip_khoa',
+    'user' => 'nhip_khoa_app',
+    'password' => 'MAT_KHAU_DUOC_CHIA_SE_RIENG',
+    'ssl_ca' => __DIR__ . '/certs/mysql-ca.pem',
+];
+```
+
+`config.local.php` đã được Git bỏ qua. Không commit hoặc gửi mật khẩu lên kho mã
+nguồn. Chứng chỉ CA trong `config/certs/mysql-ca.pem` là chứng chỉ công khai và
+được dùng để mã hóa kết nối tới MySQL trên VPS.
+
 CSDL `nhip_khoa` gồm 6 bảng chính:
 
 - `roles`, `users`: tài khoản và phân quyền.
