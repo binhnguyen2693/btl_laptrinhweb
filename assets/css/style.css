@@ -1227,7 +1227,8 @@ html,body { margin:0; width:100%; }
     .login-pill { padding:10px 13px; }
 }
 
-.article-image-link { display:block; }
+.article-image-link { display:block; width:100%; height:202px; overflow:hidden; background:#f2ece8; }
+.article-image-link img { display:block; width:100%; height:100%; object-fit:cover; }
 .article-card h3 a { color:inherit; text-decoration:none; }
 .article-card h3 a:hover { color:var(--wine); }
 .public-detail { min-height:62vh; padding:64px 0 82px; background:#fbf8f3; }
