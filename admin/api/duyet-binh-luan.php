@@ -40,7 +40,8 @@ if (!verifyCsrfToken($csrfToken)) {
 
 
 $commentId = (int) ($_POST['comment_id'] ?? 0);
-$status = $_POST['status'] ?? 'approved';
+$status = $_POST['status'] ?? '';
+$action = $_POST['action'] ?? '';
 
 if ($commentId <= 0) {
 
@@ -57,6 +58,33 @@ if ($commentId <= 0) {
 
 $commentModel = new Comment($pdo);
 
+// Xử lý xóa bình luận
+if ($action === 'delete') {
+
+    $result = $commentModel->delete($commentId);
+
+    if ($result) {
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Xóa bình luận thành công.'
+        ]);
+
+    } else {
+
+        http_response_code(500);
+
+        echo json_encode([
+            'success' => false,
+            'message' => 'Không thể xóa bình luận.'
+        ]);
+    }
+
+    exit;
+}
+
+
+// Xử lý cập nhật trạng thái
 $allowedStatuses = [
     'approved',
     'hidden'
@@ -81,9 +109,22 @@ $result = $commentModel->updateStatus(
 
 if ($result) {
 
-    $message = $status === 'hidden'
-        ? 'Ẩn bình luận thành công.'
-        : 'Duyệt bình luận thành công.';
+    if ($action === 'hide') {
+
+        $message = 'Ẩn bình luận thành công.';
+
+    } elseif ($action === 'show') {
+
+        $message = 'Hiển thị bình luận thành công.';
+
+    } elseif ($action === 'approve') {
+
+        $message = 'Duyệt bình luận thành công.';
+
+    } else {
+
+        $message = 'Cập nhật trạng thái bình luận thành công.';
+    }
 
     echo json_encode([
         'success' => true,
@@ -97,6 +138,6 @@ if ($result) {
 
     echo json_encode([
         'success' => false,
-        'message' => 'Không thể duyệt bình luận.'
+        'message' => 'Không thể cập nhật trạng thái bình luận.'
     ]);
 }
