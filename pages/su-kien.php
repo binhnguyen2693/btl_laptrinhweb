@@ -25,7 +25,7 @@
           <p style="font-size:11px; line-height:1.45; color:#5E5752; margin:0;">Chương trình giúp sinh viên tìm hiểu định hướng nghề nghiệp, giao lưu với khách mời và trang bị thêm những kỹ năng cần thiết cho quá trình học tập và làm việc.</p>
         </div>
         <div style="text-align:right; margin-top:10px;">
-          <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:700; font-size:11px;">Xem bài →</a>
+          <a href="chi-tiet-thay-doi.php" style="color:var(--brown-dark); font-weight:700; font-size:11px;">Xem bài →</a>
         </div>
       </div>
     </div>
