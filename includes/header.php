@@ -13,13 +13,11 @@
         $login_path = $in_pages ? '../dang-nhap.php' : 'dang-nhap.php';
         $pages_dir  = $in_pages ? '' : 'pages/';
     ?>
-    
     <link rel="stylesheet" href="<?php echo $css_path; ?>?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="margin: 0; padding: 0; background-color: #FAF6F0; font-family: system-ui, -apple-system, sans-serif;">
+<body>
 
-    <!-- Thanh Header phẳng màu nâu sẫm trùng khớp hoàn toàn với Footer -->
     <header style="background-color: #7A2E25; width: 100%; padding: 14px 0;">
         <div style="max-width: 1280px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between;">
             
@@ -27,8 +25,7 @@
                 <img src="<?php echo $logo_path; ?>?v=<?php echo time(); ?>" alt="Nhịp Khoa Logo" style="height: 44px; width: auto; display: block;">
             </a>
 
-            <!-- Menu trải dài phẳng, bỏ hoàn toàn khung bo xám/đỏ -->
-            <nav style="display: flex; gap: 28px; align-items: center; background: none; padding: 0; border-radius: 0;">
+            <nav style="display: flex; gap: 28px; align-items: center;">
                 <a href="<?php echo $index_path; ?>" style="color: #FFFFFF; text-decoration: none; font-size: 15px; font-weight: 600;">Trang chủ</a>
                 <a href="<?php echo $pages_dir; ?>tin-khoa.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Tin khoa</a>
                 <a href="<?php echo $pages_dir; ?>hoc-tap.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Học tập</a>
@@ -37,7 +34,6 @@
                 <a href="<?php echo $pages_dir; ?>hop-tac-dong.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Hộp tác động</a>
             </nav>
 
-            <!-- Nút tìm kiếm tròn & Đăng nhập trắng -->
             <div style="display: flex; align-items: center; gap: 16px;">
                 <a href="<?php echo $pages_dir; ?>tim-kiem.php" style="color: #FFFFFF; width: 34px; height: 34px; border: 1.5px solid #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px;">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -50,4 +46,4 @@
         </div>
     </header>
 
-    <main style="max-width: 1280px; margin: 30px auto; padding: 0 20px;">
+    <main class="container"></main>
