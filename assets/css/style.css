@@ -587,3 +587,12 @@ header nav a:hover {
         min-height: auto;
     }
 }
+
+.detail-image img, 
+article img, 
+.post-content img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; 
+    border-radius: 8px;
+}
