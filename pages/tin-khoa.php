@@ -1,7 +1,7 @@
 <?php include '../includes/header.php'; ?>
 <main class="container">
 <div class="intro small">
-<h1>TIN KHOA</h1>
+<h1>Tin Khoa</h1>
 <p>Cập nhật những thông tin, hoạt động và thông báo mới nhất từ khoa dành cho sinh viên.</p>
 </div>
 <div class="features">
@@ -12,13 +12,12 @@
 </div>
 <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:120px;">
 <div>
-<span class="badge-tag tag-red">SỰ KIỆN</span>
 <h2 class="card-title" style="margin-top:4px;">Khoa tổ chức hội thảo chuyên ngành dành cho sinh viên</h2>
 <p class="card-desc" style="font-size:12px;margin-top:6px;">Chương trình mang đến cơ hội giao lưu, trao đổi kiến thức và tìm hiểu những xu hướng mới trong lĩnh vực chuyên ngành, giúp sinh viên mở rộng hiểu biết và kết nối với giảng viên, chuyên gia.</p>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted);">
 <span>📅 12/09/2026 • 👁️ 320 lượt xem</span>
-<a href="chi-tiet-thay-doi.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
+<a href="chi-tiet-bai-viet.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
 </div>
 </div>
 </article>
@@ -28,13 +27,12 @@
 </div>
 <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:120px;">
 <div>
-<span class="badge-tag tag-yellow">THÀNH TÍCH</span>
 <h2 class="card-title" style="margin-top:4px;">Sinh viên khoa đạt thành tích nổi bật trong cuộc thi học thuật</h2>
 <p class="card-desc" style="font-size:12px;margin-top:6px;">Những thành tích nổi bật của sinh viên trong các cuộc thi học thuật và hoạt động chuyên môn, góp phần lan tỏa tinh thần học tập và nghiên cứu trong toàn khoa.</p>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted);">
 <span>📅 12/08/2026 • 👁️ 320 lượt xem</span>
-<a href="chi-tiet-thay-doi.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
+<a href="chi-tiet-bai-viet.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
 </div>
 </div>
 </article>
@@ -44,13 +42,12 @@
 </div>
 <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:120px;">
 <div>
-<span class="badge-tag tag-green">THÔNG BÁO</span>
 <h2 class="card-title" style="margin-top:4px;">Khoa triển khai hoạt động hỗ trợ sinh viên trong năm học mới</h2>
 <p class="card-desc" style="font-size:12px;margin-top:6px;">Các hoạt động hỗ trợ nhằm giúp sinh viên tiếp cận thông tin, tài liệu và những cơ hội học tập phù hợp trong năm học mới.</p>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted);">
 <span>📅 10/08/2026 • 👁️ 320 lượt xem</span>
-<a href="chi-tiet-thay-doi.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
+<a href="chi-tiet-bai-viet.php" style="color:var(--brown);font-weight:600;">Xem bài →</a>
 </div>
 </div>
 </article>
