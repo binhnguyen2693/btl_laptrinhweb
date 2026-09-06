@@ -6,4 +6,8 @@ requireRole(['editor', 'admin']);
 $pdo = db();
 $signedInUser = currentUser();
 $editorId = (int) $signedInUser['id'];
-if (!defined('BASE_URL')) define('BASE_URL', '/');
+if (!defined('BASE_URL')) {
+    // Both /author|editor/... and /project/author|editor/... are supported.
+    $areaBasePath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/', 2));
+    define('BASE_URL', rtrim($areaBasePath, '/.') . '/');
+}
