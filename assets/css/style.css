@@ -1246,4 +1246,6 @@ html,body { margin:0; width:100%; }
 .detail-summary { color:#493832; font-size:17px; font-weight:600; line-height:1.65; }
 .detail-content { color:#493f3b; font-size:15px; line-height:1.85; }
 @media(max-width:620px) { .public-detail{padding:34px 0 54px}.detail-article{padding:28px 20px}.public-state{padding:35px 20px}.detail-meta{gap:10px;flex-direction:column} }
-
+/* The compact header keeps search available inside its mobile menu. */
+.desktop-nav .mobile-search-link{display:none}
+@media(max-width:1000px){.desktop-nav .mobile-search-link{display:block}}

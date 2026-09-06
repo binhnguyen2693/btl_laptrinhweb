@@ -7,7 +7,7 @@
 3. Đăng nhập chuyển trang theo vai trò.
 4. Tác giả tạo bài nháp, sửa bài của mình và gửi duyệt.
 5. Biên tập viên hoặc Admin duyệt/từ chối bài đang chờ.
-6. Bài được duyệt chuyển thành `published` và tự xuất hiện trên trang chủ.
+6. Bài được duyệt chuyển thành `published` và xuất hiện trên trang chủ, tìm kiếm và danh mục đang hoạt động.
 7. Admin quản lý tài khoản, vai trò, khóa/mở khóa và truy cập quản lý bài.
 
 ## Đã hoàn thành
@@ -19,12 +19,12 @@
 - Dashboard Tác giả, tạo/sửa/xem/danh sách bài cá nhân.
 - Dashboard Biên tập viên, danh sách và duyệt/từ chối bài.
 - Trang chi tiết công khai chỉ cho bài `published`.
+- Danh sách Tin khoa/Học tập/Cơ hội/Sự kiện, tìm kiếm server-side và phân trang 6 bài.
+- Giữ ngữ cảnh khi xem chi tiết/quay lại danh sách; thông báo 404 và lỗi kết nối riêng.
 - Cấu hình database riêng theo từng máy và migration chung.
 
 ## Đang chờ branch khác
 
-- Danh sách bài theo Tin khoa/Học tập/Cơ hội/Sự kiện.
-- Tìm kiếm server-side và phân trang thật.
 - Chi tiết “Thay đổi đáng chú ý”.
 - Impact Box/lưu bài.
 - Bình luận và quản lý bình luận.
