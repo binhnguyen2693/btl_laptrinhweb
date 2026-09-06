@@ -27,3 +27,16 @@ SOURCE database/seed.sql;
 Chạy `schema.sql` trước vì file này tạo cấu trúc bảng. Chạy `seed.sql` sau vì
 dữ liệu con chỉ thêm được khi dữ liệu ở bảng cha đã tồn tại.
 
+## Danh mục cho các trang công khai
+
+Sau khi đã tạo database, quản trị viên chạy migration
+`migrations/2026_09_06_public_categories.sql` trên đúng database đang dùng.
+Script bổ sung Tin khoa, Học tập, Cơ hội, Sự kiện nếu chưa tồn tại; chạy lại
+không nhân đôi và không đổi danh mục/bài cũ. Nếu tên đã tồn tại với slug khác,
+kiểm tra thủ công trước khi đổi slug; không tự gán lại bài viết cũ.
+
+Không chạy lại schema/seed trên database VPS có dữ liệu. Tác giả chọn danh mục
+mới khi viết bài; chỉ bài đã xuất bản trong danh mục đang hoạt động mới xuất hiện.
+
+Ảnh upload vẫn là file trên máy chạy PHP. Dùng chung MySQL không đồng bộ file ảnh;
+cần chép ảnh tương ứng hoặc thiết lập kho ảnh chung ở đợt triển khai riêng.
