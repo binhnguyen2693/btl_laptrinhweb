@@ -6,12 +6,16 @@
     <title>NHỊP KHOA - Cổng thông tin khoa CNTT</title>
     
     <?php
-        $in_pages   = file_exists('../assets/css/style.css');
-        $css_path   = $in_pages ? '../assets/css/style.css' : 'assets/css/style.css';
-        $logo_path  = $in_pages ? '../assets/images/logo.png' : 'assets/images/logo.png';
-        $index_path = $in_pages ? '../index.php' : 'index.php';
-        $login_path = $in_pages ? '../dang-nhap.php' : 'dang-nhap.php';
-        $pages_dir  = $in_pages ? '' : 'pages/';
+        $current_file = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
+        $in_pages = strpos($current_file, '/pages/') !== false;
+
+        $root_path = $in_pages ? '../' : '';
+
+        $css_path   = $root_path . 'assets/css/style.css';
+        $logo_path  = $root_path . 'assets/images/logo.png';
+        $index_path = $root_path . 'index.php';
+        $login_path = $root_path . 'dang-nhap.php';
+        $pages_dir  = $root_path . 'pages/';
     ?>
     <link rel="stylesheet" href="<?php echo $css_path; ?>?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,14 +29,13 @@
                 <img src="<?php echo $logo_path; ?>?v=<?php echo time(); ?>" alt="Nhịp Khoa Logo" style="height: 44px; width: auto; display: block;">
             </a>
 
-            <nav style="display: flex; gap: 28px; align-items: center;">
-                <a href="<?php echo $index_path; ?>" style="color: #FFFFFF; text-decoration: none; font-size: 15px; font-weight: 600;">Trang chủ</a>
-                <a href="<?php echo $pages_dir; ?>tin-khoa.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Tin khoa</a>
-                <a href="<?php echo $pages_dir; ?>hoc-tap.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Học tập</a>
-                <a href="<?php echo $pages_dir; ?>co-hoi.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Cơ hội</a>
-                <a href="<?php echo $pages_dir; ?>su-kien.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Sự kiện</a>
-                <a href="<?php echo $pages_dir; ?>hop-tac-dong.php" style="color: #FFFFFF; text-decoration: none; font-size: 15px;">Hộp tác động</a>
-            </nav>
+            <nav style="display: flex; gap: 20px; font-size: var(--font-base);">
+                <a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">Trang chủ</a>
+                <a href="tin-khoa.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'tin-khoa.php') ? 'active' : ''; ?>">Tin khoa</a>
+                <a href="hoc-tap.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'hoc-tap.php') ? 'active' : ''; ?>">Học tập</a>
+                <a href="co-hoi.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'co-hoi.php') ? 'active' : ''; ?>">Cơ hội</a>
+                <a href="su-kien.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'su-kien.php') ? 'active' : ''; ?>">Sự kiện</a>
+</nav>
 
             <div style="display: flex; align-items: center; gap: 16px;">
                 <a href="<?php echo $pages_dir; ?>tim-kiem.php" style="color: #FFFFFF; width: 34px; height: 34px; border: 1.5px solid #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px;">
@@ -46,4 +49,4 @@
         </div>
     </header>
 
-    <main class="container"></main>
+    <main class="container">
