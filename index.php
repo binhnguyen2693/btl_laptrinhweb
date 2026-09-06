@@ -32,7 +32,7 @@
     </div>
 
     <div class="home-hero-image">
-        <img src="assets/images/hero-banner.jpg" alt="Sinh viên Khoa CNTT">
+        <img src="assets/images/trang-chu.jpg" alt="Sinh viên Khoa CNTT">
     </div>
 
 </section>
