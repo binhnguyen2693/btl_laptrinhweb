@@ -1,0 +1,143 @@
+.dashboard-container {
+    max-width: 1040px;
+    margin: auto;
+    padding: 25px 20px;
+}
+
+/* CHÀO MỪNG */
+.welcome-section h1 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+    font-size: 16px;
+    color: #7d8d76;
+}
+
+/* THỐNG KÊ */
+.statistics {
+    margin: 25px 0 18px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+}
+
+.stat-card {
+    min-height: 80px;
+    padding: 12px 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+.stat-blue {
+    background: #d9f1ff;
+    color: #078ce9;
+}
+
+.stat-yellow {
+    background: #faedc8;
+    color: #e5ac25;
+}
+
+.stat-purple {
+    background: #f0d9ff;
+    color: #ad49ee;
+}
+
+.stat-green {
+    background: #dff1dd;
+    color: #3e9a52;
+}
+
+.stat-red {
+    background: #f8dada;
+    color: #e6333a;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-info strong {
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.stat-info span {
+    font-size: 14px;
+}
+
+/* BÀI VIẾT GẦN ĐÂY */
+.recent-posts {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 25px 35px;
+}
+
+.recent-header {
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recent-header h2 {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.view-all {
+    color: #813027;
+    font-size: 14px;
+}
+
+.view-all i {
+    margin-left: 5px;
+}
+
+.action-button {
+    display: inline-block;
+    padding: 7px 17px;
+    border-radius: 8px;
+    background: #f0eeee;
+    font-size: 13px;
+}
+
+.action-button:hover {
+    background: #e3dddd;
+}
+
+@media (max-width: 950px) {
+    .statistics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .statistics {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .recent-posts {
+        padding: 12px;
+    }
+}
