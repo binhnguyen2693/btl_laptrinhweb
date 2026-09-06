@@ -1,163 +1,109 @@
 <?php include '../includes/header.php'; ?>
-
-<!-- Logic xử lý dữ liệu PHP -->
-<?php
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-if ($page < 1) $page = 1;
-
-$limit = 3; // 3 bài viết mỗi trang
-$offset = ($page - 1) * $limit;
-
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=nhip_khoa_db;charset=utf8mb4", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Lấy tổng số bài viết thuộc danh mục Cơ hội
-    $sql_count = "SELECT COUNT(*) FROM posts WHERE category_slug = 'co-hoi'";
-    $total_rows = $pdo->query($sql_count)->fetchColumn();
-    $total_pages = ceil($total_rows / $limit);
-
-    // Lấy danh sách bài viết thuộc danh mục Cơ hội
-    $sql_posts = "SELECT * FROM posts 
-                  WHERE category_slug = 'co-hoi' 
-                  ORDER BY created_at DESC 
-                  LIMIT :limit OFFSET :offset";
-    $stmt = $pdo->prepare($sql_posts);
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
-    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    // Dữ liệu mẫu chuẩn 100% theo ảnh giao diện
-    $total_pages = 5;
-    $posts = [
-        [
-            'id' => 1,
-            'title' => 'Cơ hội thực tập tại các doanh nghiệp công nghệ dành cho sinh viên',
-            'description' => 'Nhiều doanh nghiệp đang mở rộng chương trình thực tập dành cho sinh viên, tạo điều kiện để tích lũy kinh nghiệm và làm quen với môi trường làm việc thực tế.',
-            'image_url' => 'assets/images/internship-opp.jpg',
-            'created_at' => '2026-09-12',
-            'views' => 320
-        ],
-        [
-            'id' => 2,
-            'title' => 'Học bổng khuyến khích học tập kỳ I năm 2026',
-            'description' => 'Thông tin về chương trình học bổng dành cho sinh viên có thành tích học tập tốt và tích cực tham gia các hoạt động của khoa.',
-            'image_url' => 'assets/images/scholarship.jpg',
-            'created_at' => '2026-08-12',
-            'views' => 320
-        ],
-        [
-            'id' => 3,
-            'title' => 'Cơ hội việc làm IT Full-time sau khi tốt nghiệp',
-            'description' => 'Các vị trí việc làm phù hợp dành cho sinh viên năm cuối và sinh viên mới tốt nghiệp đang tìm kiếm cơ hội phát triển nghề nghiệp.',
-            'image_url' => 'assets/images/job-opp.jpg',
-            'created_at' => '2026-08-10',
-            'views' => 320
-        ]
-    ];
-}
-?>
-
-<div class="container">
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">Trang chủ / <b>Cơ hội</b></div>
-
-    <!-- Header danh mục Cơ Hội -->
-    <div class="category-header-text">
-        <h1>Cơ hội</h1>
-        <p>Học bổng, thực tập, việc làm và các cơ hội phát triển bản thân dành cho sinh viên.</p>
+<main class="container">
+  <div style="font-size:12px; color:var(--muted); margin-bottom:12px;">
+    <a href="../index.php">Trang chủ</a> / <span style="color:var(--brown); font-weight:600;">Cơ hội</span>
+  </div>
+  <div style="margin-bottom:25px;">
+    <h1 style="font-size:28px; font-weight:800; color:var(--brown-dark); letter-spacing:-0.5px; margin-bottom:4px; text-transform:uppercase;">CƠ HỘI</h1>
+    <p style="font-size:12px; color:#6B625D;">Học bổng, thực tập, việc làm và các cơ hội phát triển bản thân dành cho sinh viên.</p>
+  </div>
+  <div style="display:flex; gap:24px; align-items:flex-start;">
+    <div style="flex:1;">
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <article class="box" style="display:flex; gap:20px; align-items:center; padding:18px; border-radius:14px; border:1.5px solid var(--border); background:#fff;">
+          <div style="width:200px; height:110px; flex-shrink:0; overflow:hidden; border-radius:10px; background:#eee;">
+            <img src="../assets/images/co-hoi-1.png" alt="Cơ hội thực tập" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop'">
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; min-height:110px;">
+            <div>
+              <h2 class="card-title" style="font-size:15px; font-weight:700; color:var(--brown-dark); margin-bottom:6px; line-height:1.3;">Cơ hội thực tập tại các doanh nghiệp công nghệ dành cho sinh viên</h2>
+              <p class="card-desc" style="font-size:11px; line-height:1.45; color:#5E5752;">Nhiều doanh nghiệp đang mở rộng chương trình thực tập dành cho sinh viên, tạo điều kiện để tích lũy kinh nghiệm và làm quen với môi trường làm việc thực tế.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:10px; color:#8C827A;">
+              <span>12/08/2026 &nbsp;•&nbsp; 320 lượt xem</span>
+              <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:11px;">Xem bài →</a>
+            </div>
+          </div>
+        </article>
+        <article class="box" style="display:flex; gap:20px; align-items:center; padding:18px; border-radius:14px; border:1.5px solid var(--border); background:#fff;">
+          <div style="width:200px; height:110px; flex-shrink:0; overflow:hidden; border-radius:10px; background:#eee;">
+            <img src="../assets/images/co-hoi-2.png" alt="Học bổng khuyến khích" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&auto=format&fit=crop'">
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; min-height:110px;">
+            <div>
+              <h2 class="card-title" style="font-size:15px; font-weight:700; color:var(--brown-dark); margin-bottom:6px; line-height:1.3;">Học bổng khuyến khích học tập kỳ I năm 2026</h2>
+              <p class="card-desc" style="font-size:11px; line-height:1.45; color:#5E5752;">Thông tin về chương trình học bổng dành cho sinh viên có thành tích học tập tốt và tích cực tham gia các hoạt động của khoa.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:10px; color:#8C827A;">
+              <span>12/08/2026 &nbsp;•&nbsp; 320 lượt xem</span>
+              <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:11px;">Xem bài →</a>
+            </div>
+          </div>
+        </article>
+        <article class="box" style="display:flex; gap:20px; align-items:center; padding:18px; border-radius:14px; border:1.5px solid var(--border); background:#fff;">
+          <div style="width:200px; height:110px; flex-shrink:0; overflow:hidden; border-radius:10px; background:#eee;">
+            <img src="../assets/images/co-hoi-3.png" alt="Cơ hội việc làm IT" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&auto=format&fit=crop'">
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; min-height:110px;">
+            <div>
+              <h2 class="card-title" style="font-size:15px; font-weight:700; color:var(--brown-dark); margin-bottom:6px; line-height:1.3;">Cơ hội việc làm IT Full-time sau khi tốt nghiệp</h2>
+              <p class="card-desc" style="font-size:11px; line-height:1.45; color:#5E5752;">Các vị trí việc làm phù hợp dành cho sinh viên năm cuối và sinh viên mới tốt nghiệp đang tìm kiếm cơ hội phát triển nghề nghiệp.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:10px; color:#8C827A;">
+              <span>10/08/2026 &nbsp;•&nbsp; 320 lượt xem</span>
+              <a href="chi-tiet-bai-viet.php" style="color:var(--brown-dark); font-weight:600; font-size:11px;">Xem bài →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div style="display:flex; justify-content:center; align-items:center; gap:6px; margin:30px 0 10px 0;">
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown); font-size:11px;">&lt;</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; background:var(--brown); color:#fff; font-size:11px; font-weight:700;">1</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown-dark); font-size:11px;">2</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown-dark); font-size:11px;">3</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown-dark); font-size:11px;">4</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown-dark); font-size:11px;">5</a>
+        <a href="#" style="width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--brown); border-radius:6px; color:var(--brown); font-size:11px;">&gt;</a>
+      </div>
     </div>
-
-    <!-- Layout 2 cột chính -->
-    <div class="news-layout">
-        
-        <!-- CỘT TRÁI: Danh sách bài viết Cơ hội -->
-        <main class="news-main-list">
-            <?php foreach ($posts as $post): ?>
-                <div class="horizontal-card">
-                    <div class="card-image">
-                        <img src="<?= htmlspecialchars($post['image_url']) ?>" alt="<?= htmlspecialchars($post['title']) ?>">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">
-                            <a href="chi-tiet-bai-viet.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a>
-                        </h2>
-                        <p class="card-desc"><?= htmlspecialchars($post['description']) ?></p>
-                        <div class="card-footer-info">
-                            <div class="meta">
-                                <span><?= date('d/m/Y', strtotime($post['created_at'])) ?></span>
-                                <span><?= htmlspecialchars($post['views']) ?> lượt xem</span>
-                            </div>
-                            <a href="chi-tiet-bai-viet.php?id=<?= $post['id'] ?>" class="btn-link">Xem bài &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-
-            <!-- Thanh phân trang -->
-            <div class="pagination">
-                <a href="co-hoi.php?page=<?= max(1, $page - 1) ?>">&lt;</a>
-                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <a href="co-hoi.php?page=<?= $i ?>" class="<?= $i == $page ? 'active' : '' ?>">
-                        <?= $i ?>
-                    </a>
-                <?php endfor; ?>
-                <a href="co-hoi.php?page=<?= min($total_pages, $page + 1) ?>">&gt;</a>
+    <div style="width:300px; flex-shrink:0; display:flex; flex-direction:column; gap:20px;">
+      <div style="border:1.5px solid var(--brown); border-radius:12px; padding:16px; background:#fff;">
+        <h3 style="font-size:12px; font-weight:800; color:var(--brown-dark); text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid #EEE; padding-bottom:6px;">DANH MỤC</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:11px;">
+          <li><a href="tin-khoa.php" style="color:#5E5752; text-decoration:none;">Tin khoa</a></li>
+          <li><a href="hoc-tap.php" style="color:#5E5752; text-decoration:none;">Học tập & Nghiên cứu</a></li>
+          <li><a href="co-hoi.php" style="color:var(--brown); font-weight:700; text-decoration:none;">Cơ hội</a></li>
+          <li><a href="su-kien.php" style="color:#5E5752; text-decoration:none;">Sự kiện</a></li>
+          <li><a href="chi-tiet-thay-doi.php" style="color:#5E5752; text-decoration:none;">Thông tin thay đổi</a></li>
+        </ul>
+      </div>
+      <div style="border:1.5px solid var(--brown); border-radius:12px; padding:16px; background:#fff;">
+        <h3 style="font-size:12px; font-weight:800; color:var(--brown-dark); text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid #EEE; padding-bottom:6px;">CƠ HỘI NỔI BẬT</h3>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
+            <img src="../assets/images/co-hoi-1.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&auto=format&fit=crop'">
+            <div>
+              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Cơ hội thực tập tại doanh nghiệp công nghệ</h4>
+              <span style="font-size:8.5px; color:#8C827A;">12/08/2026</span>
             </div>
-        </main>
-
-        <!-- CỘT PHẢI: Widget Danh Mục & Cơ Hội Nổi Bật -->
-        <aside class="news-sidebar">
-            
-            <!-- Khối Danh Mục -->
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">DANH MỤC</h3>
-                <ul class="sidebar-menu">
-                    <li><a href="tin-khoa.php">Tin khoa</a></li>
-                    <li><a href="hoc-tap.php">Học tập & Nghiên cứu</a></li>
-                    <li><a href="co-hoi.php" class="active">Cơ hội</a></li>
-                    <li><a href="su-kien.php">Sự kiện</a></li>
-                    <li><a href="thong-tin-thay-doi.php">Thông tin thay đổi</a></li>
-                </ul>
+          </a>
+          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
+            <img src="../assets/images/co-hoi-2.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100&auto=format&fit=crop'">
+            <div>
+              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Học bổng hỗ trợ sinh viên có thành tích tốt</h4>
+              <span style="font-size:8.5px; color:#8C827A;">10/08/2026</span>
             </div>
-
-            <!-- Khối Cơ Hội Nổi Bật -->
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">CƠ HỘI NỔI BẬT</h3>
-                <div class="latest-posts-list">
-                    
-                    <div class="latest-post-item">
-                        <img src="assets/images/featured-opp1.jpg" alt="Thumnail">
-                        <div class="latest-post-info">
-                            <h4><a href="chi-tiet-bai-viet.php?id=1">Cơ hội thực tập tại doanh nghiệp công nghệ</a></h4>
-                            <span class="date">12/08/2026</span>
-                        </div>
-                    </div>
-
-                    <div class="latest-post-item">
-                        <img src="assets/images/featured-opp2.jpg" alt="Thumnail">
-                        <div class="latest-post-info">
-                            <h4><a href="chi-tiet-bai-viet.php?id=2">Học bổng hỗ trợ sinh viên có thành tích tốt</a></h4>
-                            <span class="date">10/08/2026</span>
-                        </div>
-                    </div>
-
-                    <div class="latest-post-item">
-                        <img src="assets/images/featured-opp3.jpg" alt="Thumnail">
-                        <div class="latest-post-info">
-                            <h4><a href="chi-tiet-bai-viet.php?id=3">Workshop xây dựng CV và kỹ năng phỏng vấn</a></h4>
-                            <span class="date">08/08/2026</span>
-                        </div>
-                    </div>
-
-                </div>
+          </a>
+          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
+            <img src="../assets/images/co-hoi-3.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=100&auto=format&fit=crop'">
+            <div>
+              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Workshop xây dựng CV và kỹ năng phỏng vấn</h4>
+              <span style="font-size:8.5px; color:#8C827A;">16/08/2026</span>
             </div>
-
-        </aside>
-
+          </a>
+        </div>
+      </div>
     </div>
-</div>
-
+  </div>
+</main>
 <?php include '../includes/footer.php'; ?>
