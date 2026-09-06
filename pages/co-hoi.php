@@ -77,29 +77,34 @@
           <li><a href="chi-tiet-thay-doi.php" style="color:#5E5752; text-decoration:none;">Thông tin thay đổi</a></li>
         </ul>
       </div>
-      <div style="border:1.5px solid var(--brown); border-radius:12px; padding:16px; background:#fff;">
-        <h3 style="font-size:12px; font-weight:800; color:var(--brown-dark); text-transform:uppercase; margin-bottom:12px; border-bottom:1px solid #EEE; padding-bottom:6px;">CƠ HỘI NỔI BẬT</h3>
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
-            <img src="../assets/images/co-hoi-1.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&auto=format&fit=crop'">
-            <div>
-              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Cơ hội thực tập tại doanh nghiệp công nghệ</h4>
-              <span style="font-size:8.5px; color:#8C827A;">12/08/2026</span>
-            </div>
-          </a>
-          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
-            <img src="../assets/images/co-hoi-2.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100&auto=format&fit=crop'">
-            <div>
-              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Học bổng hỗ trợ sinh viên có thành tích tốt</h4>
-              <span style="font-size:8.5px; color:#8C827A;">10/08/2026</span>
-            </div>
-          </a>
-          <a href="#" style="display:flex; gap:10px; text-decoration:none; align-items:center;">
-            <img src="../assets/images/co-hoi-3.png" style="width:55px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=100&auto=format&fit=crop'">
-            <div>
-              <h4 style="font-size:10px; font-weight:700; color:var(--brown-dark); margin:0; line-height:1.2;">Workshop xây dựng CV và kỹ năng phỏng vấn</h4>
-              <span style="font-size:8.5px; color:#8C827A;">16/08/2026</span>
-            </div>
+      <div class="box">
+<h3 style="font-size:14px;font-weight:700;color:var(--brown);margin-bottom:12px;text-transform:uppercase;">BÀI MỚI NHẤT</h3>
+<div style="display:flex;flex-direction:column;gap:12px;">
+<a href="chi-tiet-thay-doi.php" style="display:flex;gap:10px;text-decoration:none;align-items:center;">
+<!-- Ảnh 1 -->
+<img src="../assets/images/co-hoi-4.png" style="width:60px;height:45px;object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1531482615713-2afd69097998?w=100&auto=format&fit=crop'">
+<div>
+<h4 style="font-size:11px;font-weight:700;color:var(--brown-dark);margin:0;line-height:1.3;">Khoa tổ chức hội thảo chuyên ngành dành cho sinh viên</h4>
+<span style="font-size:9px;color:var(--muted);">12/09/2026</span>
+</div>
+</a>
+<a href="chi-tiet-thay-doi.php" style="display:flex;gap:10px;text-decoration:none;align-items:center;">
+<!-- Ảnh 2 -->
+<img src="../assets/images/co-hoi-5.png" style="width:60px;height:45px;object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=100&auto=format&fit=crop'">
+<div>
+<h4 style="font-size:11px;font-weight:700;color:var(--brown-dark);margin:0;line-height:1.3;">Sinh viên khoa đạt thành tích nổi bật trong cuộc thi học thuật</h4>
+<span style="font-size:9px;color:var(--muted);">12/08/2026</span>
+</div>
+</a>
+<a href="chi-tiet-thay-doi.php" style="display:flex;gap:10px;text-decoration:none;align-items:center;">
+<!-- Ảnh 3 -->
+<img src="../assets/images/co-hoi-6.png" style="width:60px;height:45px;object-fit:cover;border-radius:4px;flex-shrink:0;" onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=100&auto=format&fit=crop'">
+<div>
+<h4 style="font-size:11px;font-weight:700;color:var(--brown-dark);margin:0;line-height:1.3;">Khoa triển khai hoạt động hỗ trợ sinh viên trong năm học mới</h4>
+<span style="font-size:9px;color:var(--muted);">05/08/2026</span>
+</div>
+</a>
+</div>
           </a>
         </div>
       </div>
