@@ -30,7 +30,7 @@
             </a>
 
             <nav style="display: flex; gap: 20px; font-size: var(--font-base);">
-                <a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">Trang chủ</a>
+                <a href="<?php echo $root_path; ?>index.php" style="color: #FFFFFF; text-decoration: none;" ...>Trang chủ</a>
                 <a href="tin-khoa.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'tin-khoa.php') ? 'active' : ''; ?>">Tin khoa</a>
                 <a href="hoc-tap.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'hoc-tap.php') ? 'active' : ''; ?>">Học tập</a>
                 <a href="co-hoi.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'co-hoi.php') ? 'active' : ''; ?>">Cơ hội</a>
