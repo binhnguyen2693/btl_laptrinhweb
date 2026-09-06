@@ -29,6 +29,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="editor-user">
             <i class="fa-regular fa-user"></i>
             <span><?= e(currentUser()['full_name'] ?? 'Biên tập viên') ?></span>
+            <?php if ((currentUser()['role'] ?? '') === 'admin'): ?><a href="<?= BASE_URL ?>admin/dashboard.php">Về trang Admin</a><?php endif; ?>
             <form method="post" action="<?= BASE_URL ?>dang-xuat.php"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><button type="submit">Đăng xuất</button></form>
         </div>
     </div>
