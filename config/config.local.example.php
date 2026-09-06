@@ -9,4 +9,6 @@ return [
     'name' => 'nhip_khoa',
     'user' => 'root',
     'password' => '',
+    // Khi kết nối MySQL trên VPS, bỏ chú thích dòng dưới.
+    // 'ssl_ca' => __DIR__ . '/certs/mysql-ca.pem',
 ];
