@@ -40,7 +40,7 @@ require __DIR__ . '/includes/header.php';
 <p class="public-byline"><?= e(publicPostDate($post)) ?> · Tác giả: <?= e($post['author_name']) ?></p>
 <img class="public-cover" src="<?= e(publicPostImage($post['thumbnail'])) ?>" alt="" data-public-image>
 <p class="public-summary"><?= e($post['summary']) ?></p>
-<div class="public-content"><?= nl2br(e($post['content'])) ?></div>
+<div class="public-content"><?= $post['content'] ?></div>
 </article><aside class="public-sidebar"><section><h2>Bài viết liên quan</h2>
 <?php foreach ($related as $item): ?>
 <a class="public-related" href="<?= e(publicDetailUrl((int) $item['id'], $context)) ?>"><img src="<?= e(publicPostImage($item['thumbnail'])) ?>" alt="" data-public-image><span><?= e($item['title']) ?><small><?= e(publicPostDate($item)) ?></small></span></a>
