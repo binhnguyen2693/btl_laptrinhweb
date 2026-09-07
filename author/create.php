@@ -71,24 +71,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
 
             $stmt->execute([
-                $authorId,
-                $categoryId,
-                $title,
-                $slug,
-                $summary,
-                $thumbnail,
-                $content,
-                $status
-            ]);
+    $authorId,
+    $categoryId,
+    $title,
+    $slug,
+    $summary,
+    $thumbnail,
+    $content,
+    $status
+]);
 
-            if ($status === 'draft') {
-                $success = 'Bài viết đã được lưu nháp thành công.';
-            } else {
-                $success = 'Bài viết đã được gửi duyệt thành công.';
-            }
+$postId = (int) $pdo->lastInsertId();
 
-            /* Xóa dữ liệu form sau khi lưu thành công */
-            $_POST = [];
+$_SESSION['success'] = $status === 'draft'
+    ? 'Bài viết đã được lưu nháp thành công.'
+    : 'Bài viết đã được gửi duyệt thành công.';
+
+header(
+    'Location: ' .
+    BASE_URL .
+    'author/view.php?id=' .
+    $postId
+);
+
+exit;
 
         } catch (PDOException $e) {
             $error = 'Lỗi database: ' . $e->getMessage();

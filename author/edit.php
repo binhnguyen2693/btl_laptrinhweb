@@ -259,30 +259,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             try {
 
-                $stmt = $pdo->prepare("
-                    UPDATE posts
-                    SET
-                        category_id = ?,
-                        title = ?,
-                        summary = ?,
-                        thumbnail = ?,
-                        content = ?,
-                        status = ?,
-                        editor_note = NULL
-                    WHERE id = ?
-                      AND author_id = ?
-                ");
+                if ($newStatus === 'pending') {
+    // Gửi duyệt lại:
+    // xóa thông tin duyệt cũ
+    $stmt = $pdo->prepare("
+        UPDATE posts
+        SET
+            category_id = ?,
+            title = ?,
+            summary = ?,
+            thumbnail = ?,
+            content = ?,
+            status = 'pending',
+            reviewer_id = NULL,
+            editor_note = NULL,
+            published_at = NULL
+        WHERE id = ?
+          AND author_id = ?
+    ");
 
-                $stmt->execute([
-                    $categoryId,
-                    $title,
-                    $summary,
-                    $thumbnail,
-                    $content,
-                    $newStatus,
-                    $postId,
-                    $authorId
-                ]);
+    $stmt->execute([
+        $categoryId,
+        $title,
+        $summary,
+        $thumbnail,
+        $content,
+        $postId,
+        $authorId
+    ]);
+
+} else {
+    // Lưu nháp:
+    // giữ nguyên reviewer_id và editor_note
+    $stmt = $pdo->prepare("
+        UPDATE posts
+        SET
+            category_id = ?,
+            title = ?,
+            summary = ?,
+            thumbnail = ?,
+            content = ?,
+            status = 'draft'
+        WHERE id = ?
+          AND author_id = ?
+    ");
+
+    $stmt->execute([
+        $categoryId,
+        $title,
+        $summary,
+        $thumbnail,
+        $content,
+        $postId,
+        $authorId
+    ]);
+}
 
                 /*
                  * Nếu upload ảnh mới thành công
@@ -340,8 +371,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
 
                 $post = $stmt->fetch();
-
-                $oldEditorNote = null;
 
                 /* Xóa POST để form lấy dữ liệu từ DB */
                 $_POST = [];
