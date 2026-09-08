@@ -462,6 +462,9 @@ body { padding:0; color:var(--ink); font-family:Inter,Arial,sans-serif; backgrou
 
 .article-actions { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
 .article-actions small { margin-top:0; }
+.article-empty { grid-column:1/-1; padding:34px 24px; text-align:center; border:1px solid #ead7cf; border-radius:10px; background:#fffaf7; }
+.article-empty h3 { margin:0 0 8px; color:var(--brown); font:600 20px Lora,serif; }
+.article-empty p { margin:0; color:var(--muted); font-size:13px; }
 .save-button { display:grid; place-items:center; width:30px; height:30px; color:var(--wine); font-size:21px; line-height:1; text-decoration:none; background:#fff; border:1px solid #dfb8ae; border-radius:50%; transition:.2s ease; }
 .save-button:hover, .save-button:focus-visible { color:#fff; background:var(--wine); border-color:var(--wine); transform:translateY(-1px); }
 

@@ -2,23 +2,12 @@
 declare(strict_types=1);
 require_once __DIR__ . '/includes/public-posts.php';
 $posts = [];
+$postsLoadError = false;
 try {
-    $posts = db()->query("SELECT p.id,p.title,p.summary,p.thumbnail,p.published_at,p.created_at,c.name AS category_name,u.full_name AS author_name FROM posts p JOIN categories c ON c.id=p.category_id JOIN users u ON u.id=p.author_id WHERE p.status='published' AND c.status='active' ORDER BY COALESCE(p.published_at,p.created_at) DESC,p.id DESC LIMIT 4")->fetchAll();
+    $posts = db()->query("SELECT p.id,p.title,p.summary,p.thumbnail,p.published_at,p.created_at,c.name AS category_name,u.full_name AS author_name FROM posts p JOIN categories c ON c.id=p.category_id JOIN users u ON u.id=p.author_id WHERE p.status='published' AND c.status='active' AND c.slug IN ('tin-khoa','hoc-tap','co-hoi','su-kien') ORDER BY COALESCE(p.published_at,p.created_at) DESC,p.id DESC LIMIT 4")->fetchAll();
 } catch (PDOException $exception) {
     $posts = [];
-}
-$demoPosts = [
- ['category_name'=>'HỌC TẬP','title'=>'Bí quyết học hiệu quả trong giai đoạn nước rút cuối cấp','summary'=>'Những phương pháp khoa học giúp bạn tối ưu thời gian ôn tập và cải thiện kết quả.','image'=>'home-card-1.png'],
- ['category_name'=>'CƠ HỘI','title'=>'Học bổng khuyến khích học tập HK2/2024–2025','summary'=>'Thông tin chi tiết về điều kiện và cách thức nộp hồ sơ học bổng.','image'=>'article-3.jpg'],
- ['category_name'=>'HƯỚNG DẪN','title'=>'Hướng dẫn tra cứu lịch học và phòng học','summary'=>'Các bước tra cứu nhanh trên cổng thông tin sinh viên.','image'=>'article-2.jpg'],
- ['category_name'=>'SỰ KIỆN','title'=>'Talkshow: Kỹ năng thuyết trình ấn tượng','summary'=>'Đăng ký tham gia talkshow cùng chuyên gia.','image'=>'article-4.jpg'],
-];
-if ($posts === []) {
-    $posts = $demoPosts;
-} elseif (count($posts) < 4) {
-    // Khi database chưa có đủ bài đã xuất bản, bổ sung bài minh họa để giao diện
-    // trang chủ vẫn đủ bốn thẻ. Bài thật luôn được ưu tiên hiển thị trước.
-    $posts = array_merge($posts, array_slice($demoPosts, 0, 4 - count($posts)));
+    $postsLoadError = true;
 }
 $pageTitle='Trang chủ'; require __DIR__.'/includes/header.php';
 ?>
@@ -31,8 +20,14 @@ $pageTitle='Trang chủ'; require __DIR__.'/includes/header.php';
 </div></div></section>
 
 <section id="articles" class="home-section"><div class="site-shell"><div class="section-title"><h2>Bài viết và hướng dẫn</h2><a href="pages/tim-kiem.php">Xem tất cả →</a></div><div class="article-grid">
-<?php foreach ($posts as $index=>$post): $isReal=isset($post['id']); $image=!empty($post['thumbnail']) ? publicPostImage($post['thumbnail']) : 'assets/images/figma/'.($post['image'] ?? $demoPosts[$index]['image']); $detailUrl=$isReal ? 'bai-viet.php?id='.(int)$post['id'] : 'dang-phat-trien.php?feature=bai-minh-hoa'; ?><article class="article-card"><a class="article-image-link" href="<?= e($detailUrl) ?>"><img src="<?= e($image) ?>" alt=""></a><div><div class="article-meta"><span><?= e($post['category_name']) ?></span><span><?= isset($post['published_at']) && $post['published_at'] ? e(date('d/m/Y',strtotime($post['published_at']))) : '12/05/2026' ?></span></div><h3><a href="<?= e($detailUrl) ?>"><?= e($post['title']) ?></a></h3><p><?= e($post['summary']) ?></p><div class="article-actions"><small>◷ 5 phút đọc</small><a class="save-button" href="<?= empty($_SESSION['user']) ? 'dang-nhap.php' : 'dang-phat-trien.php?feature=impact-box' ?>" aria-label="Lưu bài viết vào Impact Box" title="Lưu bài viết">♡</a></div></div></article><?php endforeach; ?>
+<?php if ($postsLoadError): ?>
+<div class="article-empty" role="alert"><h3>Chưa thể tải bài viết</h3><p>Kết nối dữ liệu đang gián đoạn. Vui lòng thử lại sau.</p></div>
+<?php elseif (!$posts): ?>
+<div class="article-empty"><h3>Chưa có bài viết được xuất bản</h3><p>Bài viết sẽ xuất hiện tại đây sau khi được Biên tập viên duyệt.</p></div>
+<?php else: ?>
+<?php foreach ($posts as $post): $detailUrl='bai-viet.php?id='.(int)$post['id']; ?><article class="article-card"><a class="article-image-link" href="<?= e($detailUrl) ?>"><img src="<?= e(publicPostImage($post['thumbnail'])) ?>" alt=""></a><div><div class="article-meta"><span><?= e($post['category_name']) ?></span><span><?= e(date('d/m/Y',strtotime($post['published_at'] ?: $post['created_at']))) ?></span></div><h3><a href="<?= e($detailUrl) ?>"><?= e($post['title']) ?></a></h3><p><?= e($post['summary']) ?></p><div class="article-actions"><small>◷ 5 phút đọc</small><?php if (empty($_SESSION['user'])): ?><a class="save-button" href="dang-nhap.php" aria-label="Đăng nhập để lưu bài viết" title="Đăng nhập để lưu">♡</a><?php else: ?><form method="post" action="impact-box-action.php" class="inline-form"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><input type="hidden" name="action" value="add"><input type="hidden" name="post_id" value="<?= (int)$post['id'] ?>"><button class="save-button" type="submit" aria-label="Lưu bài viết vào Impact Box" title="Lưu bài viết">♡</button></form><?php endif; ?></div></div></article><?php endforeach; ?>
+<?php endif; ?>
 </div></div></section>
 
-<section id="topics" class="topic-section"><div class="site-shell topic-grid"><article><img src="assets/images/figma/icon-study.png" alt=""><div><h3>Học tập</h3><p>Lịch học, học phần, hướng dẫn học tập và tài liệu</p><a href="pages/hoc-tap.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-opportunity.svg" alt=""><div><h3>Cơ hội</h3><p>Học bổng, tuyển dụng, thực tập và cuộc thi.</p><a href="pages/co-hoi.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-event.svg" alt=""><div><h3>Sự kiện</h3><p>Hội thảo, workshop và hoạt động nổi bật.</p><a href="pages/su-kien.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-impact.svg" alt=""><div><h3>Impact Box</h3><p>Dự án, sáng kiến và câu chuyện tác động.</p><a href="dang-phat-trien.php?feature=impact-box">Khám phá →</a></div></article></div></section>
+<section id="topics" class="topic-section"><div class="site-shell topic-grid"><article><img src="assets/images/figma/icon-study.png" alt=""><div><h3>Học tập</h3><p>Lịch học, học phần, hướng dẫn học tập và tài liệu</p><a href="pages/hoc-tap.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-opportunity.svg" alt=""><div><h3>Cơ hội</h3><p>Học bổng, tuyển dụng, thực tập và cuộc thi.</p><a href="pages/co-hoi.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-event.svg" alt=""><div><h3>Sự kiện</h3><p>Hội thảo, workshop và hoạt động nổi bật.</p><a href="pages/su-kien.php">Khám phá →</a></div></article><article><img src="assets/images/figma/icon-impact.svg" alt=""><div><h3>Impact Box</h3><p>Các bài viết bạn đã lưu và ghi chú cá nhân.</p><a href="views/impact-box.php">Mở Impact Box →</a></div></article></div></section>
 <?php require __DIR__.'/includes/footer.php'; ?>

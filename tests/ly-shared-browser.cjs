@@ -165,6 +165,7 @@ async function post(page,url,form) {
       await reader.locator('.save-modal [name=note]').fill(data.prefix+' note');
       await Promise.all([reader.waitForURL('**/views/impact-box.php'),reader.locator('.save-modal button[type=submit]').click()]);
       check((await reader.textContent('body')).includes(data.prefix+' published'),'Saved article visible');
+      check((await reader.locator('.impact-card-image').getAttribute('src')).includes('/assets/images/figma/home-card-1.png'),'Saved article image path');
       const save=async(action,id,note='')=>post(reader,base+'/impact-box-action.php',{action,post_id:id,note,csrf_token:readerCsrf});
       await save('add',data.posts.published);
       check(fixture('state').saved.filter(r=>r.user_id==data.users.reader.id&&r.post_id==data.posts.published).length===1,'No duplicate saves');

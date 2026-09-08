@@ -45,9 +45,11 @@ if ($action === 'setup') {
             $data['categories'][$status] = (int)$pdo->lastInsertId();
         }
         foreach (['published','draft','pending','hidden'] as $type) {
-            execute('INSERT INTO posts(category_id,author_id,title,slug,summary,content,status,published_at) VALUES(?,?,?,?,?,?,?,?)',
+            execute('INSERT INTO posts(category_id,author_id,title,slug,summary,thumbnail,content,status,published_at) VALUES(?,?,?,?,?,?,?,?,?)',
                 [$data['categories'][$type==='hidden'?'hidden':'active'],$data['users']['author']['id'],
-                 $prefix.' '.$type,$run.'-'.$type,$prefix.' summary',"Nội dung thử\n<script>window.qaInjected=1</script>",
+                 $prefix.' '.$type,$run.'-'.$type,$prefix.' summary',
+                 $type==='published'?'assets/images/figma/home-card-1.png':null,
+                 "Nội dung thử\n<script>window.qaInjected=1</script>",
                  $type==='hidden'?'published':$type,in_array($type,['published','hidden'],true)?date('Y-m-d H:i:s'):null]);
             $data['posts'][$type] = (int)$pdo->lastInsertId();
         }
