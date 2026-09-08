@@ -332,3 +332,42 @@ a {
         gap: 5px;
     }
 }
+.logout-form {
+    margin: 0;
+}
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border: 1px solid rgba(255,255,255,.55);
+    border-radius: 7px;
+
+    background: transparent;
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.logout-btn i {
+    font-size: 12px;
+}
+
+.logout-btn:hover {
+    border-color: #fff;
+    background: #fff;
+    color: #813027;
+}
+
+.logout-btn:active {
+    transform: scale(.97);
+}
