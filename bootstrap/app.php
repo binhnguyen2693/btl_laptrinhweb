@@ -67,3 +67,5 @@ function redirect(string $path): never
     header('Location: ' . $path);
     exit;
 }
+
+require_once __DIR__ . '/../includes/public-posts.php';
