@@ -19,33 +19,38 @@
     font-size: 14px;
 }
 
+/* THỐNG KÊ - ĐỒNG BỘ GIAO DIỆN ADMIN */
 .editor-statistics {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
 }
 
 .editor-stat-card {
-    min-height: 75px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 9px;
-    background: #fff;
+    min-height: 100px;
+    padding: 20px;
+
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 14px;
+
+    background: #fff;
+    border: 1px solid #eadfd9;
+    border-radius: 12px;
+    box-shadow: 0 7px 22px rgba(74, 48, 40, .04);
 }
 
 .editor-stat-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 13px;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+    font-size: 18px;
 }
 
 .editor-stat-info {
@@ -54,51 +59,39 @@
 }
 
 .editor-stat-info strong {
-    font-size: 20px;
-    line-height: 22px;
+    margin: 3px 0;
+    color: #2f2724;
+    font-family: Lora, serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 .editor-stat-info span {
-    margin-top: 2px;
-    color: #333;
-    font-size: 12px;
+    margin-top: 0;
+    color: #786d68;
+    font-size: 10px;
     white-space: nowrap;
 }
 
 .editor-stat-icon.stat-blue {
-    background: #d9f1ff;
-    color: #008fe8;
+    color: #8c3026;
+    background: #fae9e6;
 }
 
 .editor-stat-icon.stat-purple {
-    background: #f0d9ff;
-    color: #b447e7;
+    color: #9c6b16;
+    background: #fff4d9;
 }
 
 .editor-stat-icon.stat-green {
-    background: #dff1dd;
-    color: #3c9c4e;
+    color: #37765a;
+    background: #e8f4ed;
 }
 
 .editor-stat-icon.stat-red {
-    background: #f8dada;
-    color: #e53239;
-}
-
-.editor-stat-card:nth-child(1) strong {
-    color: #008fe8;
-}
-
-.editor-stat-card:nth-child(2) strong {
-    color: #b447e7;
-}
-
-.editor-stat-card:nth-child(3) strong {
-    color: #3c9c4e;
-}
-
-.editor-stat-card:nth-child(4) strong {
-    color: #e53239;
+    color: #6d6764;
+    background: #efedec;
 }
 
 .editor-recent-posts {
