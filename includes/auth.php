@@ -4,17 +4,12 @@ require_once __DIR__ . '/app.php';
 
 function currentUser(): ?array
 {
-    return $_SESSION['user'] ?? null;
+    return (new App\Services\AuthService())->user();
 }
 
 function roleLandingPage(string $role): string
 {
-    return match ($role) {
-        'admin' => 'admin/dashboard.php',
-        'editor' => 'editor/dashboard.php',
-        'author' => 'author/dashboard.php',
-        default => 'index.php',
-    };
+    return (new App\Services\AuthService())->landingPage($role);
 }
 
 function requireLogin(): void
