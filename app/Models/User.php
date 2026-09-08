@@ -70,8 +70,11 @@ final class User
         $conditions = [];
         $parameters = [];
         if ($keyword !== '') {
-            $conditions[] = '(u.full_name LIKE :keyword OR u.email LIKE :keyword)';
-            $parameters['keyword'] = '%' . $keyword . '%';
+            // Prepare thật (EMULATE_PREPARES=false) không cho dùng lại một
+            // placeholder, nên mỗi cột cần một tên riêng.
+            $conditions[] = '(u.full_name LIKE :full_name OR u.email LIKE :email)';
+            $value = '%' . $keyword . '%';
+            $parameters += ['full_name' => $value, 'email' => $value];
         }
         if ($role !== '') {
             $conditions[] = 'r.code = :role';

@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/app.php';
+require_once __DIR__ . '/../bootstrap/app.php';
 
 const PUBLIC_CATEGORIES = [
     'tin-khoa' => 'Tin khoa',

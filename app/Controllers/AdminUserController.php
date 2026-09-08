@@ -21,11 +21,14 @@ final class AdminUserController extends Controller
 
     public function dashboard(): void
     {
-        $this->auth->requireRole(['admin']);
+        $admin = $this->auth->requireRole(['admin']);
         $counts=['users'=>0,'posts'=>0,'pending'=>0,'locked'=>0];$recentUsers=[];$databaseError='';
         try {$data=(new User($this->pdo()))->adminDashboard();$counts=$data['counts'];$recentUsers=$data['recent'];}
         catch(PDOException){$databaseError='Không thể tải số liệu. Hãy kiểm tra kết nối MySQL.';}
-        $this->render('admin.dashboard',compact('counts','recentUsers','databaseError')+['pageTitle'=>'Tổng quan hệ thống','adminPage'=>'dashboard'],'layouts.admin');
+        // View chạy trước khi layout nạp includes/auth.php, nên tên admin phải
+        // được truyền vào thay vì gọi currentUser() trong template.
+        $adminName = (string) ($admin['full_name'] ?? 'ADMIN');
+        $this->render('admin.dashboard',compact('counts','recentUsers','databaseError','adminName')+['pageTitle'=>'Tổng quan hệ thống','adminPage'=>'dashboard'],'layouts.admin');
     }
 
     public function users(Request $request): void

@@ -21,8 +21,11 @@ final class Category
         $sql = 'SELECT c.*, COUNT(p.id) AS post_count FROM categories c LEFT JOIN posts p ON p.category_id = c.id WHERE 1=1';
         $parameters = [];
         if ($keyword !== '') {
-            $sql .= ' AND (c.name LIKE :keyword OR c.slug LIKE :keyword)';
-            $parameters['keyword'] = '%' . $keyword . '%';
+            // Prepare thật (EMULATE_PREPARES=false) không cho dùng lại một
+            // placeholder, nên mỗi cột cần một tên riêng.
+            $sql .= ' AND (c.name LIKE :name OR c.slug LIKE :slug)';
+            $value = '%' . $keyword . '%';
+            $parameters += ['name' => $value, 'slug' => $value];
         }
         if (in_array($status, ['active', 'hidden'], true)) {
             $sql .= ' AND c.status = :status';

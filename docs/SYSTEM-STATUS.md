@@ -22,13 +22,13 @@
 - Danh sách Tin khoa/Học tập/Cơ hội/Sự kiện, tìm kiếm server-side và phân trang 6 bài.
 - Giữ ngữ cảnh khi xem chi tiết/quay lại danh sách; thông báo 404 và lỗi kết nối riêng.
 - Cấu hình database riêng theo từng máy và migration chung.
+- Quản lý chuyên mục trong Admin: danh sách, tìm kiếm, lọc trạng thái, thêm/sửa/xóa.
+- Quản lý bình luận: danh sách, lọc theo bài viết và trạng thái, xem chi tiết,
+  duyệt/ẩn/hiện/xóa qua endpoint JSON.
 
 ## Đang chờ branch khác
 
 - Chi tiết “Thay đổi đáng chú ý”.
-- Impact Box/lưu bài.
-- Bình luận và quản lý bình luận.
-- Quản lý chuyên mục trong Admin.
 
 Các liên kết chờ tích hợp phải dẫn tới `dang-phat-trien.php`; không dùng `href="#"`.
 Sau khi merge chức năng thật, thay liên kết chờ bằng URL tương ứng và kiểm tra lại role.

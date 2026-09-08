@@ -1,5 +1,5 @@
-<section class="admin-heading"><div><p>XIN CHÀO, <?= e(currentUser()['full_name'] ?? 'ADMIN') ?></p><h1>Tổng quan hệ thống</h1><span>Theo dõi nhanh tài khoản và nội dung của Nhịp Khoa.</span></div><a class="admin-primary" href="users.php">Quản lý tài khoản →</a></section>
-<?php if (isset($databaseError)): ?><div class="admin-alert error"><?= e($databaseError) ?></div><?php endif; ?>
+<section class="admin-heading"><div><p>XIN CHÀO, <?= e($adminName) ?></p><h1>Tổng quan hệ thống</h1><span>Theo dõi nhanh tài khoản và nội dung của Nhịp Khoa.</span></div><a class="admin-primary" href="users.php">Quản lý tài khoản →</a></section>
+<?php if ($databaseError !== ''): ?><div class="admin-alert error"><?= e($databaseError) ?></div><?php endif; ?>
 <section class="admin-stats" aria-label="Thống kê hệ thống">
 <article><span class="stat-icon wine">♙</span><div><small>Tổng tài khoản</small><strong><?= $counts['users'] ?></strong><p>Người dùng trong hệ thống</p></div></article>
 <article><span class="stat-icon gold">▤</span><div><small>Tổng bài viết</small><strong><?= $counts['posts'] ?></strong><p>Tất cả trạng thái bài</p></div></article>

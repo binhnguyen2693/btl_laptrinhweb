@@ -123,23 +123,53 @@ trước khi tích hợp vào `main`.
 
 ## Cấu trúc thư mục
 
+Dự án đã được chuyển sang mô hình MVC. Toàn bộ logic nằm trong `app/`, còn các
+file `.php` ở ngoài chỉ là **điểm vào mỏng** giữ nguyên đường dẫn URL cũ.
+
 ```text
 btl_laptrinhweb/
-├── index.php
-├── about.php
-├── dang-nhap.php
-├── admin/
-├── assets/
-│   ├── css/
-│   ├── images/
-│   └── js/
-├── config/
-├── database/
-│   ├── erd.md
-│   ├── schema.sql
-│   └── seed.sql
-└── includes/
+├── index.php, about.php, bai-viet.php, dang-nhap.php, ...   ← điểm vào
+├── bootstrap/
+│   └── app.php          session, BASE_URL, autoload, e()/csrfToken()/redirect()
+├── app/
+│   ├── Core/            Controller, Request, Response, View
+│   ├── Controllers/     một class cho mỗi nhóm chức năng
+│   ├── Models/          truy vấn CSDL, nhận PDO qua constructor
+│   ├── Services/        AuthService, ImageUploadService, CategoryValidator
+│   └── Views/
+│       ├── layouts/     admin, auth, author, editor, public
+│       ├── admin/       dashboard, users, categories/, comments/
+│       ├── auth/  author/  editor/  impact/  public/
+├── admin/, author/, editor/, pages/, views/                 ← điểm vào theo khu vực
+├── assets/              css/  js/  images/  uploads/
+├── config/              database.php, config.local.example.php
+├── database/            erd.md, schema.sql, seed.sql, migrations/
+├── includes/            header/footer dùng chung cho layout
+├── docs/
+└── tests/
 ```
+
+### Quy ước điểm vào
+
+Dự án chạy trên Apache/XAMPP nên không có router: mỗi URL là một file PHP thật.
+File đó chỉ nạp bootstrap rồi gọi đúng một action, ví dụ `admin/users.php`:
+
+```php
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../bootstrap/app.php';
+
+(new App\Controllers\AdminUserController(
+    static fn(): PDO => db(),
+    new App\Services\AuthService(),
+    new App\Core\View()
+))->users(App\Core\Request::capture());
+```
+
+Khi thêm chức năng mới: viết Model trong `app/Models`, Controller trong
+`app/Controllers`, view trong `app/Views`, rồi tạo file điểm vào như trên.
+Không đặt truy vấn hay xử lý form trực tiếp trong file điểm vào.
 
 ## Cách chạy trên máy
 

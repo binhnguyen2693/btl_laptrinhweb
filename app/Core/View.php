@@ -9,19 +9,32 @@ final class View
 {
     public function render(string $template, array $data = [], ?string $layout = null): void
     {
-        $viewFile = $this->path($template);
-        extract($data, EXTR_SKIP);
-
-        ob_start();
-        require $viewFile;
-        $content = (string) ob_get_clean();
+        $content = $this->capture($this->path($template), $data);
 
         if ($layout === null) {
             echo $content;
             return;
         }
 
-        require $this->path($layout);
+        echo $this->capture($this->path($layout), ['content' => $content] + $data);
+    }
+
+    /**
+     * Nạp template trong một scope riêng.
+     *
+     * Biến cục bộ ở đây phải có tiền tố __ vì extract(..., EXTR_SKIP) bỏ qua
+     * mọi khóa trùng tên biến đang tồn tại: trước đây tham số $data của
+     * render() làm khóa 'data' bị bỏ âm thầm, khiến app/Views/public/list.php
+     * nhận $data là cả mảng render thay vì mảng phân trang.
+     */
+    private function capture(string $__file, array $__data): string
+    {
+        extract($__data, EXTR_SKIP);
+
+        ob_start();
+        require $__file;
+
+        return (string) ob_get_clean();
     }
 
     private function path(string $name): string
