@@ -1,8 +1,31 @@
 <?php
+
 require_once __DIR__ . '/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| URL GỐC CỦA PROJECT
+|--------------------------------------------------------------------------
+*/
+
+$basePath = BASE_URL;
+
+
+/*
+|--------------------------------------------------------------------------
+| THÔNG TIN TRANG
+|--------------------------------------------------------------------------
+*/
+
 $pageTitle = $pageTitle ?? 'Nhịp Khoa';
+
 $user = $_SESSION['user'] ?? null;
-$activeNav = $activeNav ?? (basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.php' ? 'home' : '');
+
+$activeNav = $activeNav ?? (
+    basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.php'
+        ? 'home'
+        : ''
+);
 ?>
 <!doctype html><html lang="vi"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,8 +39,7 @@ $activeNav = $activeNav ?? (basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.p
 <header class="figma-header"><div class="site-shell header-inner">
     <a class="figma-logo" href="<?= e($basePath ?? '') ?>index.php"><img src="<?= e($basePath ?? '') ?>assets/images/figma/brand-logo.png" alt="Nhịp Khoa - The Faculty Post"></a>
     <nav class="desktop-nav" id="primary-navigation" aria-label="Điều hướng chính">
-        <a <?= $activeNav === 'home' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>index.php">Trang chủ</a><a <?= $activeNav === 'tin-khoa' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/tin-khoa.php">Tin khoa</a><a <?= $activeNav === 'hoc-tap' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/hoc-tap.php">Học tập</a><a <?= $activeNav === 'co-hoi' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/co-hoi.php">Cơ hội</a><a <?= $activeNav === 'su-kien' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/su-kien.php">Sự kiện</a><a href="<?= e($basePath ?? '') ?>dang-phat-trien.php?feature=huong-dan">Hướng dẫn</a><a href="<?= e($basePath ?? '') ?>dang-phat-trien.php?feature=impact-box">Hộp tác động</a>
-        <a class="mobile-search-link" href="<?= e($basePath ?? '') ?>pages/tim-kiem.php">Tìm kiếm</a>
+        <a <?= $activeNav === 'home' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>index.php">Trang chủ</a><a <?= $activeNav === 'tin-khoa' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/tin-khoa.php">Tin khoa</a><a <?= $activeNav === 'hoc-tap' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/hoc-tap.php">Học tập</a><a <?= $activeNav === 'co-hoi' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/co-hoi.php">Cơ hội</a><a <?= $activeNav === 'su-kien' ? 'class="active" aria-current="page"' : '' ?> href="<?= e($basePath ?? '') ?>pages/su-kien.php">Sự kiện</a><a href="<?= e($basePath ?? '') ?>dang-phat-trien.php?feature=huong-dan">Hướng dẫn</a><a href="<?= e($basePath ?? '') ?>views/impact-box.php">Hộp tác động</a>
     </nav>
     <div class="header-actions"><form class="expanding-search" role="search" method="get" action="<?= e($basePath ?? '') ?>pages/tim-kiem.php"><input class="search-input" type="search" name="q" placeholder="Tìm kiếm bài viết..." aria-label="Nhập từ khóa tìm kiếm" autocomplete="off"><button class="search-circle" type="submit" aria-label="Mở tìm kiếm" aria-expanded="false"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-search.svg" alt=""></button></form>
     <?php if ($user === null): ?><a class="login-pill" href="<?= e($basePath ?? '') ?>dang-nhap.php"><img src="<?= e($basePath ?? '') ?>assets/images/figma/icon-user.svg" alt="">Đăng nhập</a>

@@ -52,15 +52,22 @@ switch ($post['status']) {
 }
 
 $postCode = 'BV' . str_pad($post['id'], 3, '0', STR_PAD_LEFT);
-
+$success = $_SESSION['success'] ?? '';
+unset($_SESSION['success']);
 $pageTitle = 'Xem bài viết';
+
 $pageCss = 'view.css';
 
 include __DIR__ . '/../includes/author-header.php';
 ?>
 
 <div class="view-post-container">
-
+<?php if ($success !== ''): ?>
+    <div class="success-message">
+        <i class="fa-solid fa-circle-check"></i>
+        <?= e($success) ?>
+    </div>
+<?php endif; ?>
     <div class="view-post-top">
         <a href="<?= BASE_URL ?>author/posts.php"
            class="back-link">

@@ -21,7 +21,7 @@ function requireLogin(): void
 {
     if (currentUser() === null) {
         $_SESSION['flash_error'] = 'Vui lòng đăng nhập để tiếp tục.';
-        redirect('../dang-nhap.php');
+        redirect(BASE_URL . 'dang-nhap.php');
     }
 }
 

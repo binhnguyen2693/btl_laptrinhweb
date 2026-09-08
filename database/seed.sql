@@ -23,9 +23,10 @@ INSERT INTO users (
     (6, 4, 'lan.locked@nhipkhoa.vn', '$2y$10$5qOBuv285ychc3kts46L7OsmFyodolU33/K0T8QAo3dczDCzkqFga', 'Phạm Hoàng Lan', 'locked', '2026-08-20 08:50:00');
 
 INSERT INTO categories (id, slug, name, status) VALUES
-    (1, 'cong-nghe', 'Công nghệ', 'active'),
-    (2, 'giao-duc', 'Giáo dục', 'active'),
-    (3, 'doi-song', 'Đời sống', 'active');
+    (1, 'tin-khoa', 'Tin khoa', 'active'),
+    (2, 'hoc-tap', 'Học tập', 'active'),
+    (3, 'co-hoi', 'Cơ hội', 'active'),
+    (4, 'su-kien', 'Sự kiện', 'active');
 
 INSERT INTO posts (
     id,

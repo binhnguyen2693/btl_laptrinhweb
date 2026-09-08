@@ -14,6 +14,17 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_save_path($sessionDirectory);
     session_start();
 }
+if (!defined('BASE_URL')) {
+    // Derive the project URL from the executed file, including nested API routes.
+    $projectRoot = str_replace('\\', '/', dirname(__DIR__));
+    $scriptFile = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'] ?? '');
+    $scriptUrl = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/index.php');
+    $relativeScript = str_starts_with($scriptFile, $projectRoot . '/')
+        ? substr($scriptFile, strlen($projectRoot) + 1)
+        : basename($scriptUrl);
+    $urlRoot = str_replace('\\', '/', dirname($scriptUrl, substr_count($relativeScript, '/') + 1));
+    define('BASE_URL', rtrim($urlRoot, '/.') . '/');
+}
 require_once __DIR__ . '/../config/database.php';
 
 function e(?string $value): string
