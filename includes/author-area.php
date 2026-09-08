@@ -6,4 +6,4 @@ requireRole(['author']);
 $pdo = db();
 $signedInUser = currentUser();
 $authorId = (int) $signedInUser['id'];
-if (!defined('BASE_URL')) define('BASE_URL', '/');
+

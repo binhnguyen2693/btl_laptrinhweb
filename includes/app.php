@@ -14,6 +14,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_save_path($sessionDirectory);
     session_start();
 }
+if (!defined('BASE_URL')) {
+    define('BASE_URL', '/btl_laptrinhweb/');
+}
 require_once __DIR__ . '/../config/database.php';
 
 function e(?string $value): string

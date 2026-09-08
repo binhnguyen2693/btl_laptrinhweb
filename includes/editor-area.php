@@ -6,4 +6,4 @@ requireRole(['editor', 'admin']);
 $pdo = db();
 $signedInUser = currentUser();
 $editorId = (int) $signedInUser['id'];
-if (!defined('BASE_URL')) define('BASE_URL', '/');
+
