@@ -31,7 +31,7 @@ $description = $category['description'] ?? '';
 $status = $category['status'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    verifyCsrf();
     $name = trim($_POST['name'] ?? '');
     $slug = trim($_POST['slug'] ?? '');
     $description = trim($_POST['description'] ?? '');
@@ -303,7 +303,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-card">
 
         <form method="POST">
-
+        <input
+        type="hidden"
+        name="csrf_token"
+        value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+    >
 
             <!-- Tên danh mục -->
 

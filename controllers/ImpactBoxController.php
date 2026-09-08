@@ -23,6 +23,10 @@ class ImpactBoxController
      */
     public function index(int $userId): array
     {
+        if ($userId <= 0) {
+            return [];
+        }
+
         return $this->impactBox->getByUser($userId);
     }
 
@@ -34,7 +38,6 @@ class ImpactBoxController
         int $userId,
         int $postId
     ): bool {
-
         if ($userId <= 0 || $postId <= 0) {
             return false;
         }
@@ -48,19 +51,32 @@ class ImpactBoxController
 
     /**
      * Thêm bài viết vào Impact Box
+     *
+     * Chỉ cho phép lưu bài viết:
+     * - published
+     * - thuộc category active
      */
     public function add(
         int $userId,
         int $postId,
         ?string $note = null
     ): bool {
-
         if ($userId <= 0 || $postId <= 0) {
             return false;
         }
 
 
-        // Không cho lưu trùng
+        /**
+         * Kiểm tra bài viết có được phép lưu không.
+         */
+        if (!$this->impactBox->canSavePost($postId)) {
+            return false;
+        }
+
+
+        /**
+         * Không cho lưu trùng.
+         */
         if ($this->impactBox->exists(
             $userId,
             $postId
@@ -69,9 +85,10 @@ class ImpactBoxController
         }
 
 
-        // Chuẩn hóa ghi chú
+        /**
+         * Chuẩn hóa ghi chú.
+         */
         if ($note !== null) {
-
             $note = trim($note);
 
             if ($note === '') {
@@ -80,9 +97,10 @@ class ImpactBoxController
         }
 
 
-        // Giới hạn 200 ký tự
+        /**
+         * Giới hạn 200 ký tự.
+         */
         if ($note !== null) {
-
             $note = mb_substr(
                 $note,
                 0,
@@ -106,7 +124,6 @@ class ImpactBoxController
         int $userId,
         int $postId
     ): bool {
-
         if ($userId <= 0 || $postId <= 0) {
             return false;
         }
@@ -126,7 +143,6 @@ class ImpactBoxController
         int $postId,
         ?string $note
     ): bool {
-
         if ($userId <= 0 || $postId <= 0) {
             return false;
         }
@@ -141,7 +157,6 @@ class ImpactBoxController
 
 
         if ($note !== null) {
-
             $note = mb_substr(
                 $note,
                 0,
@@ -165,7 +180,6 @@ class ImpactBoxController
         int $userId,
         int $postId
     ): bool {
-
         if ($userId <= 0 || $postId <= 0) {
             return false;
         }
@@ -184,7 +198,6 @@ class ImpactBoxController
         int $userId,
         int $postId
     ): ?array {
-
         if ($userId <= 0 || $postId <= 0) {
             return null;
         }
@@ -195,3 +208,4 @@ class ImpactBoxController
         );
     }
 }
+

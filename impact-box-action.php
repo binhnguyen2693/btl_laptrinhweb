@@ -13,12 +13,12 @@ $user = currentUser();
 $userId = (int) ($user['id'] ?? 0);
 
 if ($userId <= 0) {
-    redirect(BASE_URL . 'dang-nhap.php');
+    redirect('dang-nhap.php');
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect(BASE_URL . 'views/impact-box.php');
+    redirect('views/impact-box.php');
     exit;
 }
 
@@ -28,17 +28,14 @@ $action = (string) ($_POST['action'] ?? '');
 $postId = (int) ($_POST['post_id'] ?? 0);
 
 if ($postId <= 0) {
-    redirect(BASE_URL . 'views/impact-box.php');
+    redirect('views/impact-box.php');
     exit;
 }
 
 $controller = new ImpactBoxController();
 
-
 switch ($action) {
-
     case 'add':
-
         $note = trim(
             (string) ($_POST['note'] ?? '')
         );
@@ -51,9 +48,7 @@ switch ($action) {
 
         break;
 
-
     case 'delete':
-
         $controller->delete(
             $userId,
             $postId
@@ -61,9 +56,7 @@ switch ($action) {
 
         break;
 
-
     case 'update_note':
-
         $note = trim(
             (string) ($_POST['note'] ?? '')
         );
@@ -76,9 +69,7 @@ switch ($action) {
 
         break;
 
-
     case 'clear_note':
-
         $controller->clearNote(
             $userId,
             $postId
@@ -86,12 +77,10 @@ switch ($action) {
 
         break;
 
-
     default:
-
-        redirect(BASE_URL . 'views/impact-box.php');
+        redirect('views/impact-box.php');
         exit;
 }
 
-redirect(BASE_URL . 'views/impact-box.php');
+redirect('views/impact-box.php');
 exit;

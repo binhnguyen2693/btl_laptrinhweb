@@ -26,7 +26,7 @@ if (!$category) {
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+ verifyCsrf();
     if ((int)$category['post_count'] > 0) {
 
         $message = 'Không thể xóa danh mục đang có bài viết.';
@@ -418,7 +418,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             <form method="POST">
-
+            <input
+        type="hidden"
+        name="csrf_token"
+        value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>"
+    >
                 <div class="form-actions">
 
                     <a

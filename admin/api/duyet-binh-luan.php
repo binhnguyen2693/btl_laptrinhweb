@@ -2,22 +2,15 @@
 
 declare(strict_types=1);
 
-session_start();
-
 require_once __DIR__ . '/../../includes/auth.php';
 
 requireRole(['admin']);
 
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/Comment.php';
-require_once __DIR__ . '/../../config/csrf.php';
 
-   
-
-
-
+$pdo = db();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -31,21 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-
-$csrfToken = $_POST['csrf_token'] ?? '';
-
-if (!verifyCsrfToken($csrfToken)) {
-
-    http_response_code(403);
-
-    echo json_encode([
-        'success' => false,
-        'message' => 'CSRF token không hợp lệ.'
-    ]);
-
-    exit;
-}
-
+verifyCsrf();
 
 $commentId = (int) ($_POST['comment_id'] ?? 0);
 $status = $_POST['status'] ?? '';

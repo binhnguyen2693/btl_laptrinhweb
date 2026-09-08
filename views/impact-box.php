@@ -930,10 +930,9 @@ require_once __DIR__ . '/../includes/header.php';
                     ====================================== -->
 
                     <a
-                        href="<?= e($basePath ?? '') ?>pages/chi-tiet-bai-viet.php?id=<?= $postId ?>"
-                        class="card-image-link"
-                    >
-
+    href="<?= BASE_URL ?>bai-viet.php?id=<?= $postId ?>"
+    class="card-image-link"
+>
                         <?php if (!empty($thumbnail)): ?>
 
                             <img
@@ -991,7 +990,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <h2 class="impact-card-title">
 
                                 <a
-                                    href="bai-viet.php?id=<?= $postId ?>"
+                                    href="<?= BASE_URL ?>bai-viet.php?id=<?= $postId ?>"
                                 >
 
                                     <?= htmlspecialchars(

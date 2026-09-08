@@ -23,11 +23,13 @@ class ImpactBox
 
     /**
      * =========================================================
-     * LẤY DANH SÁCH IMPACT BOX CỦA MỘT USER
+     * LẤY DANH SÁCH IMPACT BOX CỦA USER
      * =========================================================
      *
-     * Mỗi user chỉ nhìn thấy những bài viết
-     * mà chính user đó đã lưu.
+     * Chỉ hiển thị:
+     * - Bài viết đã xuất bản
+     * - Danh mục đang hoạt động
+     * - Bài viết do chính user đó lưu
      */
     public function getByUser(int $userId): array
     {
@@ -50,10 +52,12 @@ class ImpactBox
             INNER JOIN posts p
                 ON ib.post_id = p.id
 
-            LEFT JOIN categories c
+            INNER JOIN categories c
                 ON p.category_id = c.id
 
             WHERE ib.user_id = ?
+              AND p.status = 'published'
+              AND c.status = 'active'
 
             ORDER BY ib.created_at DESC
         ";
@@ -72,17 +76,31 @@ class ImpactBox
      * =========================================================
      * KIỂM TRA BÀI VIẾT ĐÃ ĐƯỢC USER LƯU CHƯA
      * =========================================================
+     *
+     * Đồng thời kiểm tra bài viết còn:
+     * - published
+     * - category active
      */
     public function exists(
         int $userId,
         int $postId
     ): bool {
         $sql = "
-            SELECT id
-            FROM impact_box_items
+            SELECT
+                ib.id
 
-            WHERE user_id = ?
-              AND post_id = ?
+            FROM impact_box_items ib
+
+            INNER JOIN posts p
+                ON ib.post_id = p.id
+
+            INNER JOIN categories c
+                ON p.category_id = c.id
+
+            WHERE ib.user_id = ?
+              AND ib.post_id = ?
+              AND p.status = 'published'
+              AND c.status = 'active'
 
             LIMIT 1
         ";
@@ -91,6 +109,44 @@ class ImpactBox
 
         $stmt->execute([
             $userId,
+            $postId
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+
+
+    /**
+     * =========================================================
+     * KIỂM TRA BÀI VIẾT CÓ ĐƯỢC PHÉP LƯU KHÔNG
+     * =========================================================
+     *
+     * Bài viết chỉ hợp lệ nếu:
+     * - tồn tại
+     * - status = published
+     * - category status = active
+     */
+    public function canSavePost(int $postId): bool
+    {
+        $sql = "
+            SELECT
+                p.id
+
+            FROM posts p
+
+            INNER JOIN categories c
+                ON p.category_id = c.id
+
+            WHERE p.id = ?
+              AND p.status = 'published'
+              AND c.status = 'active'
+
+            LIMIT 1
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
             $postId
         ]);
 
@@ -139,7 +195,7 @@ class ImpactBox
      * XÓA BÀI VIẾT KHỎI IMPACT BOX
      * =========================================================
      *
-     * Chỉ xóa bài viết thuộc về user đang thực hiện thao tác.
+     * Chỉ xóa bài viết thuộc user đang đăng nhập.
      */
     public function delete(
         int $userId,
@@ -165,9 +221,6 @@ class ImpactBox
      * =========================================================
      * THÊM / SỬA GHI CHÚ
      * =========================================================
-     *
-     * Chỉ cập nhật ghi chú của bài viết
-     * thuộc về user đang đăng nhập.
      */
     public function updateNote(
         int $userId,
@@ -197,8 +250,6 @@ class ImpactBox
      * =========================================================
      * XÓA GHI CHÚ
      * =========================================================
-     *
-     * Bài viết vẫn được giữ trong Impact Box.
      */
     public function clearNote(
         int $userId,
@@ -227,7 +278,10 @@ class ImpactBox
      * LẤY MỘT BÀI VIẾT TRONG IMPACT BOX
      * =========================================================
      *
-     * Chỉ lấy được bài viết nếu nó thuộc về user đó.
+     * Chỉ lấy nếu:
+     * - thuộc user
+     * - bài viết published
+     * - danh mục active
      */
     public function getOne(
         int $userId,
@@ -253,11 +307,13 @@ class ImpactBox
             INNER JOIN posts p
                 ON ib.post_id = p.id
 
-            LEFT JOIN categories c
+            INNER JOIN categories c
                 ON p.category_id = c.id
 
             WHERE ib.user_id = ?
               AND ib.post_id = ?
+              AND p.status = 'published'
+              AND c.status = 'active'
 
             LIMIT 1
         ";
