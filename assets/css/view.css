@@ -201,3 +201,16 @@
         gap: 7px;
     }
 }
+.success-message {
+    margin-bottom: 18px;
+    padding: 13px 16px;
+    border: 1px solid #b9dfc5;
+    border-radius: 8px;
+    background: #eef9f1;
+    color: #28743d;
+    font-size: 14px;
+}
+
+.success-message i {
+    margin-right: 6px;
+}
