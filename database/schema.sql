@@ -28,9 +28,10 @@ CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(150) NOT NULL UNIQUE,
     name VARCHAR(120) NOT NULL UNIQUE,
-    status ENUM('active', 'hidden') NOT NULL DEFAULT 'active'
+    description TEXT NULL,
+    status ENUM('active', 'hidden') NOT NULL DEFAULT 'active',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
-
 CREATE TABLE posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     category_id INT UNSIGNED NOT NULL,
