@@ -3,6 +3,12 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/public-posts.php';
 
+function sanitizePostContent(string $content): string
+{
+    $allowedTags = '<p><h2><h3><ul><ol><li><blockquote><strong><em><b><i><br>';
+    return strip_tags($content, $allowedTags);
+}
+
 $postId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $post = null;
 $related = [];
@@ -38,21 +44,34 @@ if ($post && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_subm
         if ($currentUser === null) {
             $commentError = 'Vui lòng đăng nhập để bình luận.';
         } else {
-            $content = trim((string) ($_POST['content'] ?? ''));
-            if ($content === '') {
-                $commentError = 'Vui lòng nhập nội dung bình luận.';
-            } elseif (mb_strlen($content) > 1000) {
-                $commentError = 'Bình luận không được vượt quá 1000 ký tự.';
+            $stmt = $pdo->prepare("SELECT status FROM users WHERE id=? LIMIT 1");
+            $stmt->execute([$currentUser['id']]);
+            $userStatus = $stmt->fetchColumn();
+            if ($userStatus !== 'active') {
+                $commentError = 'Tài khoản của bạn không còn hoạt động nên không thể bình luận.';
             } else {
-                $userId = $currentUser['id'];
-                $stmt = $pdo->prepare("INSERT INTO comments (post_id,user_id,content,status,created_at) VALUES (?,?,?, 'pending',NOW())");
-                $stmt->execute([$postId, $userId, $content]);
-                $commentSuccess = 'Bình luận đã được gửi và đang chờ duyệt.';
+                $content = trim((string) ($_POST['content'] ?? ''));
+                if ($content === '') {
+                    $commentError = 'Vui lòng nhập nội dung bình luận.';
+                } elseif (mb_strlen($content) > 1000) {
+                    $commentError = 'Bình luận không được vượt quá 1000 ký tự.';
+                } else {
+                    $userId = $currentUser['id'];
+                    $stmt = $pdo->prepare("INSERT INTO comments (post_id,user_id,content,status,created_at) VALUES (?,?,?, 'pending',NOW())");
+                    $stmt->execute([$postId, $userId, $content]);
+                    $_SESSION['comment_success'] = 'Bình luận đã được gửi và đang chờ duyệt.';
+                    redirect(publicDetailUrl($postId, $context));
+                }
             }
         }
     } catch (PDOException $exception) {
         $commentError = 'Không thể lưu bình luận. Vui lòng thử lại.';
     }
+}
+
+if (!empty($_SESSION['comment_success'])) {
+    $commentSuccess = (string) $_SESSION['comment_success'];
+    unset($_SESSION['comment_success']);
 }
 
 if ($loadError) http_response_code(503);
@@ -74,7 +93,7 @@ require __DIR__ . '/includes/header.php';
 <p class="public-byline"><?= e(publicPostDate($post)) ?> · Tác giả: <?= e($post['author_name']) ?></p>
 <img class="public-cover" src="<?= e(publicPostImage($post['thumbnail'])) ?>" alt="" data-public-image>
 <p class="public-summary"><?= e($post['summary']) ?></p>
-<div class="public-content"><?= $post['content'] ?></div>
+<div class="public-content"><?= sanitizePostContent((string) $post['content']) ?></div>
 </article><aside class="public-sidebar"><section><h2>Bài viết liên quan</h2>
 <?php foreach ($related as $item): ?>
 <a class="public-related" href="<?= e(publicDetailUrl((int) $item['id'], $context)) ?>"><img src="<?= e(publicPostImage($item['thumbnail'])) ?>" alt="" data-public-image><span><?= e($item['title']) ?><small><?= e(publicPostDate($item)) ?></small></span></a>
@@ -98,7 +117,6 @@ require __DIR__ . '/includes/header.php';
 <?php endforeach; ?>
 <?php endif; ?>
 </div>
-
 <?php if ($currentUser === null): ?>
 <div style="text-align:center; padding:15px; background:#fffaf7; border:1px solid #ead7cf; border-radius:8px; margin-top:15px;">
 <p style="margin:0 0 10px; font-size:14px; color:#47352e;">Vui lòng đăng nhập để tham gia bình luận.</p>
