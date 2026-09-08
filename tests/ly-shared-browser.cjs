@@ -39,6 +39,15 @@ async function post(page,url,form) {
     await start(8021,root);await start(8022,path.dirname(root));
     browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_BINARY || 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
     for(const base of ['http://127.0.0.1:8021','http://127.0.0.1:8022/'+path.basename(root)]) {
+      const guestContext=await browser.newContext();const guestPage=await guestContext.newPage();
+      check((await guestPage.goto(base+'/bai-viet.php?id='+data.posts.published)).status()===200,'Guest article opens');
+      check(await guestPage.locator('.comment-login-prompt').count()===1,'Guest sees login prompt');
+      check(await guestPage.locator('.comment-form').count()===0,'Guest has no comment form');
+      check((await post(guestPage,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:data.prefix+' guest',csrf_token:''})).status===419,'Guest comment CSRF');
+      await guestPage.goto(base+'/dang-nhap.php');const guestCsrf=await token(guestPage);
+      const guestSubmit=await post(guestPage,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:data.prefix+' guest',csrf_token:guestCsrf});
+      check(guestSubmit.status===200 && guestSubmit.body.includes('Vui lòng đăng nhập để bình luận.'),'Guest must log in to comment');
+      await guestContext.close();
       const context=await browser.newContext({viewport:{width:1440,height:1000}});
       const admin=await context.newPage();
       await login(admin,base,'admin');
@@ -89,6 +98,9 @@ async function post(page,url,form) {
       check((await post(admin,base+'/views/category-delete.php?id='+data.categories.active,{csrf_token:csrf})).body.includes('đang có bài viết'),'Cannot delete used category');
       check((await post(admin,base+'/views/category-delete.php?id='+cat.id,{csrf_token:csrf})).status===302,'Delete empty category');
       if(suffix==='root') {
+        await admin.goto(base+'/editor/posts.php?status=published&view='+data.posts.published);
+        check(await admin.evaluate(()=>window.qaInjected===undefined),'Editor preview blocks injected HTML');
+        check((await admin.textContent('.article-content')).includes('<script>'),'Editor preview shows HTML as text');
         await admin.goto(base+'/admin/binhluan.php?keyword='+encodeURIComponent(data.prefix));
         const button=admin.locator('.btn-duyet[data-id="'+data.comment+'"]');
         check(await button.count()===1,'Pending comment shown');
@@ -112,6 +124,41 @@ async function post(page,url,form) {
       check(await reader.evaluate(()=>window.qaInjected===undefined),'Escaped article content');
       check((await reader.textContent('.public-content')).includes('<script>'),'HTML shown as text');
       const readerCsrf=await token(reader);
+      const initialComments=fixture('state').comments.length;
+      let commentResponse=await post(reader,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:'',csrf_token:readerCsrf});
+      check(commentResponse.status===200 && commentResponse.body.includes('Vui lòng nhập nội dung bình luận.'),'Reject empty comment');
+      commentResponse=await post(reader,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:'x'.repeat(1001),csrf_token:readerCsrf});
+      check(commentResponse.status===200 && commentResponse.body.includes('1.000 ký tự'),'Reject overlong comment');
+      check(fixture('state').comments.length===initialComments,'Invalid comments are not stored');
+      fixture('lock-reader');
+      commentResponse=await post(reader,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:data.prefix+' locked',csrf_token:readerCsrf});
+      check(commentResponse.status===200 && commentResponse.body.includes('không còn hoạt động'),'Locked session cannot comment');
+      check(fixture('state').comments.length===initialComments,'Locked comment is not stored');
+      fixture('unlock-reader');
+      check(fixture('state').reader_status==='active','Reader test account restored');
+      if(suffix==='root') {
+        const submitted=data.prefix+' submitted <img src=x onerror=window.commentInjected=1>';
+        commentResponse=await post(reader,base+'/bai-viet.php?id='+data.posts.published,{comment_submit:'1',content:submitted,csrf_token:readerCsrf});
+        check(commentResponse.status===302,'Valid comment uses PRG redirect');
+        const pending=fixture('state').comments.find(c=>c.content===submitted);
+        check(!!pending && pending.status==='pending','New comment waits for approval');
+        await reader.goto(base+'/bai-viet.php?id='+data.posts.published);
+        check((await reader.textContent('body')).includes('Bình luận đã được gửi và đang chờ duyệt.'),'Comment flash shown once');
+        check(!(await reader.textContent('.comments-list')).includes(submitted),'Pending comment is private');
+        await reader.reload();
+        check(!(await reader.textContent('body')).includes('Bình luận đã được gửi và đang chờ duyệt.'),'Comment flash clears after reload');
+        check(fixture('state').comments.filter(c=>c.content===submitted).length===1,'Reload does not duplicate comment');
+        const adminCsrf=csrf;
+        const commentApi=base+'/admin/api/duyet-binh-luan.php';
+        check(JSON.parse((await post(admin,commentApi,{comment_id:pending.id,action:'show',status:'approved',csrf_token:adminCsrf})).body).success,'Approve submitted comment');
+        await reader.reload();
+        check((await reader.textContent('.comments-list')).includes(submitted),'Approved comment becomes public');
+        check(await reader.evaluate(()=>window.commentInjected===undefined),'Comment HTML is escaped');
+        check(JSON.parse((await post(admin,commentApi,{comment_id:pending.id,action:'hide',status:'hidden',csrf_token:adminCsrf})).body).success,'Hide submitted comment');
+        await reader.reload();check(!(await reader.textContent('.comments-list')).includes(submitted),'Hidden comment is not public');
+        check(JSON.parse((await post(admin,commentApi,{comment_id:pending.id,action:'delete',csrf_token:adminCsrf})).body).success,'Delete submitted comment');
+        check(!fixture('state').comments.some(c=>c.id==pending.id),'Deleted submitted comment absent');
+      }
       check((await post(reader,base+'/impact-box-action.php',{action:'add',post_id:data.posts.published,csrf_token:''})).status===419,'Save CSRF');
       // Exercise the visible save dialog and form.
       await reader.locator('.article-save-button').click();

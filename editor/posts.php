@@ -243,12 +243,12 @@ include __DIR__ . '/../includes/editor-header.php';
 
                     <?php if ($selectedPost['summary']): ?>
                         <div class="article-summary">
-                            <?= nl2br(htmlspecialchars($selectedPost['summary'])) ?>
+                            <?= nl2br(e((string) $selectedPost['summary'])) ?>
                         </div>
                     <?php endif; ?>
 
                     <div class="article-content">
-                        <?= nl2br(htmlspecialchars($selectedPost['content'])) ?>
+                        <?= nl2br(e((string) $selectedPost['content'])) ?>
                     </div>
 
                     <?php if ($selectedPost['status']==='rejected' && $selectedPost['editor_note']): ?>

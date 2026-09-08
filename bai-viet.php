@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/includes/public-posts.php';
+require_once __DIR__ . '/includes/auth.php';
 
 $postId = filter_input(
     INPUT_GET,
@@ -12,7 +13,11 @@ $postId = filter_input(
 
 $post = null;
 $related = [];
+$comments = [];
 $loadError = false;
+$commentError = '';
+$commentSuccess = '';
+$commentContent = '';
 
 $context = publicContext();
 
@@ -41,6 +46,24 @@ if ($postId && $postId > 0) {
         $stmt->execute([$postId]);
 
         $post = $stmt->fetch() ?: null;
+
+        if ($post) {
+            $stmt = $pdo->prepare("
+                SELECT
+                    comments.id,
+                    comments.content,
+                    comments.created_at,
+                    users.full_name
+                FROM comments
+                INNER JOIN users
+                    ON users.id = comments.user_id
+                WHERE comments.post_id = ?
+                  AND comments.status = 'approved'
+                ORDER BY comments.created_at DESC, comments.id DESC
+            ");
+            $stmt->execute([$postId]);
+            $comments = $stmt->fetchAll();
+        }
 
         if ($post && !empty($post['category_id'])) {
             $stmt = $pdo->prepare("
@@ -77,6 +100,50 @@ if ($postId && $postId > 0) {
     } catch (PDOException $exception) {
         $loadError = true;
     }
+}
+
+$currentUser = currentUser();
+
+if ($post && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_submit'])) {
+    verifyCsrf();
+    $commentContent = trim((string) ($_POST['content'] ?? ''));
+
+    if ($currentUser === null) {
+        $commentError = 'Vui lòng đăng nhập để bình luận.';
+    } elseif ($commentContent === '') {
+        $commentError = 'Vui lòng nhập nội dung bình luận.';
+    } elseif (mb_strlen($commentContent) > 1000) {
+        $commentError = 'Bình luận không được vượt quá 1.000 ký tự.';
+    } else {
+        try {
+            $stmt = $pdo->prepare('SELECT status FROM users WHERE id = ? LIMIT 1');
+            $stmt->execute([(int) $currentUser['id']]);
+
+            if ($stmt->fetchColumn() !== 'active') {
+                $commentError = 'Tài khoản của bạn không còn hoạt động nên không thể bình luận.';
+            } else {
+                $stmt = $pdo->prepare("
+                    INSERT INTO comments (post_id, user_id, content, status, created_at)
+                    VALUES (?, ?, ?, 'pending', NOW())
+                ");
+                $stmt->execute([
+                    $postId,
+                    (int) $currentUser['id'],
+                    $commentContent,
+                ]);
+
+                $_SESSION['comment_success'] = 'Bình luận đã được gửi và đang chờ duyệt.';
+                redirect(publicDetailUrl((int) $postId, $context));
+            }
+        } catch (PDOException $exception) {
+            $commentError = 'Không thể lưu bình luận. Vui lòng thử lại.';
+        }
+    }
+}
+
+if (isset($_SESSION['comment_success'])) {
+    $commentSuccess = (string) $_SESSION['comment_success'];
+    unset($_SESSION['comment_success']);
 }
 
 if ($loadError) {
@@ -388,6 +455,65 @@ require __DIR__ . '/includes/header.php';
                         <?= nl2br(e($post['content'])) ?>
                     </div>
 
+                    <section class="article-comments" aria-labelledby="comments-title">
+                        <h2 id="comments-title">Bình luận (<?= count($comments) ?>)</h2>
+
+                        <?php if ($commentSuccess !== ''): ?>
+                            <div class="comment-alert comment-alert-success" role="status">
+                                <?= e($commentSuccess) ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($commentError !== ''): ?>
+                            <div class="comment-alert comment-alert-error" role="alert">
+                                <?= e($commentError) ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="comments-list">
+                            <?php if (!$comments): ?>
+                                <p class="comments-empty">Chưa có bình luận đã được duyệt.</p>
+                            <?php else: ?>
+                                <?php foreach ($comments as $comment): ?>
+                                    <article class="comment-item">
+                                        <div class="comment-avatar" aria-hidden="true">
+                                            <?= e(mb_substr((string) ($comment['full_name'] ?? 'N'), 0, 1)) ?>
+                                        </div>
+                                        <div class="comment-body">
+                                            <strong><?= e($comment['full_name'] ?? 'Người dùng') ?></strong>
+                                            <p><?= nl2br(e($comment['content'])) ?></p>
+                                            <small><?= e(date('d/m/Y H:i', strtotime((string) $comment['created_at']))) ?></small>
+                                        </div>
+                                    </article>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if ($currentUser === null): ?>
+                            <div class="comment-login-prompt">
+                                <p>Vui lòng đăng nhập để tham gia bình luận.</p>
+                                <a href="<?= e(BASE_URL) ?>dang-nhap.php">Đăng nhập</a>
+                            </div>
+                        <?php else: ?>
+                            <form method="post" class="comment-form" id="commentForm" novalidate>
+                                <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
+                                <p class="comment-user">
+                                    Bình luận với tên <strong><?= e($currentUser['full_name'] ?? 'Người dùng') ?></strong>
+                                </p>
+                                <label for="commentContent">Nội dung bình luận</label>
+                                <textarea
+                                    name="content"
+                                    id="commentContent"
+                                    maxlength="1000"
+                                    placeholder="Viết bình luận..."
+                                    required
+                                ><?= e($commentContent) ?></textarea>
+                                <span class="comment-client-error" id="commentContentError" aria-live="polite"></span>
+                                <button type="submit" name="comment_submit">Gửi bình luận</button>
+                            </form>
+                        <?php endif; ?>
+                    </section>
+
                 </article>
 
                 <aside class="public-sidebar">
@@ -646,6 +772,25 @@ require __DIR__ . '/includes/header.php';
         }
     );
 
+</script>
+
+<script>
+    document.getElementById('commentForm')?.addEventListener('submit', function (event) {
+        const field = document.getElementById('commentContent');
+        const error = document.getElementById('commentContentError');
+
+        if (!field || !error) {
+            return;
+        }
+
+        if (field.value.trim() === '') {
+            event.preventDefault();
+            error.textContent = 'Vui lòng nhập nội dung bình luận.';
+            field.focus();
+        } else {
+            error.textContent = '';
+        }
+    });
 </script>
 
 
