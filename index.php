@@ -3,21 +3,46 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/public-posts.php';
 $posts = [];
 $postsLoadError = false;
+$impactItems = [];
+$impactLoadError = false;
 try {
     $posts = db()->query("SELECT p.id,p.title,p.summary,p.thumbnail,p.published_at,p.created_at,c.name AS category_name,u.full_name AS author_name FROM posts p JOIN categories c ON c.id=p.category_id JOIN users u ON u.id=p.author_id WHERE p.status='published' AND c.status='active' AND c.slug IN ('tin-khoa','hoc-tap','co-hoi','su-kien') ORDER BY COALESCE(p.published_at,p.created_at) DESC,p.id DESC LIMIT 4")->fetchAll();
 } catch (PDOException $exception) {
     $posts = [];
     $postsLoadError = true;
 }
+
+if (!empty($_SESSION['user']['id'])) {
+    try {
+        require_once __DIR__ . '/controllers/ImpactBoxController.php';
+        $impactItems = array_slice(
+            (new ImpactBoxController())->index((int) $_SESSION['user']['id']),
+            0,
+            3
+        );
+    } catch (PDOException $exception) {
+        $impactLoadError = true;
+    }
+}
 $pageTitle='Trang chủ'; require __DIR__.'/includes/header.php';
 ?>
-<section class="figma-hero"><div class="site-shell hero-layout"><div class="hero-copy"><p>CẬP NHẬT · ĐỔI MỚI · TÁC ĐỘNG</p><h1>ĐIỀU GÌ<br>ĐANG THAY ĐỔI?</h1><i></i><div>Nơi cập nhật những thông tin quan trọng, cơ hội và hướng dẫn mới nhất dành riêng cho sinh viên Khoa CNTT.<br>Hiểu đúng – Hành động kịp thời – Tạo ra tác động.</div><div class="hero-buttons"><a href="#articles">Tìm thông tin →</a><a href="#featured">Xem bài mới</a></div></div><div class="hero-photo"><img src="assets/images/figma/home-hero.png" alt="Sinh viên trao đổi và học tập trong khuôn viên trường"></div></div></section>
+<section class="figma-hero"><div class="site-shell hero-layout"><div class="hero-copy"><p>CẬP NHẬT · ĐỔI MỚI · TÁC ĐỘNG</p><h1>ĐIỀU GÌ<br>ĐANG THAY ĐỔI?</h1><i></i><div>Nơi cập nhật những thông tin quan trọng, cơ hội và hướng dẫn mới nhất dành riêng cho sinh viên Khoa CNTT.<br>Hiểu đúng – Hành động kịp thời – Tạo ra tác động.</div><div class="hero-buttons"><a href="#articles">Tìm thông tin →</a><a href="#featured">Impact Box</a></div></div><div class="hero-photo"><img src="assets/images/figma/home-hero.png" alt="Sinh viên trao đổi và học tập trong khuôn viên trường"></div></div></section>
 
-<section id="featured" class="home-section soft-section"><div class="site-shell"><div class="section-title"><h2>Thay đổi đáng chú ý</h2><a href="dang-phat-trien.php?feature=thay-doi">Xem tất cả →</a></div><div class="change-grid">
-<article class="change-card urgent"><span>CẦN THỰC HIỆN</span><h3>Đăng ký học phần HK2/2024–2025</h3><p>Sinh viên thực hiện đăng ký học phần trực tuyến trên hệ thống từ ngày 20/05 đến 27/05.</p><div class="change-meta"><div><img src="assets/images/figma/icon-user.svg" alt=""><p><b>Đối tượng</b><small>Tất cả sinh viên</small></p></div><div><img src="assets/images/figma/icon-clock.svg" alt=""><p><b>Hạn chót</b><small>27/05/2025</small></p></div></div><div class="impact"><strong>Impact Summary</strong><div class="impact-row"><span class="impact-icon impact-person" aria-hidden="true"><img src="assets/images/figma/icon-user.svg" alt=""></span><b>Ảnh hưởng đến ai</b><small>Tất cả sinh viên khoa CNTT</small></div><div class="impact-row"><span class="impact-icon" aria-hidden="true"><img src="assets/images/figma/icon-opportunity.svg" alt=""></span><b>Cần làm gì</b><small>Đăng nhập hệ thống, chọn và xác nhận học phần đúng hạn.</small></div><div class="impact-row"><span class="impact-icon" aria-hidden="true"><img src="assets/images/figma/icon-event.svg" alt=""></span><b>Hạn chót</b><small class="deadline">27/05/2025</small></div></div><a href="dang-phat-trien.php?feature=thay-doi">Xem chi tiết →</a></article>
-<article class="change-card warning"><span>CẦN CHÚ Ý</span><h3>Điều chỉnh lịch thi giữa kỳ một số học phần</h3><p>Lịch thi giữa kỳ của một số học phần sẽ được điều chỉnh từ tuần 9 sang tuần 10.</p><div class="change-meta"><div><img src="assets/images/figma/icon-user.svg" alt=""><p><b>Đối tượng</b><small>Sinh viên các lớp DLT01, DLT02, DLT03, DLT05</small></p></div><div><img src="assets/images/figma/icon-clock.svg" alt=""><p><b>Hạn chót</b><small>18/05/2025</small></p></div></div><a href="dang-phat-trien.php?feature=thay-doi">Xem chi tiết →</a></article>
-<article class="change-card info"><span>THÔNG TIN</span><h3>Hướng dẫn sử dụng cổng hỗ trợ sinh viên</h3><p>Cổng hỗ trợ sinh viên mới chính thức đi vào hoạt động từ ngày 15/05/2025.</p><div class="change-meta"><div><img src="assets/images/figma/icon-user.svg" alt=""><p><b>Đối tượng</b><small>Tất cả sinh viên</small></p></div><div><img src="assets/images/figma/icon-clock.svg" alt=""><p><b>Hạn chót</b><small>15/05/2025</small></p></div></div><a href="dang-phat-trien.php?feature=thay-doi">Xem chi tiết →</a></article>
-</div></div></section>
+<section id="featured" class="home-section home-impact-section"><div class="site-shell"><div class="section-title"><div><p class="section-kicker">KHÔNG GIAN CÁ NHÂN</p><h2>Impact Box của bạn</h2></div><a href="<?= empty($_SESSION['user']) ? 'dang-nhap.php' : 'views/impact-box.php' ?>"><?= empty($_SESSION['user']) ? 'Đăng nhập →' : 'Xem tất cả →' ?></a></div>
+<?php if (empty($_SESSION['user'])): ?>
+<div class="home-impact-state"><img src="assets/images/figma/icon-impact.svg" alt=""><div><h3>Lưu lại những bài viết quan trọng</h3><p>Đăng nhập để tạo Impact Box cá nhân, thêm ghi chú và xem lại khi cần.</p></div><a href="dang-nhap.php">Đăng nhập</a></div>
+<?php elseif ($impactLoadError): ?>
+<div class="home-impact-state" role="alert"><div><h3>Chưa thể tải Impact Box</h3><p>Kết nối dữ liệu đang gián đoạn. Vui lòng thử lại sau.</p></div></div>
+<?php elseif (!$impactItems): ?>
+<div class="home-impact-state"><img src="assets/images/figma/icon-impact.svg" alt=""><div><h3>Impact Box đang trống</h3><p>Nhấn biểu tượng ♡ tại một bài viết để lưu bài vào đây.</p></div><a href="#articles">Khám phá bài viết</a></div>
+<?php else: ?>
+<div class="home-impact-grid">
+<?php foreach ($impactItems as $item): $impactUrl='bai-viet.php?id='.(int)$item['post_id']; ?>
+<article class="home-impact-card"><a class="home-impact-image" href="<?= e($impactUrl) ?>"><img src="<?= e(publicPostImage($item['thumbnail'])) ?>" alt=""></a><div><span><?= e($item['category_name']) ?></span><h3><a href="<?= e($impactUrl) ?>"><?= e($item['title']) ?></a></h3><?php if (!empty($item['note'])): ?><p><?= e($item['note']) ?></p><?php else: ?><p class="home-impact-no-note">Chưa có ghi chú cho bài viết này.</p><?php endif; ?><small>Đã lưu <?= e(date('d/m/Y', strtotime((string)$item['created_at']))) ?></small></div></article>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>
+</div></section>
 
 <section id="articles" class="home-section"><div class="site-shell"><div class="section-title"><h2>Bài viết và hướng dẫn</h2><a href="pages/tim-kiem.php">Xem tất cả →</a></div><div class="article-grid">
 <?php if ($postsLoadError): ?>

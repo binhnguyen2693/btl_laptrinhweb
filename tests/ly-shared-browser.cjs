@@ -40,6 +40,9 @@ async function post(page,url,form) {
     browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_BINARY || 'C:/Program Files/Google/Chrome/Application/chrome.exe'});
     for(const base of ['http://127.0.0.1:8021','http://127.0.0.1:8022/'+path.basename(root)]) {
       const guestContext=await browser.newContext();const guestPage=await guestContext.newPage();
+      await guestPage.goto(base+'/index.php');
+      check((await guestPage.textContent('#featured')).includes('Lưu lại những bài viết quan trọng'),'Guest sees Impact Box login state');
+      check(await guestPage.locator('#featured a[href="dang-nhap.php"]').count()>=1,'Guest Impact Box login link');
       check((await guestPage.goto(base+'/bai-viet.php?id='+data.posts.published)).status()===200,'Guest article opens');
       check(await guestPage.locator('.comment-login-prompt').count()===1,'Guest sees login prompt');
       check(await guestPage.locator('.comment-form').count()===0,'Guest has no comment form');
@@ -166,6 +169,9 @@ async function post(page,url,form) {
       await Promise.all([reader.waitForURL('**/views/impact-box.php'),reader.locator('.save-modal button[type=submit]').click()]);
       check((await reader.textContent('body')).includes(data.prefix+' published'),'Saved article visible');
       check((await reader.locator('.impact-card-image').getAttribute('src')).includes('/assets/images/figma/home-card-1.png'),'Saved article image path');
+      await reader.goto(base+'/index.php');
+      check((await reader.textContent('#featured')).includes(data.prefix+' published'),'Saved article appears in home Impact Box');
+      check((await reader.locator('#featured .home-impact-card').count())===1,'Home Impact Box uses current user data');
       const save=async(action,id,note='')=>post(reader,base+'/impact-box-action.php',{action,post_id:id,note,csrf_token:readerCsrf});
       await save('add',data.posts.published);
       check(fixture('state').saved.filter(r=>r.user_id==data.users.reader.id&&r.post_id==data.posts.published).length===1,'No duplicate saves');
