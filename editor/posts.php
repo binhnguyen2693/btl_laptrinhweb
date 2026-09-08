@@ -247,9 +247,15 @@ include __DIR__ . '/../includes/editor-header.php';
                         </div>
                     <?php endif; ?>
 
-                    <div class="article-content">
-                        <?= nl2br(htmlspecialchars($selectedPost['content'])) ?>
-                    </div>
+                   <?php if ($selectedPost['summary']): ?>
+                        <div class="article-summary">
+                            <?= $selectedPost['summary'] ?>
+                        </div>
+                    <?php endif; ?>
+
+<div class="article-content">
+    <?= $selectedPost['content'] ?>
+</div>
 
                     <?php if ($selectedPost['status']==='rejected' && $selectedPost['editor_note']): ?>
                         <div class="reject-note">
