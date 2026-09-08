@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: categories.php');
             exit;
         } else {
-            $message = 'Cập nhật danh mục thất bại.';
+            $message = $controller->error();
         }
     }
 }
