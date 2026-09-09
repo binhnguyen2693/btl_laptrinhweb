@@ -38,5 +38,10 @@ kiểm tra thủ công trước khi đổi slug; không tự gán lại bài vi�
 Không chạy lại schema/seed trên database VPS có dữ liệu. Tác giả chọn danh mục
 mới khi viết bài; chỉ bài đã xuất bản trong danh mục đang hoạt động mới xuất hiện.
 
+Database cũ còn các danh mục `cong-nghe`, `giao-duc`, `doi-song` chạy migration
+`migrations/2026_09_08_move_legacy_categories.sql` một lần. Script chuyển bài sang
+Tin khoa, Học tập, Cơ hội rồi chỉ xóa danh mục cũ khi không còn bài tham chiếu;
+ID bài, bình luận và các mục trong Impact Box được giữ nguyên.
+
 Ảnh upload vẫn là file trên máy chạy PHP. Dùng chung MySQL không đồng bộ file ảnh;
 cần chép ảnh tương ứng hoặc thiết lập kho ảnh chung ở đợt triển khai riêng.

@@ -1,33 +1,7 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/public-posts.php';
-
-$basePath = '../';
-$publicStyles = true;
-$activeNav = $category ?? '';
-$isSearch = $category === null;
-$q = $isSearch ? publicQuery('q') : '';
-$pageTitle = $isSearch ? ($q === '' ? 'Tất cả bài viết' : 'Kết quả tìm kiếm') : PUBLIC_CATEGORIES[$category];
-$descriptions = [
-    'tin-khoa' => 'Thông tin, hoạt động và thông báo mới nhất từ khoa.',
-    'hoc-tap' => 'Kiến thức, nghiên cứu và kinh nghiệm học tập dành cho sinh viên.',
-    'co-hoi' => 'Học bổng, thực tập, việc làm và cơ hội phát triển bản thân.',
-    'su-kien' => 'Hội thảo, workshop và các hoạt động của khoa.',
-];
-$data = ['posts' => [], 'total' => 0, 'pages' => 1, 'page' => 1];
-$latest = [];
-$loadError = false;
-try {
-    $pdo = db();
-    $data = publicList($pdo, $category, $q, publicPage());
-    if (!$isSearch) $latest = array_slice(publicList($pdo, null, '', 1)['posts'], 0, 3);
-} catch (PDOException $exception) {
-    $loadError = true;
-    http_response_code(503);
-}
-$context = ['from' => $category ?? 'tim-kiem', 'q' => $q, 'page' => $data['page']];
-$grid = in_array($category, ['hoc-tap', 'su-kien'], true);
-require __DIR__ . '/header.php';
+$basePath = BASE_URL;
+$q = $keyword;
 ?>
 <section class="public-pages"><div class="site-shell">
 <div class="public-heading">
@@ -35,7 +9,7 @@ require __DIR__ . '/header.php';
     <?php if ($isSearch): ?><form class="public-search" action="tim-kiem.php" method="get" role="search"><label for="public-query">Từ khóa tìm kiếm</label><div><input id="public-query" name="q" type="search" value="<?= e($q) ?>" placeholder="Nhập từ khóa..."><button type="submit">Tìm kiếm</button></div></form><?php endif; ?>
 </div>
 <?php if ($loadError): ?>
-<div class="public-empty" role="alert"><h2>Chưa thể tải bài viết</h2><p>Kết nối dữ liệu đang gián đoạn. Vui lòng thử lại sau.</p><a href="<?= e(($category ?? 'tim-kiem') . '.php?' . http_build_query(['q' => $q, 'page' => publicPage()])) ?>">Thử lại</a></div>
+<div class="public-empty" role="alert"><h2>Chưa thể tải bài viết</h2><p>Kết nối dữ liệu đang gián đoạn. Vui lòng thử lại sau.</p><a href="<?= e(BASE_URL . 'pages/' . ($category ?? 'tim-kiem') . '.php?' . http_build_query(['q' => $q, 'page' => $requestedPage])) ?>">Thử lại</a></div>
 <?php else: ?>
 <p class="public-count"><?= $data['total'] ?> bài viết<?= $q !== '' ? ' phù hợp với “' . e($q) . '”' : '' ?></p>
 <div class="public-layout<?= $isSearch || $grid ? ' public-layout-wide' : '' ?>">
@@ -66,7 +40,7 @@ require __DIR__ . '/header.php';
 </div>
 <?php if (!$isSearch && !$grid): ?>
 <aside class="public-sidebar"><section><h2>Danh mục</h2><nav aria-label="Danh mục bài viết">
-<?php foreach (PUBLIC_CATEGORIES as $slug => $name): ?><a href="<?= e($slug) ?>.php" <?= $slug === $category ? 'aria-current="page"' : '' ?>><?= e($name) ?></a><?php endforeach; ?>
+<?php foreach ($categories as $slug => $name): ?><a href="<?= e(BASE_URL . 'pages/' . $slug) ?>.php" <?= $slug === $category ? 'aria-current="page"' : '' ?>><?= e($name) ?></a><?php endforeach; ?>
 </nav></section><section><h2>Bài mới nhất</h2>
 <?php foreach ($latest as $post): ?><a class="public-related" href="<?= e(publicDetailUrl((int) $post['id'], $context, $basePath)) ?>"><img src="<?= e(publicPostImage($post['thumbnail'], $basePath)) ?>" alt="" data-public-image><span><?= e($post['title']) ?><small><?= e(publicPostDate($post)) ?></small></span></a><?php endforeach; ?>
 <?php if (!$latest): ?><p>Chưa có bài viết.</p><?php endif; ?>
@@ -75,4 +49,3 @@ require __DIR__ . '/header.php';
 </div>
 <?php endif; ?>
 </div></section>
-<?php require __DIR__ . '/footer.php'; ?>

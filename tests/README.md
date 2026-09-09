@@ -33,3 +33,16 @@ lọc trạng thái bài và danh mục, nội dung không thực thi HTML/scrip
 ảnh dự phòng, menu mobile, không tràn ngang ở 375/768/1440px, phiên đăng nhập
 4 vai trò và đăng xuất. Phần chuyển pending → published chỉ thay đổi dữ liệu thử,
 sau đó trả bài về pending. Database thử được giữ lại để tái hiện kết quả.
+
+## Kiểm thử tích hợp trên database VPS chung
+
+Chỉ chạy khi nhóm đã cho phép tạo dữ liệu thử tạm thời trên VPS:
+
+```powershell
+node tests/ly-shared-browser.cjs --allow-shared-vps
+```
+
+Script chỉ tạo bản ghi có tiền tố `[TEST] qa-ly-...`, kiểm tra quản lý danh mục,
+bình luận, Impact Box, phân quyền, đường dẫn gốc/thư mục con và giao diện responsive.
+Nó tự xóa đúng các bản ghi thử khi kết thúc, đồng thời so sánh dấu vân tay để bảo
+đảm dữ liệu có sẵn của nhóm không bị thay đổi. Không chạy lại schema hoặc seed.

@@ -1,6 +1,6 @@
 <?php
-
 declare(strict_types=1);
+
 
 require_once __DIR__ . '/includes/public-posts.php';
 
@@ -97,9 +97,6 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <style>
-    /* =========================
-       SAVE BUTTON
-    ========================= */
 
     .article-save-area {
         margin: 20px 0 30px;
@@ -650,3 +647,4 @@ require __DIR__ . '/includes/header.php';
 
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
+

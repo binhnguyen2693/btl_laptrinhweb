@@ -45,9 +45,11 @@ if ($action === 'setup') {
             $data['categories'][$status] = (int)$pdo->lastInsertId();
         }
         foreach (['published','draft','pending','hidden'] as $type) {
-            execute('INSERT INTO posts(category_id,author_id,title,slug,summary,content,status,published_at) VALUES(?,?,?,?,?,?,?,?)',
+            execute('INSERT INTO posts(category_id,author_id,title,slug,summary,thumbnail,content,status,published_at) VALUES(?,?,?,?,?,?,?,?,?)',
                 [$data['categories'][$type==='hidden'?'hidden':'active'],$data['users']['author']['id'],
-                 $prefix.' '.$type,$run.'-'.$type,$prefix.' summary',"Nội dung thử\n<script>window.qaInjected=1</script>",
+                 $prefix.' '.$type,$run.'-'.$type,$prefix.' summary',
+                 $type==='published'?'assets/images/figma/home-card-1.png':null,
+                 "Nội dung thử\n<script>window.qaInjected=1</script>",
                  $type==='hidden'?'published':$type,in_array($type,['published','hidden'],true)?date('Y-m-d H:i:s'):null]);
             $data['posts'][$type] = (int)$pdo->lastInsertId();
         }
@@ -68,12 +70,27 @@ $data = json_decode(file_get_contents($file),true,512,JSON_THROW_ON_ERROR);
 if ($action === 'state') {
     echo json_encode([
         'categories'=>execute('SELECT id,name,slug,status FROM categories WHERE slug LIKE ?',[$run.'-%'])->fetchAll(),
-        'comments'=>execute('SELECT id,status FROM comments WHERE id=? AND content=?',[$data['comment'],$prefix.' comment'])->fetchAll(),
+        'comments'=>execute(
+            'SELECT id,status,content FROM comments WHERE post_id=? AND user_id=? AND content LIKE ? ORDER BY id',
+            [$data['posts']['published'],$data['users']['reader']['id'],$prefix.'%']
+        )->fetchAll(),
+        'reader_status'=>execute('SELECT status FROM users WHERE id=? AND email=?',[
+            $data['users']['reader']['id'],
+            $data['users']['reader']['email'],
+        ])->fetchColumn(),
         'saved'=>execute('SELECT user_id,post_id,note FROM impact_box_items WHERE user_id IN (?,?,?)',array_column($data['users'],'id'))->fetchAll()
     ],JSON_UNESCAPED_UNICODE); exit;
 }
 if ($action === 'hide' || $action === 'unhide') {
     execute('UPDATE categories SET status=? WHERE id=? AND slug=?',[$action==='hide'?'hidden':'active',$data['categories']['active'],$run.'-active']);
+    echo '{}'; exit;
+}
+if ($action === 'lock-reader' || $action === 'unlock-reader') {
+    execute('UPDATE users SET status=? WHERE id=? AND email=?',[
+        $action === 'lock-reader' ? 'locked' : 'active',
+        $data['users']['reader']['id'],
+        $data['users']['reader']['email'],
+    ]);
     echo '{}'; exit;
 }
 if ($action !== 'cleanup') throw new RuntimeException('Unsupported action');
@@ -83,7 +100,10 @@ try {
     foreach ($data['users'] as $u) {
         execute('DELETE FROM impact_box_items WHERE user_id=?',[$u['id']]);
     }
-    execute('DELETE FROM comments WHERE id=? AND user_id=? AND content=?',[$data['comment'],$data['users']['reader']['id'],$prefix.' comment']);
+    execute(
+        'DELETE FROM comments WHERE post_id=? AND user_id=? AND content LIKE ?',
+        [$data['posts']['published'],$data['users']['reader']['id'],$prefix.'%']
+    );
     foreach($data['posts'] as $type=>$id) {
         // Never cascade-delete another person's comment/save on a test post.
         if (execute('SELECT COUNT(*) FROM comments WHERE post_id=?',[$id])->fetchColumn()

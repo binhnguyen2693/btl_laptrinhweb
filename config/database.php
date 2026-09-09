@@ -34,8 +34,14 @@ function db(): PDO
 
     $sslCa = $value('DB_SSL_CA', 'ssl_ca', '');
     if ($sslCa !== '') {
-        $options[PDO::MYSQL_ATTR_SSL_CA] = $sslCa;
-        $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+        // PHP 8.5 đánh dấu PDO::MYSQL_ATTR_* là deprecated và đổi sang Pdo\Mysql::ATTR_*.
+        // Chỉ nhánh được chọn mới bị đánh giá nên không phát sinh cảnh báo ở cả hai bản.
+        $options[defined('Pdo\Mysql::ATTR_SSL_CA')
+            ? Pdo\Mysql::ATTR_SSL_CA
+            : PDO::MYSQL_ATTR_SSL_CA] = $sslCa;
+        $options[defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT')
+            ? Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT
+            : PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
     }
 
     $pdo = new PDO("mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4", $user, $password, $options);
